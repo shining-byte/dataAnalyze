@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+        <section class="cd-hero">
+            <ul class="cd-hero-slider autoplay">
+            <!--
+            	<ul class="cd-hero-slider autoplay"> for slider auto play
+                <ul class="cd-hero-slider"> for disabled auto play
+            -->
+                <li class="selected">
+                    <div class="cd-full-width">
+                        <div class="tm-slide-content-div">
+                            <form action="{% url 'search' %}" id="search-form">
+                                <i class="fa fa-cogs tm-slide-icon"></i>
+                                <h2 class="text-uppercase">Strategy</h2>
+                                <p class="m-b-mid">Search your want to check product</p>
+                                <div class="form-group">
+                                    <input name="search" type="text" class="form-control center-block tm-max-w-400" id="search" placeholder="Type a keyword...">
+                              </div>
+                                <button type="submit" class="cd-btn">Search</button>
+
+                            </form>
+                        </div>
+                    </div> <!-- .cd-full-width -->
+                </li>
+
+{#                <li>#}
+{#                    <div class="cd-full-width">#}
+{#                        <div class="tm-slide-content-div">#}
+{#                            <form action="index.html">#}
+{#                                <i class="fa fa-compass tm-slide-icon"></i>#}
+{#                                <h2 class="text-uppercase">Strategy</h2>#}
+{#                                <p>Using Hero Slider from Cody House. Donec mattis ipsum in erat viverra commodo. #}
+{#                                Proin sapien lacus, euismod eget nisl.</p>                                            #}
+{#                                <a href="index.html#1" class="cd-btn">Explore</a>#}
+{#                                #}
+{#                            </form>                           #}
+{#                        </div>                        #}
+{#                    </div> <!-- .cd-full-width -->#}
+{#                </li>#}
+{##}
+{#                <li>#}
+{#                    <div class="cd-full-width">#}
+{#                        <div class="tm-slide-content-div">#}
+{#                            <form action="index.html" id="newsletter">#}
+{#                                <i class="fa fa-cloud tm-slide-icon"></i>#}
+{#                                <h2 class="text-uppercase">Strategy</h2>#}
+{#                                <p class="tm-site-description">Photos from Unsplash</p>#}
+{#                                <div class="form-group">#}
+{#                                    <input type="text" class="form-control center-block tm-max-w-400" id="input3" placeholder="Enter your email...">#}
+{#                                </div>                                #}
+{#                                <button type="submit" class="cd-btn">Sign Up</button>#}
+{#                                #}
+{#                            </form>                            #}
+{#                        </div>                        #}
+{#                    </div> <!-- .cd-full-width -->#}
+{#                </li>#}
+            </ul> <!-- .cd-hero-slider -->
+
+            <div class="cd-slider-nav">
+                <nav>
+                    <span class="cd-marker item-1"></span>
+
+                    <ul>
+                        <li class="selected"><a href="#0"></a></li>
+                        <li><a href="#0"></a></li>
+                        <li><a href="#0"></a></li>
+                    </ul>
+                </nav>
+            </div> <!-- .cd-slider-nav -->
+        </section> <!-- .cd-hero -->
+
+{% endblock %}
