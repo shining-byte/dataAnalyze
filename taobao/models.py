@@ -110,51 +110,24 @@ class HotCommentTagItem(models.Model):
 
 class CommentItem(models.Model):
     _id =models.CharField('评论用户id', max_length=100, blank=True)
-    # afterDays =models.IntegerField('待定')
-    # anonymousFlag =models.CharField('待定', max_length=100)
     content =models.TextField('评论内容', blank=True)
     creationTime = models.CharField('评论时间', max_length=100, blank=True)
     days =models.IntegerField('已评论参数', blank=True)
-    # discussionId =models.IntegerField('待定')
     firstCategory =models.IntegerField('第一级分类', blank=True)
-    # guid =models.CharField('待定', max_length=100)
     imageCount =models.SmallIntegerField('评论图片数量', blank=True, null=True)
-    # integral =models.IntegerField('待定')
-    # isMobile =models.CharField('待定', max_length=100)
-    # isReplyGrade =models.CharField('待定', max_length=100)
-    # isTop =models.CharField('待定', max_length=100)
-    # mergeOrderStatus =models.CharField('待定', max_length=100)
     nickname =models.CharField('用户名', max_length=100, blank=True)
-    # orderId =models.CharField('订单号', max_length=100)
-    # plusAvailable =models.CharField('待定', max_length=100)
     productColor =models.CharField('产品颜色', max_length=100, blank=True)
     productId =models.ForeignKey(ProductsItem, on_delete=models.CASCADE)  #同ProductsItem的id相同
     productSize =models.CharField('产品型号', max_length=100, blank=True)
-    # recommend =models.CharField('待定', max_length=100)
 
     referenceId =models.CharField('产品总id', blank=True, max_length=100)
     referenceName =models.CharField('产品描述', max_length=100, blank=True)
-    # referenceType =models.CharField('待定', max_length=100)
-    # referenceTypeId =models.CharField('待定', max_length=100)
-    # replyCount =models.IntegerField('待定')
     score =models.IntegerField('评分', blank=True)
     secondCategory =models.IntegerField('第二级分类', blank=True)
     shop_id = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
-    # status =models.CharField('待定', max_length=100)
     thirdCategory =models.IntegerField('第三级分类', blank=True)
-    # title =models.CharField('待定', max_length=100)
-    # usefulVoteCount =models.CharField('待定', max_length=100)
-    # uselessVoteCount =models.CharField('待定', max_length=100)
-    # userClient =models.CharField('待定', max_length=100)
-    # userClientShow =models.CharField('待定', max_length=100)
-    # userImage =models.CharField('待定', max_length=100)
-    # userImageUrl =models.CharField('待定', max_length=100)
-    # userImgFlag =models.CharField('待定', max_length=100)
-    # userLevelColor =models.CharField('待定', max_length=100)
     userLevelId =models.CharField('用户等级id', max_length=100, blank=True)
-    # userProvince =models.CharField('待定', max_length=100)
     userLevelName =models.CharField('用户等级名称', max_length=100, blank=True)
-    # viewCount =models.CharField('待定', max_length=100)
 
 
     class Meta:
@@ -180,4 +153,15 @@ class AfterComment(models.Model):
     
 
 
+class ProductLink(models.Model):
+    id = models.CharField('产品id' ,primary_key=True, max_length=50)
+    imgurl = models.TextField('产品封面')
+
+    class Meta:
+        db_table = 'productlink'
+        verbose_name = '产品链接'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.id
 

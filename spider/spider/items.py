@@ -148,5 +148,8 @@ class HotCommentTagItem(Item):
 class AfterCommentItem(Item):
     commentid = Field()
     product_id = Field()
-
     content = Field()
+
+class ProductLink(Item):
+    id = Field()
+    imgurl = Field()

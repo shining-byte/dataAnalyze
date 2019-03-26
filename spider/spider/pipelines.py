@@ -17,13 +17,6 @@ class MySqlPipeline(object):
         self.mydb = 'spider'
         # 打开数据库连接
         self.conn = pymysql.connect(host="localhost", port=3306, user="spideruser", password="159874xzh", db="spider", charset="utf8")
-        # self.Categories = db["Categories"]
-        # self.Products = db["Products"]
-        # self.Shop = db["Shop"]
-        # self.Comment = db["Comment"]
-        # self.CommentImage = db["CommentImage"]
-        # self.CommentSummary = db["CommentSummary"]
-        # self.HotCommentTag = db["HotCommentTag"]
 
 
     def process_item(self, item, spider):
@@ -39,7 +32,17 @@ class MySqlPipeline(object):
                 self.conn.close()
             except Exception as e:
                 print(e)
-                # print(e)
+        elif isinstance(item, ProductLink):
+            try:
+                cur = self.conn.cursor()
+                sql = '''insert into productlink values (%s,%s)'''
+                self.conn.ping(reconnect=True)
+                cur.execute(sql,(item['id'], item['imgurl']))
+                cur.close()
+                self.conn.commit()
+                self.conn.close()
+            except Exception as e:
+                print(e)
         # # 插入产品信息
         # elif isinstance(item, ProductsItem):
         #     try:
