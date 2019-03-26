@@ -25,15 +25,19 @@ class JDSpider(scrapy.Spider):
     def parse(self, response):
         selector = Selector(response)
 
-        productLink = ProductLink()
-
-        for url in selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[1]/a/img').extract()[:3]:
-            productLink['imgurl'] =url
-        for idurl in selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[1]/a/@href').extract()[:3]:
-            id = re.compile('com/(.*?).html', re.S).findall(idurl)
-            productLink['id'] = id
-            yield Request(url='https:'+idurl, callback=self.parse_product)
-            yield productLink
+        productsItem1 = ProductsItem()
+        price = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/strong/i/text()').extract()
+        name = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/font/text()').extract()
+        desc = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/text()').extract()
+        imgurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/img').extract()
+        idurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[4]/a/@href').extract()
+        id = [re.compile('com/(.*?).html').findall(i)[0] for i in idurl]
+        url = ['https:' + i for i in idurl]
+        category = selector.xpath('//*[@id="J_selector"]/div[1]/div/div[2]/div[1]/ul/li[1]/a/text()').extract()
+        # for i in range(len(price)):
+        #     productsItem1['productid'] =
+        #     yield Request(url='https:'+idurl, callback=self.parse_product)
+        #     yield productLink
 
 
     def parse_product(self, response):
@@ -91,18 +95,18 @@ class JDSpider(scrapy.Spider):
             title = response.xpath('//div[@id="name"]/h1/text()').extract()[0]
         productsItem['name'] = title
         product_id = response.url.split('/')[-1][:-5]
-        productsItem['_id'] = product_id
+        # productsItem['_id'] = product_id
         productsItem['url'] = response.url
 
         # description
-        desc = response.xpath('//ul[@class="parameter2 p-parameter-list"]//text()').extract()
-        productsItem['description'] = ';'.join(i.strip() for i in desc)
+        # desc = response.xpath('//ul[@class="parameter2 p-parameter-list"]//text()').extract()
+        # productsItem['description'] = ';'.join(i.strip() for i in desc)
 
         # price
-        response = requests.get(url=price_url + product_id)
-        price_json = response.json()
-        productsItem['reallyPrice'] = price_json[0]['p']
-        productsItem['originalPrice'] = price_json[0]['m']
+        # response = requests.get(url=price_url + product_id)
+        # price_json = response.json()
+        # productsItem['reallyPrice'] = price_json[0]['p']
+        # productsItem['originalPrice'] = price_json[0]['m']
 
         # 优惠
         res_url = favourable_url % (product_id, shop_id, vender_id, re_categoy[0][0].replace(',', '%2c'))
@@ -155,9 +159,9 @@ class JDSpider(scrapy.Spider):
         commentSummaryItem['imageListCount'] = data.get('imageListCount')
         commentSummaryItem['poorCount'] = commentSummary.get('poorCount')
         commentSummaryItem['poorRate'] = commentSummary.get('poorRate')
-        commentSummaryItem['showCount'] = commentSummary.get('showCount')
+        # commentSummaryItem['showCount'] = commentSummary.get('showCount')
         commentSummaryItem['score'] = data.get('score')
-        commentSummaryItem['soType'] = data.get('soType')
+        # commentSummaryItem['soType'] = data.get('soType')
         commentSummaryItem['defaultGoodCount'] = commentSummary.get('defaultGoodCount')
         yield commentSummaryItem
             # 商品特性
@@ -171,8 +175,8 @@ class JDSpider(scrapy.Spider):
             yield hotCommentTagItem
 
         for comment_item in data['comments']:
-            # if (comment_item.get('content')[:7] in '此用户未及时填写评价内容，系统默认评价！'):
-            #     pass
+            if (comment_item.get('content')[:7] in '此用户未及时填写评价内容，系统默认评价！'):
+                pass
             if(len(comment_item.get('content'))<=6):
                 pass
             else:

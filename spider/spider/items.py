@@ -16,21 +16,14 @@ class CategoriesItem(Item):
 
 
 class ProductsItem(Item):
-    name = Field()  #产品名称
-    url = Field()  #产品url
-    _id = Field()  #产品id
-    category = Field()  #产品分类
-    reallyPrice = Field()  #产品价格
-    originalPrice = Field()  #原价
+    productid = Field()  #产品id
+    category = Field()  # 产品分类
     description = Field()  #产品描述
-    shopId = Field()  #shop id
-    venderId = Field()  #vender id
-    commentCount = Field()  #评价总数
-    goodComment = Field()  #好评数
-    generalComment = Field()  #中评数
-    poolComment = Field()  #差评数
+    name = Field()  #产品名称
+    imgurl = Field()  #产品url
+    reallyPrice = Field()  # 产品价格
+    url = Field()
     favourableDesc1 = Field()  #优惠描述1
-    favourableDesc2 = Field()  #优惠描述2
 
 
 class ShopItem(Item):

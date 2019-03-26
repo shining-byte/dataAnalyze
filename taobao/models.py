@@ -2,53 +2,48 @@ from django.db import models
 
 # Create your models here.
 
-class ShopItem(models.Model):
-    _id = models.CharField('id', max_length=100, blank=True)
-    name = models.CharField('店铺名称', max_length=100, blank=True)  #
-    shopId = models.CharField('shop id',max_length=50 ,primary_key=True)  #
-    url1 = models.CharField('店铺url1', max_length=100, blank=True)  #
-    url2 = models.CharField('店铺url2', max_length=100, blank=True)  #
-    venderId = models.IntegerField('vender id', blank=True )  #
-
-    class Meta:
-        db_table = 'shop'
-        verbose_name = '商店信息'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.name
+# class ShopItem(models.Model):
+#     _id = models.CharField('id', max_length=100, blank=True)
+#     name = models.CharField('店铺名称', max_length=100, blank=True)  #
+#     shopId = models.CharField('shop id',max_length=50 ,primary_key=True)  #
+#     url1 = models.CharField('店铺url1', max_length=100, blank=True)  #
+#     url2 = models.CharField('店铺url2', max_length=100, blank=True)  #
+#     venderId = models.IntegerField('vender id', blank=True )  #
+#
+#     class Meta:
+#         db_table = 'shop'
+#         verbose_name = '商店信息'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return self.name
 
 
 
     
 class ProductsItem(models.Model):
-    _id =models.CharField('产品id', primary_key=True, max_length=100)  #
+    productid =models.CharField('产品id', primary_key=True, max_length=100)  #
     category =models.CharField('产品分类名', max_length=50, blank=True)  #
     description =models.TextField('产品描述', blank=True)  #
     name =models.CharField('产品名称',max_length=100, blank=True)  #
-    originalPrice =models.FloatField('原价', blank=True)  #
-
+    # originalPrice =models.FloatField('原价', blank=True)  #
+    imgurl = models.CharField('封面地址', max_length=300)
     reallyPrice =models.FloatField('当前价格', blank=True)  #
-    shopId =models.ForeignKey(ShopItem, on_delete=models.CASCADE)  #
+    # shopId =models.ForeignKey(ShopItem, on_delete=models.CASCADE)  #
     url = models.URLField('商品地址', blank=True)
-    # venderId =models.CharField('vender id', max_length=100)  #
-    # commentCount =models.CharField('评价总数', max_length=100)  #
-    # goodComment =models.CharField('好评数', max_length=100)  #
-    # generalComment =models.CharField('中评数', max_length=100)  #
-    # poolComment =models.CharField('差评数', max_length=100)  #
     favourableDesc1 =models.CharField('优惠描述1', max_length=300, blank=True)  #
-    # favourableDesc2 =models.CharField('优惠描述2', max_length=100)  #
 
     class Meta:
         db_table = 'product'
-        verbose_name = '评论简述'
+        verbose_name = '商品信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.name
 
+
 class CommentSummaryItem(models.Model):
-    _id = models.ForeignKey(ProductsItem, on_delete=models.CASCADE)
+    productid = models.ForeignKey(ProductsItem, on_delete=models.CASCADE)
     afterCount = models.IntegerField('追加评论', blank=True)
     averageScore = models.IntegerField('平均评分', blank=True)
     commentCount = models.IntegerField('评分总人数', blank=True)
@@ -64,19 +59,10 @@ class CommentSummaryItem(models.Model):
 
     # goodRateShow = models.CharField('待定', max_length=100)
     # poorRateShow = models.CharField('待定', max_length=100)
-    score = models.IntegerField('星级', blank=True)
-    showCount = models.IntegerField('待定', blank=True)
+    score = models.IntegerField('评论等级', blank=True)
+    # showCount = models.IntegerField('待定', blank=True)
 
-    soType = models.IntegerField('待定', blank=True)
-    # skuId = models.CharField('待定', max_length=100)
-    # goodRateStyle = models.CharField('待定', max_length=100)
-    # skuIds = models.CharField('待定', max_length=100)
-    # poorRateStyle = models.CharField('待定', max_length=100)
-    # generalRateStyle = models.CharField('待定', max_length=100)
-    # productId = models.CharField('待定', max_length=100)  #同ProductsItem的id相同
-    # generalRateShow = models.CharField('待定', max_length=100)
-    # jwotestProduct = models.CharField('待定', max_length=100)
-    # maxPage = models.CharField('待定', max_length=100)
+    # soType = models.IntegerField('待定', blank=True)
 
 
     class Meta:
@@ -85,19 +71,14 @@ class CommentSummaryItem(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self._id
+        return self.id
     
 class HotCommentTagItem(models.Model):
     _id = models.CharField('id', max_length=100, blank=True)
     name = models.CharField('名字', max_length=100, blank=True)
-    # status = models.CharField('待定', max_length=100)
-    # rid = models.CharField('待定', max_length=100)
     productId = models.ForeignKey(ProductsItem, on_delete=models.CASCADE, blank=True)
     count = models.CharField('数量', max_length=100, blank=True)
-    # created = models.CharField('待定', max_length=100)
-    # modified = models.CharField('待定', max_length=100)
     type = models.CharField('类型', max_length=100, blank=True)
-    # canBeFiltered = models.CharField('待定', max_length=100)
 
 
     class Meta:
@@ -106,10 +87,10 @@ class HotCommentTagItem(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self._id
+        return self.id
 
 class CommentItem(models.Model):
-    _id =models.CharField('评论用户id', max_length=100, blank=True)
+    userid =models.CharField('评论用户id', max_length=100, blank=True)
     content =models.TextField('评论内容', blank=True)
     creationTime = models.CharField('评论时间', max_length=100, blank=True)
     days =models.IntegerField('已评论参数', blank=True)
@@ -119,12 +100,11 @@ class CommentItem(models.Model):
     productColor =models.CharField('产品颜色', max_length=100, blank=True)
     productId =models.ForeignKey(ProductsItem, on_delete=models.CASCADE)  #同ProductsItem的id相同
     productSize =models.CharField('产品型号', max_length=100, blank=True)
-
     referenceId =models.CharField('产品总id', blank=True, max_length=100)
     referenceName =models.CharField('产品描述', max_length=100, blank=True)
     score =models.IntegerField('评分', blank=True)
     secondCategory =models.IntegerField('第二级分类', blank=True)
-    shop_id = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
+    # shop_id = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
     thirdCategory =models.IntegerField('第三级分类', blank=True)
     userLevelId =models.CharField('用户等级id', max_length=100, blank=True)
     userLevelName =models.CharField('用户等级名称', max_length=100, blank=True)
@@ -136,11 +116,12 @@ class CommentItem(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self._id
+        return self.id
         
 class AfterComment(models.Model):
+
+    product_id = models.ForeignKey(ProductsItem, on_delete=models.CASCADE)
     commentid = models.CharField('评论人ID', max_length=100)
-    product_id = models.CharField('产品id', max_length=100)
     content = models.TextField('追评内容')
 
     class Meta:
@@ -153,15 +134,15 @@ class AfterComment(models.Model):
     
 
 
-class ProductLink(models.Model):
-    id = models.CharField('产品id' ,primary_key=True, max_length=50)
-    imgurl = models.TextField('产品封面')
-
-    class Meta:
-        db_table = 'productlink'
-        verbose_name = '产品链接'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.id
+# class ProductLink(models.Model):
+#     id = models.CharField('产品id' ,primary_key=True, max_length=50)
+#     imgurl = models.TextField('产品封面')
+#
+#     class Meta:
+#         db_table = 'productlink'
+#         verbose_name = '产品链接'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return self.id
 
