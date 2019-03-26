@@ -50,7 +50,7 @@ def index(request):
     )
     mydict = dict(context, **context1)
 
-    return render(request, 'index.html', mydict)
+    return render(request, 'reslut.html', mydict)
 
 
 
@@ -58,7 +58,7 @@ def index(request):
 def pie(v1,attr):
     # attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
     # v1 = [11, 12, 13, 10, 10, 10]
-    pie = Pie("饼图示例")
+    pie = Pie("")
     # 传入两个列表
     pie.add("", v1,attr ,is_label_show=True)
     return pie
@@ -103,4 +103,4 @@ def search(request):
         print(request.POST.get('search'))
     if request.method == 'GET':
         print(request.GET.get('search'))
-    return render(request, 'search.html')
+    return render(request, 'reslut.html')

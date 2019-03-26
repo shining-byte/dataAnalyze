@@ -6,6 +6,7 @@ import json
 import scrapy
 from scrapy.http import Request
 
+from scrapy.selector import Selector
 
 import requests
 from spider.items import *
@@ -21,12 +22,31 @@ comment_url = 'https://club.jd.com/comment/productPageComments.action?productId=
 class JDSpider(scrapy.Spider):
     # name = 'taobao'
     name = 'JD'
-    allowed_domains = ['taobao.com', 'jd.com']
+    allowed_domains = ['jd.com']
     # start_urls = ['https://rate.tmall.com/list_detail_rate.htm?itemId=580731960102&spuId=1089679943&sellerId=197232874&order=3&currentPage=1&append=0&content=1&tagId=&posi=&picture=&groupId=&ua=098%23E1hvppvEvbQvUvCkvvvvvjiPRLqWtjDUPszWzjivPmPpgj3Cn2sv1jYUPsLvzjtbiQhvCvvvpZptvpvhvvCvpvGCvvpvvPMMmphvLUvWqRQa0fJ6W3CQcExre8TJeVQEfwmK5iIffvDrz8TJhBH%2Bm7zZdiT1dcZI%2B87J%2Bu04jobZ1CQ4jBitL%2BoQRqJ6WeCpqU0QKfUpwymtvpvIvvCv7QvvvvvvvhNjvvmvxQvvBGwvvvUwvvCj1QvvvIgvvhNjvvvmFuyCvv9vvhhI1oREHIyCvvOCvhEvzW9CvpvVvvBvpvvv3QhvCvmvphv%3D&needFold=0&_ksTS=1552392132598_529&callback=jsonp530']
     # start_urls = ['https://search.jd.com/Search?keyword=%E5%B0%8F%E7%B1%B38&enc=utf-8&wq=%E5%B0%8F%E7%B1%B38&pvid=72f362cdd9774eefa743f71f843034e3']
     start_urls = 0
     # start_urls = ['https://www.xicidaili.com/']
     def parse(self, response):
+        selector = Selector(response)
+        # 获取商品的图片链接，价钱，介绍
+
+        # print(selector.xpath('//*[@id="J_goodsList"]/ul').extract()[0])
+        print(selector.xpath('//*[@id="J_goodsList"]/ul/li[1]/div/div[1]/a/img').extract()[0])
+        print(selector.xpath('//*[@id="J_goodsList"]/ul/li[1]/div/div[1]/a').extract()[0])
+        print(selector.xpath('//*[@id="J_goodsList"]/ul/li[1]/div/div[3]/strong/i/text()').extract()[0])
+        print(selector.xpath('//*[@id="J_goodsList"]/ul').extract()[0])
+        print(selector.xpath('//*[@id="J_goodsList"]/ul').extract()[0])
+        # yield Request(url='', callback=self.parse_comments)
+
+
+
+        # yield productsItem
+        # for i in['1','2','3', '5']:
+            # yield Request(url=comment_url % (product_id, '0'), callback=self.parse_comments, meta=data)
+
+        # parse_product 传入是product的id
+    def parse_product(self, response):
         # meta = dict()
         categorylink = response.xpath('//*[@id="crumb-wrap"]/div/div[1]/div[5]/a').extract()[0]
         re_categoy = re.compile('<a href=".*?cat=(.*?)".*?>(.*?)</a>').findall(categorylink)

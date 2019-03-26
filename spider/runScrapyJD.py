@@ -4,5 +4,5 @@
 from scrapy import cmdline
 
 from spider.spiders.scrapy_jingdong import JDSpider
-JDSpider.start_urls = ['https://item.jd.com/100000232304.html']
+JDSpider.start_urls = ['https://search.jd.com/Search?keyword=小米8&enc=utf-8&spm=2.1.0']
 cmdline.execute("scrapy crawl JD".split())
