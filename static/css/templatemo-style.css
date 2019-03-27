@@ -212,7 +212,7 @@ a:focus {
 .tm-gray-text { color: #666666; }
 .tm-gray-text-2 { color: #656565; }
 
-.tm-bg-purple { background-color: #3F3F67; }
+/*.tm-bg-purple { background-color: #3F3F67; }*/
 .tm-bg-light-purple { background-color: #C4C4DB; }
 .tm-bg-light-green { background-color: #C6D9C8; }
 .tm-bg-light-orange { background-color: #DDD3C1; }
@@ -250,7 +250,7 @@ a:focus {
 .tm-plan-table-header {
 	border-top-right-radius: 20px;
 	border-top-left-radius: 20px;
-	color: #3F3F67;
+	/*color: #3F3F67;*/
 	font-size: 1.8rem;
 	font-weight: 300;
 	background-color: white;
@@ -263,7 +263,7 @@ a:focus {
 }
 
 .tm-plan-link {
-	color: #3F3F67;
+	/*color: #3F3F67;*/
 	background-color: white;
 	border-bottom-left-radius: 20px;
 	border-bottom-right-radius: 20px;

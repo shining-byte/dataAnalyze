@@ -5,8 +5,10 @@ from django.shortcuts import render
 import math
 import json
 import re
+import subprocess
 from pyecharts import Line3D, Pie, WordCloud
 
+from taobao.models import ProductsItem
 
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
@@ -31,6 +33,11 @@ for i in json1:
     count.append(i['count'])
 
 def index(request):
+    return render(request, 'index.html')
+
+
+def show(request, id):
+    print(id)
     pe = pie(name, count)
     context = dict(
         mypie=pe.render_embed(),
@@ -51,6 +58,61 @@ def index(request):
     mydict = dict(context, **context1)
 
     return render(request, 'reslut.html', mydict)
+
+from twisted.internet import reactor,defer
+import scrapy
+from scrapy.crawler import CrawlerProcess, CrawlerRunner
+from scrapy.utils.log import configure_logging
+import os
+
+from spider.spiders.scrapy_jingdong import JDSpider
+
+# configure_logging()
+# runner = CrawlerRunner()
+
+def scrapy_JD(keyword):
+    import requests
+    from scrapy.selector import Selector
+    from scrapy.http import HtmlResponse
+    from scrapy.http import Request
+    from bs4 import BeautifulSoup
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+    response = requests.get(url='https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format(keyword), headers=headers)
+    response.encoding = 'utf8'
+
+    selector = Selector(response)
+    # productsItem = ProductsItem()
+    price = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/strong/i/text()').extract()[:10]
+    name = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/font/text()').extract()[:10]
+    desc = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/text()').extract()[:10]
+    # // *[ @ id = "J_goodsList"] / ul / li[1] / div / div[1] / a / img
+    imgurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[1]/a/img/@source-data-lazy-img').extract()[:10]
+    idurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[4]/a/@href').extract()[:10]
+    id = [re.compile('com/(.*?).html').findall(i)[0] for i in idurl]
+    url = ['https:' + i for i in idurl]
+    category = selector.xpath('//*[@id="J_selector"]/div[1]/div/div[2]/div[1]/ul/li[1]/a/text()').extract()
+    print(len(name))
+
+    for i in range(len(price)):
+        try:
+            product = ProductsItem.objects.create(productid=id[i], category=category[0], description=desc[i], name=name[i],
+                                                  imgurl=imgurl[i], reallyPrice=price[i], url=url[i])
+            product.save()
+        except Exception as e:
+            print(e)
+
+
+
+def search(request):
+    if request.method == 'POST':
+        print(request.POST.get('search'))
+    if request.method == 'GET':
+        keyword = request.GET.get('search')
+        scrapy_JD(keyword)
+        products = ProductsItem.objects.filter(name=keyword)
+
+    return render(request, 'reslut.html', {'products': products})
+
 
 
 
@@ -98,9 +160,3 @@ def line3d():
     return line3d
 
 
-def search(request):
-    if request.method == 'POST':
-        print(request.POST.get('search'))
-    if request.method == 'GET':
-        print(request.GET.get('search'))
-    return render(request, 'reslut.html')

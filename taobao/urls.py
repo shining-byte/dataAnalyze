@@ -4,12 +4,13 @@
 
 from django.urls import path
 
-from .views import search
+from .views import search, show
 
 app_name = 'taobao'
 urlpatterns = [
     # 用户信息
-    path('search/', search, name="search"),
+    # path('search/', search, name="search"),
+    path('show/<int:id>/', show, name="search"),
     # path('pdf/', SomeView.as_view(), name="user_pdf"),
     # path('update/pwd/', UpdatePwdView.as_view(), name="update_pwd"),
     # path('bespeak', BespeakView.as_view(), name="user_bespeak"),

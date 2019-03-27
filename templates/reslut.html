@@ -12,85 +12,39 @@
                 <div class="row">
 
                     <div class="tm-plan-boxes-container">
-
+                                    {% for product in products %}
                         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-table-col">
 
                         <div class="gl-i-wrap">
                             <div class="p-img">
                                 <a target="_blank" title=""
-                                   href="{% url 'search' %}">
+                                   href="{% url 'show' product.productid %}">
                                     <img width="220" height="220" class="" data-img="1" source-data-lazy-img="" data-lazy-img="done"
-                                         src="//img14.360buyimg.com/n7/jfs/t1/4398/28/6190/281470/5ba1ee9bE38ae264d/19f155adacf55419.jpg">
+                                         src="{{ product.imgurl }}">
                     </a>
                             </div>
 
                             <div class="p-price">
-                    <strong class="J_100000400010" data-done="1"><em>￥</em><i>2899.00</i></strong>		</div>
+                    <strong class="J_100000400010" data-done="1"><em>￥</em><i>{{ product.reallyPrice }}</i></strong>		</div>
                             <div class="p-name p-name-type-2">
-                                <a target="_blank" title="" href="{% url 'search' %}">
-                                    <em>小米8屏幕指纹版 6GB+128GB 黑色 全网通4G 双卡双待 全面屏拍照游戏智能手机</em>
+                                <a target="_blank" title="" href="{% url 'show' product.productid %}">
+                                    <em>{{ product.name }}</em>
                                     <i class="promo-words" id="J_AD_100000400010">
-                                        【品质特惠】抢购价2499！压感屏幕指纹，双频GPS精准定位，支持红外人脸识别！小米爆品特惠，选品质，购小米！</i>
+                                        {{ product.description }}
+                                    </i>
                                 </a>
                             </div>
                         </div>
 
                         </div>
+                        {% endfor %}
 
-                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-table-col">
 
-                            <table class="tm-plan">
-                                <thead>
-                                    <tr>
-                                        <th class="text-xs-center tm-plan-table-header">Titanium Plan</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tm-bg-light-green">
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">Sed porttitor lobortis</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">20 sit amet luctus sapien</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">25 eget sagittis</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">35 aliquam eros nec tortor</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">45 vel suscipit turpis</td></tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td class="text-xs-center">
-                                            <a href="#" class="tm-plan-link tm-plan-link-green">Sign up</a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
 
-                        </div>
 
-                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-table-col">
 
-                            <table class="tm-plan">
-                                <thead>
-                                    <tr>
-                                        <th class="text-xs-center tm-plan-table-header">Platinum Plan</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tm-bg-light-orange">
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">Sed porttitor lobortis</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">30 sit amet luctus sapien</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">40 eget sagittis</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">50 aliquam eros nec tortor</td></tr>
-                                    <tr class="tm-plan-table-row"><td class="tm-plan-table-cell">60 vel suscipit turpis</td></tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td class="text-xs-center">
-                                            <a href="#" class="tm-plan-link tm-plan-link-orange">Sign up</a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-                        </div>
 
                     </div> <!-- tm-plan-boxes-container -->
-
                 </div>
             </div>
         </section>

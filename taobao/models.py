@@ -31,7 +31,7 @@ class ProductsItem(models.Model):
     reallyPrice =models.FloatField('当前价格', blank=True)  #
     # shopId =models.ForeignKey(ShopItem, on_delete=models.CASCADE)  #
     url = models.URLField('商品地址', blank=True)
-    favourableDesc1 =models.CharField('优惠描述1', max_length=300, blank=True)  #
+    # favourableDesc1 =models.CharField('优惠描述1', max_length=300, blank=True)  #
 
     class Meta:
         db_table = 'product'
@@ -120,7 +120,7 @@ class CommentItem(models.Model):
         
 class AfterComment(models.Model):
 
-    product_id = models.ForeignKey(ProductsItem, on_delete=models.CASCADE)
+    productid = models.ForeignKey(ProductsItem, on_delete=models.CASCADE)
     commentid = models.CharField('评论人ID', max_length=100)
     content = models.TextField('追评内容')
 
@@ -130,7 +130,7 @@ class AfterComment(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.product_id
+        return self.productid
     
 
 

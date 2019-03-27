@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from taobao.views import index, search
+from taobao.views import index, search,show
+
 urlpatterns = [
     path('', index),
     path('search', search, name='search'),
-    path('admin/', admin.site.urls),
+    path('show/<int:id>/', show, name="show"),
+
+                  path('admin/', admin.site.urls),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
