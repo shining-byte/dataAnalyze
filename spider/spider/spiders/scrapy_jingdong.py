@@ -188,7 +188,7 @@ class JDSpider(scrapy.Spider):
             yield hotCommentTagItem
 
         for comment_item in data['comments']:
-            if (comment_item.get('content')[:7] in '此用户未及时填写评价内容，系统默认评价！'):
+            if (comment_item.get('content') == '此用户未及时填写评价内容，系统默认评价！') or comment_item.get('content' == '此用户未填写评价内容'):
                 pass
             if(len(comment_item.get('content'))<=6):
                 pass
