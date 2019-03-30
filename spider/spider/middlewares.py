@@ -10,6 +10,8 @@ from scrapy.exceptions import IgnoreRequest
 from scrapy.utils.response import response_status_message
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 import os
+
+
 class MyfirstscrapySpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the

@@ -23,6 +23,5 @@ urlpatterns = [
     path('', index),
     path('search', search, name='search'),
     path('show/<int:id>/', show, name="show"),
-
-                  path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
