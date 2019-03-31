@@ -1,11 +1,53 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
+    {#                   京东  #}
             <div class="container-fluid tm-section tm-section-2">
             <div class="row tm-media-row">
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 
                     <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3901394527,3047269893&fm=26&gp=0.jpg" alt="Image" class="img-fluid img-circle img-thumbnail tm-media-img">
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <div class="tm-media-text-container">
+{#                        <h3 class="tm-media-title tm-gray-text">Interdum et malesuada fames</h3>#}
+{#                        <p class="tm-media-description tm-gray-text-2">Aliquam dapibus felis fringilla ligula mittis, ut congue purus gravida. Suspendisse suscipit tellus id odio mollis, id tincidunt metus gravida. Ut at arcu in elit maximus eleifend.</p>#}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row tm-media-row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    {{ mypie|safe }}
+
+{#                    <img src="/static/img/tm-img-320x320-3.jpg" alt="Image" class="img-fluid img-circle img-thumbnail tm-media-img">#}
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <div class="tm-media-text-container">
+{#                        <h3 class="tm-media-title tm-gray-text">Interdum et malesuada fames</h3>#}
+                                                                {{ myworldcloud|safe }}
+                                {% for conment in comments %}
+                        <p class="tm-media-description tm-gray-text-2">
+                           {{ conment.userLevelName }}买家：{{ conment.nickname }}说：“{{ conment.content }}”</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+{#    淘宝div#}
+    <div class="container-fluid tm-section tm-section-2">
+            <div class="row tm-media-row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+                    <img src="https://img.mp.itc.cn/upload/20170724/e68a3a58eedd4e1d82cc11e2218a8203_th.jpg" alt="Image" class="img-fluid img-circle img-thumbnail tm-media-img">
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                     <div class="tm-media-text-container">

@@ -4,13 +4,16 @@
 
 from django.urls import path
 
+from taobao.views import index
 from .views import search, show
 
 app_name = 'taobao'
 urlpatterns = [
     # 用户信息
     # path('search/', search, name="search"),
-    path('show/<int:id>/', show, name="search"),
+    path('', index, name="index"),
+    path('search', search, name='search'),
+    path('show/<int:id>/', show, name="show"),
     # path('pdf/', SomeView.as_view(), name="user_pdf"),
     # path('update/pwd/', UpdatePwdView.as_view(), name="update_pwd"),
     # path('bespeak', BespeakView.as_view(), name="user_bespeak"),

@@ -20,7 +20,7 @@
                         <div class="gl-i-wrap">
                             <div class="p-img">
                                 <a target="_blank" title=""
-                                   href="{% url 'show' product.productid %}">
+                                   href="{% url 'taobao:show' product.productid %}">
                                     <img width="220" height="220" class="" data-img="1" source-data-lazy-img="" data-lazy-img="done"
                                          src="{{ product.imgurl }}">
                     </a>
@@ -29,7 +29,7 @@
                             <div class="p-price">
                     <strong class="J_100000400010" data-done="1"><em>￥</em><i>{{ product.reallyPrice }}</i></strong>		</div>
                             <div class="p-name p-name-type-2">
-                                <a target="_blank" title="" href="{% url 'show' product.productid %}">
+                                <a target="_blank" title="" href="{% url 'taobao:show' product.productid %}">
                                     <em>{{ product.name }}</em>
                                     <i class="promo-words" id="J_AD_100000400010">
                                         {{ product.description }}

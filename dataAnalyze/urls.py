@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from taobao.views import index, search,show
+from rest_framework.routers import DefaultRouter
+
+
+
+# router = DefaultRouter()
+# router.register('index-api', index)
 
 urlpatterns = [
-    path('', index),
-    path('search', search, name='search'),
-    path('show/<int:id>/', show, name="show"),
+    path('', include('taobao.urls')),
     path('admin/', admin.site.urls),
+    # path('index-api/', include(router.urls)),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
