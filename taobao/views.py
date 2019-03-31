@@ -2,9 +2,10 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import mixins, viewsets
-
+from django.db import connection
+from django.db.utils import OperationalError
 from taobao.models import JDProductsItem, JDCommentItem
-from utils.scrapy_web import ScrapyInfo, scrapy_JD, scrapy_taobao
+from utils.scrapy_web import ScrapyInfo, scrapy_JD, scrapy_taobao, pie, worldcloud, pie2
 
 
 def index(request):
@@ -12,42 +13,37 @@ def index(request):
 
 
 def show(request, id):
-    print(id)
     keyword = request.session['keyword']
+    taobaoProductId = request.session['taobaoproductId']
     # 初始化类
-    spider = ScrapyInfo(jdid=id, keyword=keyword)
-    # 开始爬虫
-    spider.scrapy_JDinfo()
+    spider = ScrapyInfo(jdid=id, taobaoProductId=taobaoProductId, keyword=keyword)
+    # 开始爬取京东
+    jdlist = spider.scrapy_JDinfo()
+    taobaolist = spider.scrapy_taobaoinfo()
     # scrapy_info(id=id)
 
+    #     comments = JDCommentItem.objects.all()[:3]
     # 饼图
-    pie = spider.pie()
+    jdpie = pie(jdlist[0], jdlist[1])
     # comment_item = json.loads(text1[0], strict=False)['comments'][:3]
-    comments = JDCommentItem.objects.all()[:3]
 
+    taobaopie = pie2(taobaolist[0], taobaolist[1])
     # 云词图
-    worldud = spider.worldcloud()
+    jdworldud = worldcloud(jdlist[2], jdlist[3])
 
-
-    mydict = dict(pie, **worldud)
+    comments = JDCommentItem.objects.all()[:3]
+    mydict = dict(jdpie, **jdworldud)
     mydict['comments'] = comments
+    url = JDProductsItem.objects.get(name=keyword).url
+    mydict['url'] = url
+    # print(mydict)
+    # mydict['taobaopie'] = taobaopie
     # mydict2 = dict(mydict, **commentdict)
     #
     # print(mydict['mypie'])
     # # # print(mydict)
     # print(context['mypie'])
-    return render(request, 'show.html',mydict)
-
-from twisted.internet import reactor,defer
-import scrapy
-from scrapy.crawler import CrawlerProcess, CrawlerRunner
-from scrapy.utils.log import configure_logging
-import os
-
-from spider.spiders.scrapy_jingdong import JDSpider
-
-# configure_logging()
-# runner = CrawlerRunner()
+    return render(request, 'show.html', mydict)
 
 
 def search(request):
@@ -56,7 +52,8 @@ def search(request):
         request.session['keyword'] = keyword
         # request['keyword'] = keyword
         scrapy_JD(keyword)
-        scrapy_taobao(keyword)
+        taobaoProductId = scrapy_taobao(keyword)
+        request.session['taobaoproductId'] = taobaoProductId
         products = JDProductsItem.objects.filter(name=keyword)
 
     return render(request, 'reslut.html', {'products': products})

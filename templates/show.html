@@ -30,8 +30,9 @@
                                                                 {{ myworldcloud|safe }}
                                 {% for conment in comments %}
                         <p class="tm-media-description tm-gray-text-2">
-                           {{ conment.userLevelName }}买家：{{ conment.nickname }}说：“{{ conment.content }}”</p>
+                           （{{ conment.userLevelName }}）买家：{{ conment.nickname }} 说：“{{ conment.content }}”</p>
                         {% endfor %}
+                        <a href="{{ url }}">购买链接</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
 
             <div class="row tm-media-row">
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                    {{ mypie|safe }}
+                    {{ mypie2|safe }}
 
 {#                    <img src="/static/img/tm-img-320x320-3.jpg" alt="Image" class="img-fluid img-circle img-thumbnail tm-media-img">#}
                 </div>

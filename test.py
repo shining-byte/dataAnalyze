@@ -1,15 +1,16 @@
 # -*- coding:utf-8 -*-
 # Author: cmzz
 # @Time :19-3-19
-list = ['//item.jd.com/100000400010.html', '//item.jd.com/8656283.html', '//item.jd.com/100000503295.html', '//item.jd.com/8051104.html', '//item.jd.com/7652013.html', '//item.jd.com/100003895136.html', '//item.jd.com/8264403.html', '//item.jd.com/7120000.html', '//item.jd.com/7437710.html', '//item.jd.com/7437564.html', '//item.jd.com/6735790.html', '//item.jd.com/28445462537.html', '//item.jd.com/100003438274.html', '//item.jd.com/8457421.html', '//item.jd.com/33277169973.html', '//item.jd.com/33278877170.html', '//item.jd.com/28917601601.html', '//item.jd.com/30911025510.html', '//item.jd.com/20903273963.html', '//item.jd.com/28779745128.html', '//item.jd.com/33276636524.html', '//item.jd.com/41578142821.html', '//item.jd.com/41563312675.html', '//item.jd.com/28756072327.html', '//item.jd.com/40922103042.html', '//item.jd.com/41566114375.html', '//item.jd.com/29038940952.html', '//item.jd.com/33955078555.html', '//item.jd.com/41306818658.html', '//item.jd.com/28858935461.html']
 import re
+import json
 
-id = []
+str = '''({"tags":{"rateSum":5196,"structuredRateStatisticList":[],"tagClouds":[{"posi":true,"count":1248,"weight":0,"id":"620","tag":"手机不错"},{"posi":true,"count":1070,"weight":0,"id":"121","tag":"外型不错"},{"posi":true,"count":961,"weight":0,"id":"921","tag":"性能强大"},{"posi":true,"count":543,"weight":0,"id":"721","tag":"操作顺畅"},{"posi":true,"count":385,"weight":0,"id":"420","tag":"快递不错"},{"posi":true,"count":292,"weight":0,"id":"40221","tag":"拍照好清晰"},{"posi":false,"count":248,"weight":0,"id":"921","tag":"性能一般"},{"posi":false,"count":243,"weight":0,"id":"421","tag":"屏稍小"},{"posi":true,"count":167,"weight":0,"id":"520","tag":"划算"},{"posi":true,"count":39,"weight":0,"id":"1020","tag":"机子是正品"}],"dimenSum":9,"innerTagCloudList":[],"userTagCloudList":[]}})'''
 
+str = str.replace('(', '')
+str = str.replace(')', '')
+tag = json.loads(str)['tags']['tagClouds']
+for i in tag:
+    print(i['count'])
+    print(i['tag'])
 
-# imageUrl = re.compile('com/(.*?).html', re.S).findall(str)
-# imageUrl2 = re.compile('\d').findall(str)
-# print(imageUrl2)
-# print(imageUrl)
-list2 = ['https:'+i for i in list]
-print(list2)
+print([tag[i]['count'] for i in range(len(tag))])
