@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class ProductName(models.Model):
     name = models.CharField('名字', max_length=100, primary_key=True)
     jdProductId = models.CharField('京东产品id', max_length=50, default=1)
@@ -16,8 +17,6 @@ class ProductName(models.Model):
         return self.name
 
 
-
-    
 class JDProductsItem(models.Model):
     productid =models.CharField('产品id', primary_key=True, max_length=50)  #
     category =models.CharField('产品分类名', max_length=50, blank=True)  #
@@ -40,7 +39,7 @@ class JDProductsItem(models.Model):
 
 
 class JDCommentSummaryItem(models.Model):
-    productid = models.CharField('产品id', max_length=50, primary_key=True)
+    productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE)
     # productname = models.ForeignKey(ProductName, on_delete=models.CASCADE)
     afterCount = models.IntegerField('追加评论', blank=True)
     averageScore = models.IntegerField('平均评分', blank=True)
@@ -145,8 +144,9 @@ class TaobaoProduct(models.Model):
 
 class TaobaoComment(models.Model):
     productid = models.ForeignKey(TaobaoProduct, on_delete=models.CASCADE)
-    tagname = models.CharField('标签名字', max_length=50)
-    tagcount = models.CharField('数量', max_length=50)
+    displayUserNick = models.CharField('卖家', max_length=50)
+    rateContent = models.TextField('评论')
+
 
     class Meta:
         db_table = 'taobaocomment'

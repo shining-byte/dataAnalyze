@@ -9,7 +9,8 @@ import re
 import subprocess
 from pyecharts import Line3D, Pie, WordCloud
 
-from taobao.models import JDProductsItem, JDCommentItem, ProductName, JDHotCommentTagItem, TaobaoTag
+from taobao.models import JDProductsItem, JDCommentItem, ProductName, JDHotCommentTagItem, TaobaoTag, TaobaoProduct, \
+    TaobaoComment
 import requests
 from scrapy.selector import Selector
 
@@ -26,7 +27,6 @@ class ScrapyInfo:
         self.piecount = []
         self.woldname = []
         self.worldcount = []
-
 
     def scrapy_JDinfo(self):
         comment_url = 'https://sclub.jd.com/comment/productPageComments.action?productId={}&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1'.format(self.jdid)
@@ -47,8 +47,7 @@ class ScrapyInfo:
             count = hotComment['count']
             self.woldname.append(name)
             self.worldcount.append(count)
-            pool.apply_async(saveJDhotTag, (self.keyword, self.jdid, name, count))
-
+            pool.apply_async(saveJDhotTag, (name, count, self.jdid))
 
         pool.close()
         pool.join()
@@ -73,7 +72,7 @@ class ScrapyInfo:
                 # secondCategory = comment_item.get('secondCategory')
                 # thirdCategory = comment_item.get('thirdCategory')
                 # userLevelId = comment_item.get('userLevelId')
-                # saveJDcomment(self.keyword, self.jdid, content, nickname, score, userLevelName, referenceId)
+                saveJDcomment(content, nickname, referenceId, score, userLevelName, self.jdid)
         jdlist = [self.piename, self.piecount, self.woldname, self.worldcount]
         return jdlist
 
@@ -84,16 +83,102 @@ class ScrapyInfo:
         taobao_sumtagurl = 'https://rate.tmall.com/listTagClouds.htm?itemId={0}&isAll=true&isInner=true&t=&groupId=&_ksTS='.format(self.taobaoProductId)
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
                    'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-        taobao_comurl = 'https://rate.tmall.com/list_detail_rate.htm?itemId=587578411300&spuId=1152764912&sellerId=2024314280&order=3&currentPage=1&append=0&content=1&tagId=&posi=&picture=&groupId=&ua=098'
         response = requests.get(url=taobao_sumtagurl, headers=headers).text
         response = response.replace('(', '')
         response = response.replace(')', '')
         taoboatag = json.loads(response)['tags']['tagClouds']
         taobaolist = [[taoboatag[i]['tag'] for i in range(len(taoboatag))], [taoboatag[i]['count'] for i in range(len(taoboatag))]]
         for i in taoboatag:
-            TaobaoTag.objects.create(productid=self.taobaoProductId, tagname=i['tag'], productname_id=self.keyword, tagcount=i['count']).save()
-        print(taobaolist)
+            TaobaoTag.objects.create(tagname=i['tag'], productid_id=self.taobaoProductId, tagcount=i['count']).save()
+        taobao_comurl = 'http://rate.tmall.com/list_detail_rate.htm?itemId={0}&sellerId=1652490016&currentPage=1'.format(self.taobaoProductId)
+
+        text = requests.get(taobao_comurl).text
+        text = text.replace('jsonp128(', '')
+        text = text.replace(')', '')
+        jsons = json.loads(text)
+        comment = jsons['rateDetail']['rateList'][:10]
+        for i in comment:
+            try:
+                TaobaoComment.objects.create(displayUserNick=i['displayUserNick'], rateContent=i['rateContent'], productid_id=self.taobaoProductId).save()
+                print(i['rateContent'])
+            except Exception as e:
+                print(e)
         return taobaolist
+
+
+# 搜索时调用
+def scrapy_JD(keyword):
+    # 先保存产品
+    try:
+        product = ProductName.objects.create(name=keyword)
+        product.save()
+    except Exception as e:
+        print(e)
+
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+    response = requests.get(url='https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format(keyword), headers=headers)
+    response.encoding = 'utf8'
+
+    selector = Selector(response)
+    # productsItem = ProductsItem()
+    price = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/strong/i/text()').extract()[0]
+    # name = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/font/text()').extract()[0]
+    desc = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/text()').extract()[0]
+    # // *[ @ id = "J_goodsList"] / ul / li[1] / div / div[1] / a / img
+    imgurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[1]/a/img/@source-data-lazy-img').extract()[0]
+    idurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[4]/a/@href').extract()[:1]
+    id = [re.compile('com/(.*?).html').findall(i)[0] for i in idurl]
+    url = ['https:' + i for i in idurl]
+    category = selector.xpath('//*[@id="J_selector"]/div[1]/div/div[2]/div[1]/ul/li[1]/a/text()').extract()
+    # print(selector.xpath('//*[@id="J_goodsList"]/ul/li[1]/div/div[4]/a/em/text()').extract())
+    # print(name)
+    # for i in range(len(price)):
+    #     if name[i] == keyword:
+    try:
+        ProductName.objects.filter(name=keyword).update(jdProductId=id[0])
+
+        product = JDProductsItem.objects.create(productid=id[0], category=category[0], description=desc,
+                                                          imgurl=imgurl, reallyPrice=price, url=url[0], name_id=keyword)
+        product.save()
+            #     product.save()
+    except Exception as e:
+        print(e)
+
+
+# 搜索时调用
+def scrapy_taobao(keyword):
+    taobao_search_url = 'https://s.taobao.com/search?q=' + keyword
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+    response = requests.get(url=taobao_search_url, headers=headers)
+    response.encoding = 'utf8'
+    # productsItem = ProductsItem()
+    # tlist = re.findall('"raw_title":"(.*?)",', response.text)[1]  # 正则提取商品名称
+    prices = re.findall('"view_price":"(.*?)",', response.text)[1]  # 正则提示商品价格
+    nid = re.findall('"nid":"(.*?)"', response.text)[1]# 正则匹配id
+    try:
+        ProductName.objects.filter(name=keyword).update(taobaoProductId=nid)
+        TaobaoProduct.objects.create(productid=nid, productprice=prices, productname_id=keyword)
+    except Exception as e:
+        print(e)
+    return nid
+
+    # print(response.content)
+    # print(response.text)
+    # print(price)
+
+
+# 保存京东标签
+def saveJDhotTag(*args):
+    JDHotCommentTagItem.objects.create(name=args[0], count=args[1], productid_id=args[2]).save()
+
+
+# 保存京东评论信息
+def saveJDcomment(*args):
+
+    jdcomment = JDCommentItem.objects.create(content=args[0], nickname=args[1], referenceId=args[2],
+                                             score=args[3], userLevelName=args[4], productid_id=args[5])
+    jdcomment.save()
+
 
 
 # 元饼图
@@ -164,73 +249,3 @@ def line3d(self):
                visual_range_color=range_color, visual_range=[0, 30],
                is_grid3D_rotate=True, grid3D_rotate_speed=180)
     return line3d
-
-# 搜索时调用
-def scrapy_JD(keyword):
-    # 先保存产品
-    try:
-        product = ProductName.objects.create(name=keyword)
-        product.save()
-    except Exception as e:
-        print(e)
-
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-    response = requests.get(url='https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format(keyword), headers=headers)
-    response.encoding = 'utf8'
-
-    selector = Selector(response)
-    # productsItem = ProductsItem()
-    price = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/strong/i/text()').extract()[0]
-    # name = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/font/text()').extract()[0]
-    desc = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/text()').extract()[0]
-    # // *[ @ id = "J_goodsList"] / ul / li[1] / div / div[1] / a / img
-    imgurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[1]/a/img/@source-data-lazy-img').extract()[0]
-    idurl = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div[4]/a/@href').extract()[:1]
-    id = [re.compile('com/(.*?).html').findall(i)[0] for i in idurl]
-    url = ['https:' + i for i in idurl]
-    category = selector.xpath('//*[@id="J_selector"]/div[1]/div/div[2]/div[1]/ul/li[1]/a/text()').extract()
-    # print(selector.xpath('//*[@id="J_goodsList"]/ul/li[1]/div/div[4]/a/em/text()').extract())
-    # print(name)
-    # for i in range(len(price)):
-    #     if name[i] == keyword:
-    try:
-        ProductName.objects.filter(name=keyword).update(jdProductId=id[0])
-
-        product = JDProductsItem.objects.create(name_id=keyword,productid=id[0], category=category[0], description=desc,
-                                                          imgurl=imgurl, reallyPrice=price, url=url[0])
-        product.save()
-            #     product.save()
-    except Exception as e:
-        print(e)
-
-# 搜索时调用
-def scrapy_taobao(keyword):
-    taobao_search_url = 'https://s.taobao.com/search?q=' + keyword
-    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-    response = requests.get(url=taobao_search_url, headers=headers)
-    response.encoding = 'utf8'
-    # productsItem = ProductsItem()
-    tlist = re.findall('"raw_title":"(.*?)",', response.text)  # 正则提取商品名称
-    plist = re.findall('"view_price":"(.*?)",', response.text)  # 正则提示商品价格
-    nid = re.findall('"nid":"(.*?)"', response.text)[1]# 正则匹配id
-    ProductName.objects.filter(name=keyword).update(taobaoProductId=nid)
-    return nid
-
-    # print(response.content)
-    # print(response.text)
-    # print(price)
-
-
-# 保存京东标签
-def saveJDhotTag(*args):
-    JDHotCommentTagItem.objects.create(productname_id=args[0], name=args[2], productid=args[1], count=args[3]).save()
-
-
-# 保存京东评论信息
-def saveJDcomment(*args):
-
-    jdcomment = JDCommentItem.objects.create(productname_id=args[0], productid=args[1],
-                                             content=args[2], nickname=args[3],
-                                             score=args[4], userLevelName=args[5], referenceId=args[6])
-    jdcomment.save()
-
