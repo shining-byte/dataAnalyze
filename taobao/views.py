@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from rest_framework import mixins, viewsets, filters
 from django.db import connection
 from django.db.utils import OperationalError
@@ -9,6 +7,8 @@ from taobao.filter import JDHotCommentTagFilter
 from taobao.models import *
 from taobao.serializers import *
 from django_filters.rest_framework import DjangoFilterBackend
+
+from taobao.serializers_pagination import *
 from utils.scrapy_web import ScrapyInfo, scrapy_JD, scrapy_taobao, pie, worldcloud, pie2
 
 
@@ -57,16 +57,6 @@ def search(request):
     return render(request, 'reslut.html', {'products': products})
 
 
-# rest framework
-
-class JDHotCommentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-
-    queryset = JDHotCommentTagItem.objects.all()
-    serializer_class = JDHotCommentSerializer
-
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-
-    filter_class = JDHotCommentTagFilter
 
 
 

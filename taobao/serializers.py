@@ -18,7 +18,7 @@ class JDCommentSummarySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class JDHotCommentSerializer(serializers.ModelSerializer):
+class JDHotTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = JDHotCommentTagItem
         fields = "__all__"
