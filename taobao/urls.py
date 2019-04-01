@@ -2,10 +2,14 @@
 # Author: cmzz
 # @Time :19-3-18
 
-from django.urls import path
-
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from taobao.views import index
-from .views import search, show
+from .views import search, show, JDHotCommentViewSet
+
+router = DefaultRouter()
+router.register('JDHotTag', JDHotCommentViewSet)
+
 
 app_name = 'taobao'
 urlpatterns = [
@@ -14,17 +18,6 @@ urlpatterns = [
     path('', index, name="index"),
     path('search', search, name='search'),
     path('show/<int:id>/', show, name="show"),
-    # path('pdf/', SomeView.as_view(), name="user_pdf"),
-    # path('update/pwd/', UpdatePwdView.as_view(), name="update_pwd"),
-    # path('bespeak', BespeakView.as_view(), name="user_bespeak"),
-    # path('word/',Word.as_view(),name="word"),
-    # path('getSeat/', Seats.as_view(), name='getSeat'),
-    # path(r'choice/', ChoiceTime.as_view(), name= 'choicetime'),
-    # path('send_verification_code/', views.send_verification_code, name='send_verification_code'),
-    # path('forgetpassword/', views.forgetpassword, name='fogetpassword'),
-    # path('update_email/', UpdateEmailView.as_view(), name="update_email"),
-    # path('sendemail_code/', SendEmailCodeView.as_view(), name="sendemail_code"),
-    #注册链接
-    # path('')
-
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(router.urls)),
 ]

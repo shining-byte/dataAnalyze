@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'taobao',
     'rest_framework',
+    'django_filters',
+
 ]
 
 MIDDLEWARE = [

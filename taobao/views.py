@@ -1,10 +1,14 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, filters
 from django.db import connection
 from django.db.utils import OperationalError
-from taobao.models import JDProductsItem, JDCommentItem
+
+from taobao.filter import JDHotCommentTagFilter
+from taobao.models import *
+from taobao.serializers import *
+from django_filters.rest_framework import DjangoFilterBackend
 from utils.scrapy_web import ScrapyInfo, scrapy_JD, scrapy_taobao, pie, worldcloud, pie2
 
 
@@ -36,13 +40,7 @@ def show(request, id):
     mydict['comments'] = comments
     url = JDProductsItem.objects.get(name=keyword).url
     mydict['url'] = url
-    # print(mydict)
-    # mydict['taobaopie'] = taobaopie
-    # mydict2 = dict(mydict, **commentdict)
-    #
-    # print(mydict['mypie'])
-    # # # print(mydict)
-    # print(context['mypie'])
+
     return render(request, 'show.html', mydict)
 
 
@@ -61,11 +59,14 @@ def search(request):
 
 # rest framework
 
-# class ShowListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-#     """
-#     主页面序列化
-#     """
-#     queryset =
+class JDHotCommentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+
+    queryset = JDHotCommentTagItem.objects.all()
+    serializer_class = JDHotCommentSerializer
+
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+
+    filter_class = JDHotCommentTagFilter
 
 
 
