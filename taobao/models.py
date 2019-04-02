@@ -138,7 +138,7 @@ class TaobaoProduct(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.id
+        return self.productid
 
 
 class TaobaoComment(models.Model):

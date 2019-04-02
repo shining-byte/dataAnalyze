@@ -8,9 +8,9 @@ from .models import *
 
 # 过滤器
 class JDHotCommentTagFilter(filters.FilterSet):
-    min_time = filters.NumberFilter(field_name="name", lookup_expr='gte')
-    max_time = filters.NumberFilter(field_name="name", lookup_expr='lte')
+    productid = filters.NumberFilter(field_name="productid", lookup_expr='gte')
+    max_time = filters.NumberFilter(field_name="productid", lookup_expr='lte')
 
     class Meta:
         model = JDHotCommentTagItem
-        fields = ['min_time', 'max_time', ]
+        fields = ['productid',]

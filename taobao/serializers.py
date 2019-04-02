@@ -15,37 +15,37 @@ class JDProductsSerializer(serializers.ModelSerializer):
 class JDCommentSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = JDCommentSummaryItem
-        fields = "__all__"
+        fields = ['commentCount', 'generalCount', 'goodCount', 'poorCount', 'score']
 
 
 class JDHotTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = JDHotCommentTagItem
-        fields = "__all__"
+        fields = ['name', 'count']
 
 
 class JDCommentItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = JDCommentItem
-        fields = "__all__"
+        fields = ['nickname', 'score', 'userLevelName']
 
 
 class JDAfterCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = JDAfterComment
-        fields = "__all__"
+        fields = ['content', ]
 
 
 class TaobaoProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaobaoProduct
-        fields = "__all__"
+        fields = ['productprice', 'producturl']
 
 
 class TaobaoCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaobaoComment
-        fields = "__all__"
+        fields = ['displayUserNick', 'rateContent']
 
 
 class TaobaoTagSerializer(serializers.ModelSerializer):

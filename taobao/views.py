@@ -44,6 +44,8 @@ def show(request, id):
         url = JDProductsItem.objects.get(name=keyword).url
         mydict['url'] = url
         mydict['price'] = price
+        mydict['jdproductid'] = id
+        mydict['taobaoproductid'] = taobaoProductId
 
     return render(request, 'show2.html', mydict)
 

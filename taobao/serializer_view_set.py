@@ -20,8 +20,9 @@ class JDHotTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     serializer_class = JDHotTagSerializer
     pagination_class = JDHotTagPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
 
-    filter_class = JDHotCommentTagFilter
+    # filter_class = JDHotCommentTagFilter
 
 
 class JDProductsViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -30,6 +31,7 @@ class JDProductsViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewse
     serializer_class = JDProductsSerializer
     pagination_class = JDProductPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
 
     # filter_class =
 
@@ -40,6 +42,7 @@ class JDCommentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewset
     serializer_class = JDCommentItemSerializer
     pagination_class = JDCommentPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
 
     # filter_class = JD
 
@@ -50,6 +53,7 @@ class JDCommentSummaryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
     serializer_class = JDCommentSummarySerializer
     pagination_class = JDCommentSumPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
 
     # filter_class = JDHotCommentTagFilter
 
@@ -60,6 +64,7 @@ class TaobaoProductViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, vie
     serializer_class = TaobaoProductSerializer
     pagination_class = TaobaoProductPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
 
     # filter_class = JDHotCommentTagFilter
 
@@ -70,15 +75,19 @@ class TaobaoCommentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, vie
     serializer_class = TaobaoCommentSerializer
     pagination_class = TaobaoCommentPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
+
 
     # filter_class = JDHotCommentTagFilter
 
 
 class TaobaoTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    def __int__(self):
+        self.id = id
 
     queryset = TaobaoTag.objects.all()
     serializer_class = TaobaoTagSerializer
     pagination_class = TaobaoTagPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-
+    filter_fields = ('productid',)
     # filter_class = JDHotCommentTagFilter
