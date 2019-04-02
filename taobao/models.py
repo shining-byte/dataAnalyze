@@ -13,9 +13,6 @@ class ProductName(models.Model):
         verbose_name = '产品名字'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.name
-
 
 class JDProductsItem(models.Model):
     productid =models.CharField('产品id', primary_key=True, max_length=50)  #
@@ -34,8 +31,7 @@ class JDProductsItem(models.Model):
         verbose_name = '京东商品信息'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.name
+
 
 
 class JDCommentSummaryItem(models.Model):
@@ -65,9 +61,6 @@ class JDCommentSummaryItem(models.Model):
         verbose_name = '京东评论总详情'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.id
-
 
 class JDHotCommentTagItem(models.Model):
     productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE)
@@ -78,9 +71,6 @@ class JDHotCommentTagItem(models.Model):
         db_table = 'jdhotcomment'
         verbose_name = '京东热评'
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.id
 
 
 class JDCommentItem(models.Model):
@@ -108,9 +98,6 @@ class JDCommentItem(models.Model):
         verbose_name = '京东评论详情'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.id
-
 
 class JDAfterComment(models.Model):
     productid = models.ForeignKey(JDProductsItem , on_delete=models.CASCADE)
@@ -122,9 +109,6 @@ class JDAfterComment(models.Model):
         verbose_name = '京东追评'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.id
-    
 
 class TaobaoProduct(models.Model):
     productid = models.CharField('产品id', max_length=50, primary_key=True)
@@ -137,23 +121,16 @@ class TaobaoProduct(models.Model):
         verbose_name = '淘宝商品'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.productid
-
 
 class TaobaoComment(models.Model):
     productid = models.ForeignKey(TaobaoProduct, on_delete=models.CASCADE)
     displayUserNick = models.CharField('卖家', max_length=50)
     rateContent = models.TextField('评论')
 
-
     class Meta:
         db_table = 'taobaocomment'
         verbose_name = '淘宝产品评论'
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.id
 
 
 # 淘宝
@@ -167,7 +144,5 @@ class TaobaoTag(models.Model):
         verbose_name = '淘宝产品特性'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.id
 
 

@@ -25,20 +25,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <link href="/static/css/animate.css" rel="stylesheet" type="text/css" media="all">
 <script src="/static/js/wow.min.js"></script>
 <script src="/static/js/echarts.min.js"></script>
-	<script>
-		 new WOW().init();
-         window.onload = function () {
-            $.ajax({
-                type: "get",
-                url : 'http://127.0.0.1:8080/api/TaobaoTag/',
-                dateType: "json",
-                success:function (responseData) {
-                    var data = responseData;
-                    console.log(responseData)
-                }
-            })
-        };
-	</script>
 <!--//end-animate-->
 <!-- chart -->
 <script src="/static/js/Chart.js"></script>
@@ -71,7 +57,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-4 widget">
 						<div class="stats-left ">
 							<h5>Today</h5>
-							<h4>Sales</h4>
+							<h4>亚马逊</h4>
 						</div>
 						<div class="stats-right">
 							<label> 45</label>
@@ -80,8 +66,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="col-md-4 widget states-mdl">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Visitors</h4>
+{#							<h5>Today</h5>#}
+							<h4>淘宝</h4>
 						</div>
 						<div class="stats-right">
 							<label> 80</label>
@@ -90,7 +76,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="col-md-4 widget states-last">
 						<div class="stats-left">
-{#							<h5>Today</h5>#}
+							<h5>{{ taobaoproductid }}</h5>
 							<h4>京东</h4>
 						</div>
 						<div class="stats-right">
@@ -115,7 +101,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="clearfix"> </div>
                     <p hidden id="jdproductid">77</p>
-                    <p hidden id="taobaoproductid">{{ taobaoproductid }}</p>
+                    <p id="taobaoproductid">{{ taobaoproductid }}</p>
 							 <script>
                                  window.onload = function () {
     var myChart = echarts.init(document.getElementById('firstPieChart'));
@@ -123,8 +109,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     myChart.setOption({
         color: ['#ff7d27', '#47b73d', '#fcc36e', '#57a2fd', "#228b22"],//饼图颜色
         title: {
-            text: '信息发布排行',
-            subtext: '纯属虚构',
+{#            text: '信息发布排行',#}
+{#            subtext: '纯属虚构',#}
             x:'center'
         },
         tooltip: {
@@ -212,235 +198,235 @@ loadOneColumn();
 							</script>
 							
 				</div>
-				<div class="row">
-					<div class="col-md-4 stats-info widget">
-						<div class="stats-title">
-							<h4 class="title">Browser Stats</h4>
-						</div>
-						<div class="stats-body">
-							<ul class="list-unstyled">
-								<li>GoogleChrome <span class="pull-right">85%</span>  
-									<div class="progress progress-striped active progress-right">
-										<div class="bar green" style="width:85%;"></div> 
-									</div>
-								</li>
-								<li>Firefox <span class="pull-right">35%</span>  
-									<div class="progress progress-striped active progress-right">
-										<div class="bar yellow" style="width:35%;"></div>
-									</div>
-								</li>
-								<li>Internet Explorer <span class="pull-right">78%</span>  
-									<div class="progress progress-striped active progress-right">
-										<div class="bar red" style="width:78%;"></div>
-									</div>
-								</li>
-								<li>Safari <span class="pull-right">50%</span>  
-									<div class="progress progress-striped active progress-right">
-										<div class="bar blue" style="width:50%;"></div>
-									</div>
-								</li>
-								<li>Opera <span class="pull-right">80%</span>  
-									<div class="progress progress-striped active progress-right">
-										<div class="bar light-blue" style="width:80%;"></div>
-									</div>
-								</li>
-								<li class="last">Others <span class="pull-right">60%</span>  
-									<div class="progress progress-striped active progress-right">
-										<div class="bar orange" style="width:60%;"></div>
-									</div>
-								</li> 
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-8 stats-info stats-last widget-shadow">
-						<table class="table stats-table ">
-							<thead>
-								<tr>
-									<th>S.NO</th>
-									<th>PRODUCT</th>
-									<th>STATUS</th>
-									<th>PROGRESS</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Lorem ipsum</td>
-									<td><span class="label label-success">In progress</span></td>
-									<td><h5>85% <i class="fa fa-level-up"></i></h5></td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Aliquam</td>
-									<td><span class="label label-warning">New</span></td>
-									<td><h5>35% <i class="fa fa-level-up"></i></h5></td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Lorem ipsum</td>
-									<td><span class="label label-danger">Overdue</span></td>
-									<td><h5  class="down">40% <i class="fa fa-level-down"></i></h5></td>
-								</tr>
-								<tr>
-									<th scope="row">4</th>
-									<td>Aliquam</td>
-									<td><span class="label label-info">Out of stock</span></td>
-									<td><h5>100% <i class="fa fa-level-up"></i></h5></td>
-								</tr>
-								<tr>
-									<th scope="row">5</th>
-									<td>Lorem ipsum</td>
-									<td><span class="label label-success">In progress</span></td>
-									<td><h5 class="down">10% <i class="fa fa-level-down"></i></h5></td>
-								</tr>
-								<tr>
-									<th scope="row">6</th>
-									<td>Aliquam</td>
-									<td><span class="label label-warning">New</span></td>
-									<td><h5>38% <i class="fa fa-level-up"></i></h5></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="row">
-					<div class="col-md-8 map widget-shadow">
-						<h4 class="title">Visitors Map </h4>
-						<div class="map_container"><div id="vmap" style="width: 100%; height: 354px;"></div></div>
-						<!--map js-->
-						<link href="/static/css/jqvmap.css" rel='stylesheet' type='text/css' />
-						<script src="/static/js/jquery.vmap.js"></script>
-						<script src="/static/js/jquery.vmap.sampledata.js" type="text/javascript"></script>
-						<script src="/static/js/jquery.vmap.world.js" type="text/javascript"></script>
-						<script type="text/javascript">
-							jQuery(document).ready(function() {
-								jQuery('#vmap').vectorMap({
-									map: 'world_en',
-									backgroundColor: '#fff',
-									color: '#696565',
-									hoverOpacity: 0.8,
-									selectedColor: '#696565',
-									enableZoom: true,
-									showTooltip: true,
-									values: sample_data,
-									scaleColors: ['#585858', '#696565'],
-									normalizeFunction: 'polynomial'
-								});
-							});
-						</script>
-						<!-- //map js -->
-					</div>
-					<div class="col-md-4 social-media widget-shadow">
-						<div class="wid-social twitter">
-							<div class="social-icon">
-								<i class="fa fa-twitter text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">3.1 K</h3>
-								<h4 class="counttype text-light">Tweets</h4>
-							</div>
-						</div>
-						<div class="wid-social google-plus">
-							<div class="social-icon">
-								<i class="fa fa-google-plus text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">523</h3>
-								<h4 class="counttype text-light">Circles</h4>
-							</div>
-						</div>
-						<div class="wid-social facebook">
-							<div class="social-icon">
-								<i class="fa fa-facebook text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1.06K</h3>
-								<h4 class="counttype text-light">Likes</h4>
-							</div>
-						</div>
-						<div class="wid-social dribbble">
-							<div class="social-icon">
-								<i class="fa fa-dribbble text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1.6 K</h3>
-								<h4 class="counttype text-light">Subscribers</h4>
-							</div>
-						</div>
-						<div class="wid-social vimeo">
-							<div class="social-icon">
-								<i class="fa fa-vimeo-square text-light icon-xlg"> </i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">2.1 m</h3>
-								<h4 class="counttype text-light">Contacts</h4>
-							</div>
-						</div>
-						<div class="wid-social xing">
-							<div class="social-icon">
-								<i class="fa fa-xing text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">2525</h3>
-								<h4 class="counttype text-light">Connections</h4>
-							</div>
-						</div>
-						<div class="wid-social flickr">
-							<div class="social-icon">
-								<i class="fa fa-android text-light icon-xlg"></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1221</h3>
-								<h4 class="counttype text-light">Media</h4>
-							</div>
-						</div>
-						<div class="wid-social yahoo">
-							<div class="social-icon">
-								<i class="fa fa-yahoo text-light icon-xlg"> Y!</i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">2525</h3>
-								<h4 class="counttype text-light">Connections</h4>
-							</div>
-						</div>
-						<div class="wid-social rss">
-							<div class="social-icon">
-								<i class="fa fa-rss text-light icon-xlg"></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1523</h3>
-								<h4 class="counttype text-light">Subscribers</h4>
-							</div>
-						</div>
-						<div class="wid-social youtube">
-							<div class="social-icon">
-								<i class="fa fa-youtube text-light icon-xlg"></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1523</h3>
-								<h4 class="counttype text-light">Subscribers</h4>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="row calender widget-shadow">
-					<h4 class="title">Calender</h4>
-					<div class="cal1">
-						
-					</div>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-		<!--footer-->
-		<div class="footer">
-		   <p>Copyright &copy; 2016.Company name All rights reserved.</p>
-		</div>
-        <!--//footer-->
-	</div>
+{#				<div class="row">#}
+{#					<div class="col-md-4 stats-info widget">#}
+{#						<div class="stats-title">#}
+{#							<h4 class="title">Browser Stats</h4>#}
+{#						</div>#}
+{#						<div class="stats-body">#}
+{#							<ul class="list-unstyled">#}
+{#								<li>GoogleChrome <span class="pull-right">85%</span>  #}
+{#									<div class="progress progress-striped active progress-right">#}
+{#										<div class="bar green" style="width:85%;"></div> #}
+{#									</div>#}
+{#								</li>#}
+{#								<li>Firefox <span class="pull-right">35%</span>  #}
+{#									<div class="progress progress-striped active progress-right">#}
+{#										<div class="bar yellow" style="width:35%;"></div>#}
+{#									</div>#}
+{#								</li>#}
+{#								<li>Internet Explorer <span class="pull-right">78%</span>  #}
+{#									<div class="progress progress-striped active progress-right">#}
+{#										<div class="bar red" style="width:78%;"></div>#}
+{#									</div>#}
+{#								</li>#}
+{#								<li>Safari <span class="pull-right">50%</span>  #}
+{#									<div class="progress progress-striped active progress-right">#}
+{#										<div class="bar blue" style="width:50%;"></div>#}
+{#									</div>#}
+{#								</li>#}
+{#								<li>Opera <span class="pull-right">80%</span>  #}
+{#									<div class="progress progress-striped active progress-right">#}
+{#										<div class="bar light-blue" style="width:80%;"></div>#}
+{#									</div>#}
+{#								</li>#}
+{#								<li class="last">Others <span class="pull-right">60%</span>  #}
+{#									<div class="progress progress-striped active progress-right">#}
+{#										<div class="bar orange" style="width:60%;"></div>#}
+{#									</div>#}
+{#								</li> #}
+{#							</ul>#}
+{#						</div>#}
+{#					</div>#}
+{#					<div class="col-md-8 stats-info stats-last widget-shadow">#}
+{#						<table class="table stats-table ">#}
+{#							<thead>#}
+{#								<tr>#}
+{#									<th>S.NO</th>#}
+{#									<th>PRODUCT</th>#}
+{#									<th>STATUS</th>#}
+{#									<th>PROGRESS</th>#}
+{#								</tr>#}
+{#							</thead>#}
+{#							<tbody>#}
+{#								<tr>#}
+{#									<th scope="row">1</th>#}
+{#									<td>Lorem ipsum</td>#}
+{#									<td><span class="label label-success">In progress</span></td>#}
+{#									<td><h5>85% <i class="fa fa-level-up"></i></h5></td>#}
+{#								</tr>#}
+{#								<tr>#}
+{#									<th scope="row">2</th>#}
+{#									<td>Aliquam</td>#}
+{#									<td><span class="label label-warning">New</span></td>#}
+{#									<td><h5>35% <i class="fa fa-level-up"></i></h5></td>#}
+{#								</tr>#}
+{#								<tr>#}
+{#									<th scope="row">3</th>#}
+{#									<td>Lorem ipsum</td>#}
+{#									<td><span class="label label-danger">Overdue</span></td>#}
+{#									<td><h5  class="down">40% <i class="fa fa-level-down"></i></h5></td>#}
+{#								</tr>#}
+{#								<tr>#}
+{#									<th scope="row">4</th>#}
+{#									<td>Aliquam</td>#}
+{#									<td><span class="label label-info">Out of stock</span></td>#}
+{#									<td><h5>100% <i class="fa fa-level-up"></i></h5></td>#}
+{#								</tr>#}
+{#								<tr>#}
+{#									<th scope="row">5</th>#}
+{#									<td>Lorem ipsum</td>#}
+{#									<td><span class="label label-success">In progress</span></td>#}
+{#									<td><h5 class="down">10% <i class="fa fa-level-down"></i></h5></td>#}
+{#								</tr>#}
+{#								<tr>#}
+{#									<th scope="row">6</th>#}
+{#									<td>Aliquam</td>#}
+{#									<td><span class="label label-warning">New</span></td>#}
+{#									<td><h5>38% <i class="fa fa-level-up"></i></h5></td>#}
+{#								</tr>#}
+{#							</tbody>#}
+{#						</table>#}
+{#					</div>#}
+{#					<div class="clearfix"> </div>#}
+{#				</div>#}
+{#				<div class="row">#}
+{#					<div class="col-md-8 map widget-shadow">#}
+{#						<h4 class="title">Visitors Map </h4>#}
+{#						<div class="map_container"><div id="vmap" style="width: 100%; height: 354px;"></div></div>#}
+{#						<!--map js-->#}
+{#						<link href="/static/css/jqvmap.css" rel='stylesheet' type='text/css' />#}
+{#						<script src="/static/js/jquery.vmap.js"></script>#}
+{#						<script src="/static/js/jquery.vmap.sampledata.js" type="text/javascript"></script>#}
+{#						<script src="/static/js/jquery.vmap.world.js" type="text/javascript"></script>#}
+{#						<script type="text/javascript">#}
+{#							jQuery(document).ready(function() {#}
+{#								jQuery('#vmap').vectorMap({#}
+{#									map: 'world_en',#}
+{#									backgroundColor: '#fff',#}
+{#									color: '#696565',#}
+{#									hoverOpacity: 0.8,#}
+{#									selectedColor: '#696565',#}
+{#									enableZoom: true,#}
+{#									showTooltip: true,#}
+{#									values: sample_data,#}
+{#									scaleColors: ['#585858', '#696565'],#}
+{#									normalizeFunction: 'polynomial'#}
+{#								});#}
+{#							});#}
+{#						</script>#}
+{#						<!-- //map js -->#}
+{#					</div>#}
+{#					<div class="col-md-4 social-media widget-shadow">#}
+{#						<div class="wid-social twitter">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-twitter text-light icon-xlg "></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">3.1 K</h3>#}
+{#								<h4 class="counttype text-light">Tweets</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social google-plus">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-google-plus text-light icon-xlg "></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">523</h3>#}
+{#								<h4 class="counttype text-light">Circles</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social facebook">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-facebook text-light icon-xlg "></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">1.06K</h3>#}
+{#								<h4 class="counttype text-light">Likes</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social dribbble">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-dribbble text-light icon-xlg "></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">1.6 K</h3>#}
+{#								<h4 class="counttype text-light">Subscribers</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social vimeo">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-vimeo-square text-light icon-xlg"> </i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">2.1 m</h3>#}
+{#								<h4 class="counttype text-light">Contacts</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social xing">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-xing text-light icon-xlg "></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">2525</h3>#}
+{#								<h4 class="counttype text-light">Connections</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social flickr">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-android text-light icon-xlg"></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">1221</h3>#}
+{#								<h4 class="counttype text-light">Media</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social yahoo">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-yahoo text-light icon-xlg"> Y!</i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">2525</h3>#}
+{#								<h4 class="counttype text-light">Connections</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social rss">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-rss text-light icon-xlg"></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">1523</h3>#}
+{#								<h4 class="counttype text-light">Subscribers</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="wid-social youtube">#}
+{#							<div class="social-icon">#}
+{#								<i class="fa fa-youtube text-light icon-xlg"></i>#}
+{#							</div>#}
+{#							<div class="social-info">#}
+{#								<h3 class="number_counter bold count text-light start_timer counted">1523</h3>#}
+{#								<h4 class="counttype text-light">Subscribers</h4>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="clearfix"> </div>#}
+{#					</div>#}
+{#					<div class="clearfix"> </div>#}
+{#				</div>#}
+{#				<div class="row calender widget-shadow">#}
+{#					<h4 class="title">Calender</h4>#}
+{#					<div class="cal1">#}
+{#						#}
+{#					</div>#}
+{#				</div>#}
+{#				<div class="clearfix"> </div>#}
+{#			</div>#}
+{#		</div>#}
+{#		<!--footer-->#}
+{#		<div class="footer">#}
+{#		   <p>Copyright &copy; 2016.Company name All rights reserved.</p>#}
+{#		</div>#}
+{#        <!--//footer-->#}
+{#	</div>#}
 	<!-- Classie -->
 		<script src="/static/js/classie.js"></script>
 		<script>

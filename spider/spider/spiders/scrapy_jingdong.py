@@ -17,6 +17,7 @@ shop_id = 1
 # from myFirstScrapy
 comment_url = 'https://club.jd.com/comment/productPageComments.action?productId=%s&score=0&sortType=6&page=%s&pageSize=10'
 
+
 class JDSpider(scrapy.Spider):
     name = 'JD'
     allowed_domains = ['jd.com']
@@ -25,7 +26,7 @@ class JDSpider(scrapy.Spider):
     def parse(self, response):
         selector = Selector(response)
 
-        productsItem = ProductsItem()
+        productsItem = JDProductsItem()
         price = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/strong/i/text()').extract()[:5]
         name = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/font/text()').extract()[:5]
         desc = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/text()').extract()[:5]
@@ -35,6 +36,10 @@ class JDSpider(scrapy.Spider):
         url = ['https:' + i for i in idurl]
         category = selector.xpath('//*[@id="J_selector"]/div[1]/div/div[2]/div[1]/ul/li[1]/a/text()').extract()
         for i in range(len(price)):
+            prdouctname = ProductName()
+            prdouctname['name'] = name[i]
+            prdouctname['jdProductId'] = id[i]
+            yield prdouctname
             productsItem['productid'] = id[i]
             productsItem['category'] = category
             productsItem['description'] = desc[i]
@@ -159,32 +164,32 @@ class JDSpider(scrapy.Spider):
 
         product_id = response.meta['product_id']
         # 评论总情况
-        commentSummaryItem = CommentSummaryItem()
+        commentSummaryItem = JDCommentSummaryItem()
         commentSummary = data.get('productCommentSummary')
-        commentSummaryItem['productid_id'] = commentSummary.get('productId')
+        commentSummaryItem['productid'] = commentSummary.get('productId')
         commentSummaryItem['afterCount'] = commentSummary.get('afterCount')
         commentSummaryItem['averageScore'] = commentSummary.get('averageScore')
         commentSummaryItem['commentCount'] = commentSummary.get('commentCount')
         commentSummaryItem['defaultGoodCount'] = commentSummary.get('defaultGoodCount')
         commentSummaryItem['generalCount'] = commentSummary.get('generalCount')
-        commentSummaryItem['generalRate'] = commentSummary.get('generalRate')
+        # commentSummaryItem['generalRate'] = commentSummary.get('generalRate')
         commentSummaryItem['goodCount'] = commentSummary.get('goodCount')
-        commentSummaryItem['goodRate'] = commentSummary.get('goodRate')
+        # commentSummaryItem['goodRate'] = commentSummary.get('goodRate')
         commentSummaryItem['imageListCount'] = data.get('imageListCount')
         commentSummaryItem['poorCount'] = commentSummary.get('poorCount')
-        commentSummaryItem['poorRate'] = commentSummary.get('poorRate')
+        # commentSummaryItem['poorRate'] = commentSummary.get('poorRate')
         # commentSummaryItem['showCount'] = commentSummary.get('showCount')
         commentSummaryItem['score'] = data.get('score')
         # commentSummaryItem['soType'] = data.get('soType')
         yield commentSummaryItem
             # 商品特性
         for hotComment in data['hotCommentTagStatistics']:
-            hotCommentTagItem = HotCommentTagItem()
-            hotCommentTagItem['_id'] = hotComment.get('id')
+            hotCommentTagItem = JDHotCommentTagItem()
+            hotCommentTagItem['productid'] = commentSummary.get('productId')
             hotCommentTagItem['count'] = hotComment.get('count')
             hotCommentTagItem['name'] = hotComment.get('name')
-            hotCommentTagItem['productId'] = product_id
-            hotCommentTagItem['type'] = hotComment.get('type')
+            # hotCommentTagItem['productId'] = product_id
+            # hotCommentTagItem['type'] = hotComment.get('type')
             yield hotCommentTagItem
 
         for comment_item in data['comments']:
@@ -193,24 +198,25 @@ class JDSpider(scrapy.Spider):
             if(len(comment_item.get('content'))<=6):
                 pass
             else:
-                comment = CommentItem()
+                comment = JDCommentItem()
+                # comment[''] =
                 # comment['shop_id'] = shop_id
-                comment['userid'] = comment_item.get('id')
+                # comment['userid'] = comment_item.get('id')
                 comment['content'] = comment_item.get('content')
-                comment['creationTime'] = comment_item.get('creationTime')
-                comment['days'] = comment_item.get('days')
-                comment['firstCategory'] = comment_item.get('firstCategory')
-                comment['imageCount'] = comment_item.get('imageCount')
+                # comment['creationTime'] = comment_item.get('creationTime')
+                # comment['days'] = comment_item.get('days')
+                # comment['firstCategory'] = comment_item.get('firstCategory')
+                # comment['imageCount'] = comment_item.get('imageCount')
                 comment['nickname'] = comment_item.get('nickname')
-                comment['productColor'] = comment_item.get('productColor')
+                # comment['productColor'] = comment_item.get('productColor')
                 comment['productId'] = product_id
-                comment['productSize'] = comment_item.get('productSize')
-                comment['referenceId'] = comment_item.get('referenceId')
-                comment['referenceName'] = comment_item.get('referenceName')
+                # comment['productSize'] = comment_item.get('productSize')
+                # comment['referenceId'] = comment_item.get('referenceId')
+                # comment['referenceName'] = comment_item.get('referenceName')
                 comment['score'] = comment_item.get('score')
-                comment['secondCategory'] = comment_item.get('secondCategory')
-                comment['thirdCategory'] = comment_item.get('thirdCategory')
-                comment['userLevelId'] = comment_item.get('userLevelId')
+                # comment['secondCategory'] = comment_item.get('secondCategory')
+                # comment['thirdCategory'] = comment_item.get('thirdCategory')
+                # comment['userLevelId'] = comment_item.get('userLevelId')
                 comment['userLevelName'] = comment_item.get('userLevelName')
 
                 yield comment
@@ -219,7 +225,7 @@ class JDSpider(scrapy.Spider):
         # next page
         max_page = int(data.get('maxPage', '1'))
         if max_page > 60:
-            max_page = 60
+            max_page = 30
         for j in [1, 2, 3, 5]:
             for i in range(1, max_page):
                 if j == 5:
@@ -229,7 +235,7 @@ class JDSpider(scrapy.Spider):
                     # text1 = re.compile(r'[(](.*?)[)];', re.S).findall(text.text)
                     # jsontext = text['comments'][0]['afterUserComment']
                     # global aftercomment
-                    aftercomment = AfterCommentItem()
+                    aftercomment = JDAfterComment()
                     # for comment_item in data['comments']:
                     for after in text['comments']:
 
@@ -240,7 +246,7 @@ class JDSpider(scrapy.Spider):
                             pass
                         else:
                             aftercomment['commentid'] = after['id']
-                            aftercomment['product_id'] = after['afterUserComment']['productId']
+                            aftercomment['productid'] = after['afterUserComment']['productId']
                             aftercomment['content'] = after['afterUserComment']['hAfterUserComment']['content']
                             yield aftercomment
                 url ='https://club.jd.com/comment/productPageComments.action?productId=%s&score=%s&sortType=6&page=%s&pageSize=10' % (product_id, j, str(i))
@@ -265,24 +271,25 @@ class JDSpider(scrapy.Spider):
             elif (len(comment_item.get('content')) <= 6):
                 pass
             else:
-                comment = CommentItem()
-                # comment['shop_id'] = shop_id
-                comment['userid'] = comment_item.get('id')
-                comment['content'] = comment_item.get('content')
-                comment['creationTime'] = comment_item.get('creationTime')
-                comment['days'] = comment_item.get('days')
-                comment['firstCategory'] = comment_item.get('firstCategory')
-                comment['imageCount'] = comment_item.get('imageCount')
-                comment['nickname'] = comment_item.get('nickname')
-                comment['productColor'] = comment_item.get('productColor')
+                comment = JDCommentItem()
                 comment['productId'] = product_id
-                comment['productSize'] = comment_item.get('productSize')
-                comment['referenceId'] = comment_item.get('referenceId')
-                comment['referenceName'] = comment_item.get('referenceName')
+                # comment['shop_id'] = shop_id
+                # comment['userid'] = comment_item.get('id')
+                comment['content'] = comment_item.get('content')
+                # comment['creationTime'] = comment_item.get('creationTime')
+                # comment['days'] = comment_item.get('days')
+                # comment['firstCategory'] = comment_item.get('firstCategory')
+                # comment['imageCount'] = comment_item.get('imageCount')
+                comment['nickname'] = comment_item.get('nickname')
+                # comment['productColor'] = comment_item.get('productColor')
+                # comment['productId'] = product_id
+                # comment['productSize'] = comment_item.get('productSize')
+                # comment['referenceId'] = comment_item.get('referenceId')
+                # comment['referenceName'] = comment_item.get('referenceName')
                 comment['score'] = comment_item.get('score')
-                comment['secondCategory'] = comment_item.get('secondCategory')
-                comment['thirdCategory'] = comment_item.get('thirdCategory')
-                comment['userLevelId'] = comment_item.get('userLevelId')
+                # comment['secondCategory'] = comment_item.get('secondCategory')
+                # comment['thirdCategory'] = comment_item.get('thirdCategory')
+                # comment['userLevelId'] = comment_item.get('userLevelId')
                 comment['userLevelName'] = comment_item.get('userLevelName')
                 yield comment
 

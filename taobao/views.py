@@ -13,10 +13,13 @@ def index(request):
 def show(request, id):
     mydict = {}
     if(ProductName.objects.filter(jdProductId=id)):
-        print('--------------------------------')
-        pass
+        taobaoProductId = request.session['taobaoproductId']
+        mydict['jdproductid'] = id
+        mydict['taobaoproductId'] = taobaoProductId
+        print(mydict)
+        return render(request, 'show2.html', mydict)
+
     else:
-        print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         keyword = request.session['keyword']
         taobaoProductId = request.session['taobaoproductId']
         # 初始化类
@@ -44,7 +47,6 @@ def show(request, id):
         url = JDProductsItem.objects.get(name=keyword).url
         mydict['url'] = url
         mydict['price'] = price
-        mydict['jdproductid'] = id
         mydict['taobaoproductid'] = taobaoProductId
 
     return render(request, 'show2.html', mydict)
