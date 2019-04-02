@@ -39,7 +39,7 @@ class JDProductsItem(models.Model):
 
 
 class JDCommentSummaryItem(models.Model):
-    productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE)
+    productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE, primary_key=True)
     # productname = models.ForeignKey(ProductName, on_delete=models.CASCADE)
     afterCount = models.IntegerField('追加评论', blank=True)
     averageScore = models.IntegerField('平均评分', blank=True)
@@ -59,7 +59,6 @@ class JDCommentSummaryItem(models.Model):
     # showCount = models.IntegerField('待定', blank=True)
 
     # soType = models.IntegerField('待定', blank=True)
-
 
     class Meta:
         db_table = 'jdcommentsummary'

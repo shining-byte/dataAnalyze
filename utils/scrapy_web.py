@@ -10,7 +10,7 @@ import subprocess
 from pyecharts import Line3D, Pie, WordCloud
 
 from taobao.models import JDProductsItem, JDCommentItem, ProductName, JDHotCommentTagItem, TaobaoTag, TaobaoProduct, \
-    TaobaoComment
+    TaobaoComment, JDCommentSummaryItem
 import requests
 from scrapy.selector import Selector
 
@@ -41,16 +41,25 @@ class ScrapyInfo:
         self.piecount.append(commentSummary['generalCount'])
         self.piecount.append(commentSummary['goodCount'] - commentSummary['defaultGoodCount'])
         self.piecount.append(commentSummary['poorCount'])
-        pool = multiprocessing.Pool(multiprocessing.cpu_count())
+        try:
+            JDCommentSummaryItem.objects.create(afterCount=commentSummary['afterCount'], averageScore=commentSummary['averageScore'],
+                                            commentCount=commentSummary['commentCount'], defaultGoodCount=commentSummary['defaultGoodCount'],
+                                            generalCount=commentSummary['generalCount'], goodCount=commentSummary['goodCount'],
+                                            imageListCount=data['imageListCount'], poorCount=commentSummary['poorCount'],
+                                            score=data['score'], productid_id=self.jdid).save()
+        except Exception as e:
+            print(e)
+        # pool = multiprocessing.Pool(multiprocessing.cpu_count())
         for hotComment in data['hotCommentTagStatistics']:
             name = hotComment['name']
             count = hotComment['count']
+            saveJDhotTag(name, count, self.jdid)
             self.woldname.append(name)
             self.worldcount.append(count)
-            pool.apply_async(saveJDhotTag, (name, count, self.jdid))
+            # pool.apply_async(saveJDhotTag, (name, count, self.jdid))
 
-        pool.close()
-        pool.join()
+        # pool.close()
+        # pool.join()
         # pool2 = multiprocessing.Pool(multiprocessing.cpu_count())
         for comment_item in data['comments']:
             if (comment_item.get('content') == '此用户未及时填写评价内容，系统默认评价！') or comment_item.get('content' == '此用户未填写评价内容'):
@@ -138,7 +147,7 @@ def scrapy_JD(keyword):
         ProductName.objects.filter(name=keyword).update(jdProductId=id[0])
 
         product = JDProductsItem.objects.create(productid=id[0], category=category[0], description=desc,
-                                                          imgurl=imgurl, reallyPrice=price, url=url[0], name_id=keyword)
+                                            imgurl=imgurl, reallyPrice=price, url=url[0], name_id=keyword)
         product.save()
             #     product.save()
     except Exception as e:
@@ -222,16 +231,16 @@ def worldcloud(*args):
 
 
 # 云词
-def worldcloud(*args):
-    wordcloud = WordCloud(width=1300, height=620)
-    # 传入两个列表
-    wordcloud.add("", args[0], args[1], word_size_range=[20, 100])
-    word = dict(
-        myworldcloud2=wordcloud.render_embed(),
-        host=REMOTE_HOST,
-        script_list=wordcloud.get_js_dependencies()
-    )
-    return word
+# def worldcloud(*args):
+#     wordcloud = WordCloud(width=1300, height=620)
+#     # 传入两个列表
+#     wordcloud.add("", args[0], args[1], word_size_range=[20, 100])
+#     word = dict(
+#         myworldcloud2=wordcloud.render_embed(),
+#         host=REMOTE_HOST,
+#         script_list=wordcloud.get_js_dependencies()
+#     )
+#     return word
 
 def line3d(self):
     _data = []

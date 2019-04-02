@@ -51,4 +51,4 @@ class TaobaoCommentSerializer(serializers.ModelSerializer):
 class TaobaoTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaobaoTag
-        fields = "__all__"
+        fields = ['tagname', 'tagcount']

@@ -27,12 +27,12 @@
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                     <div class="tm-media-text-container">
 {#                        <h3 class="tm-media-title tm-gray-text">Interdum et malesuada fames</h3>#}
-                                                                {{ myworldcloud|safe }}
-                                {% for conment in comments %}
+                        {{ myworldcloud|safe }}
+                                {% for conment in jdcomments %}
                         <p class="tm-media-description tm-gray-text-2">
                            （{{ conment.userLevelName }}）买家：{{ conment.nickname }} 说：“{{ conment.content }}”</p>
                         {% endfor %}
-                        <a href="{{ url }}">购买链接</a>
+                        <a href="{{ url }}">京东价格{{ price }}购买链接</a>
                     </div>
                 </div>
             </div>
@@ -70,9 +70,9 @@
                     <div class="tm-media-text-container">
 {#                        <h3 class="tm-media-title tm-gray-text">Interdum et malesuada fames</h3>#}
                                                                 {{ myworldcloud|safe }}
-                                {% for conment in comments %}
+                                {% for conment in taobaocomments %}
                         <p class="tm-media-description tm-gray-text-2">
-                           {{ conment.userLevelName }}买家：{{ conment.nickname }}说：“{{ conment.content }}”</p>
+                        买家：{{ conment.displayUserNick }}说：“{{ conment.rateContent }}”</p>
                         {% endfor %}
                     </div>
                 </div>
@@ -81,4 +81,17 @@
 
 
         </div>
+    <script>
+        window.onload = function () {
+            $.ajax({
+                type: "get",
+                url : 'http://127.0.0.1:8080/api/TaobaoTag/',
+                dateType: "json",
+                success:function (responseData) {
+                    var data = responseData;
+                    console.log(responseData)
+                }
+            })
+        };
+        </script>
 {% endblock %}
