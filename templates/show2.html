@@ -98,7 +98,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">苏宁电商情况</h4>
 						<div id="suning" style= "height:300px; width:400px;"> </div>
-                        <p hidden id="suning"></p>
+{#                        <p hidden id="suning"></p>#}
+                        <div class="tm-media-text-container">
+                                {% for comment in suningcomments %}
+                        <p class="tm-media-description tm-gray-text-2">{{ comment.levelName }}
+                        买家：{{ comment.nickName }}说：“{{ comment.content }}”</p>
+                                    <br>
+                        {% endfor %}
+                    </div>
 					</div>
 {#                    第二个是淘宝#}
 					<div class="col-md-4 charts-grids widget states-mdl">
@@ -107,7 +114,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <div class="tm-media-text-container">
                                 {% for comment in taobaocomments %}
                         <p class="tm-media-description tm-gray-text-2">
-                        买家：{{ conment.displayUserNick }}说：“{{ comment.rateContent }}”</p>
+                        买家：{{ comment.displayUserNick }}说：“{{ comment.rateContent }}”</p>
                                     <br>
                         {% endfor %}
                     </div>
@@ -119,7 +126,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <div class="tm-media-text-container">
                                 {% for comment in jdcomments %}
                         <p class="tm-media-description tm-gray-text-2">{{ comment.userLevelName }}
-                        买家：{{ conment.nickname }}说：“{{ comment.content }}”</p>
+                        买家：{{ comment.nickname }}说：“{{ comment.content }}”</p>
                                     <br>
                         {% endfor %}
                     </div>
@@ -191,9 +198,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 }]        
                             });
                             jd.showLoading();    //数据加载完之前先显示一段简单的loading动画
-                            var jdnamelist = [];    //类别数组（用于存放饼图的类别）
-                            var jdcountlist = [];
-                            var jddata = [];
                             $.ajax({
                                 type: 'get',
                          url: 'http://94.191.87.62:8090/api/JDCommntSum/?productid='+jdid.innerText,//请求数据的地址
@@ -362,44 +366,40 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 }]        
                             });
                             suning.showLoading();    //数据加载完之前先显示一段简单的loading动画
-                            var taobaonamelist = [];    //类别数组（用于存放饼图的类别）
-                            var taobaovalueslist = [];
-                            var datajson = [];
+                            var labelName = [];    //类别数组（用于存放饼图的类别）
+                            var labelCnt = [];
+                            var suningdata = [];
                             $.ajax({
                                 type: 'get',
-                                url: 'http://94.191.87.62:8090/api/TaobaoTag/?format=json',//请求数据的地址
+                                url: 'http://94.191.87.62:8090/api/SuNingTag/?productid='+suningid.innerText,//请求数据的地址
                                 dataType: "json",        //返回数据形式为json
                                 success: function (result) {
                                     //请求成功时执行该函数内容，result即为服务器返回的json对象
-                        {#            var data = result;#}
-                        {#            for (var i= 0;i<data.results.length; i++){#}
-                        {#                taobaonamelist.push(data['results'][i]['tagname']);#}
-                        {#                taobaovalueslist.push(data['results'][i]['tagcount']);#}
-                        {#            }#}
-                                    {#console.log(taobaonamelist);#}
-                        {#            for(var i=0; i<taobaonamelist.length;i++){#}
-                        {#            var json = {};#}
-                        {#                for (var j =0; j<taobaovalueslist.length;j++){#}
-                        {#                    if(i==j){#}
-                        {#                        json.value = taobaovalueslist[j][0];#}
-                        {#                        json.name = taobaonamelist[i];#}
-                        {#                        datajson.push(json)#}
-                        {#                    }#}
-                        {#                }#}
-                        {#            }#}
+                                    var data = result;
+                                    for (var i= 0;i<data.results.length; i++){
+                                        labelName.push(data['results'][i]['labelName']);
+                                        labelCnt.push(data['results'][i]['labelCnt']);
+                                    }
+                                    console.log(labelName);
+                                    console.log(labelCnt);
+                                    for(var i=0; i<labelName.length;i++){
+                                    var json = {};
+                                        for (var j =0; j<labelCnt.length;j++){
+                                            if(i==j){
+                                                json.value = labelCnt[j];
+                                                json.name = labelName[j];
+                                                suningdata.push(json)
+                                            }
+                                        }
+                                    }
+                                    console.log(suningdata);
                                     suning.hideLoading();    //隐藏加载动画
                                     suning.setOption({        //加载数据图表                
                                         legend: {                    
-                                            data: taobaonamelist
+                                            data: labelName
                                         },
                                         series: [{                    
-                                            data: [
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
-            ],
+                                            data: suningdata
                                         }]
                                     });
                                 },

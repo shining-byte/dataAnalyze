@@ -3,14 +3,13 @@
 # @Time :19-3-19
 import re
 import requests
-from scrapy import Selector
-keyword = '小米9'
-url = 'https://search.suning.com/{}/'.format(keyword)
+url = '''https://search.suning.com/{}/'''.format('小米9')
 
-response = requests.get(url=url)
-selector = Selector(response)
-# li = selector.xpath('//*[@id="product-list"]/ul').extract()[0]
-# print(li)
-print(response.text)
-# li = re.compile('<li doctype="1".*?class=item-wrap.*?>(.*?)</li>').findall(response.content)
-# print(li)
+r = requests.get(url=url).text
+
+'''<span class="def-price" datasku="10887042490|||||0000000000">
+<i>¥</i>2999<i>.00</i></span>'''
+
+# text = re.compile('''<span class="def-price" datasku=".*?"><i>¥</i>(.*?)<i>.00</i></span>''', re.S).findall(r)
+# print(text)
+print(r)

@@ -91,3 +91,19 @@ class TaobaoTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewset
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     filter_fields = ('productid',)
     # filter_class = JDHotCommentTagFilter
+
+
+class SuNingTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset =  SuNingTag.objects.all()
+    serializer_class = SuNingTagSerializer
+    pagination_class = SuNingTagPagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)
+
+
+class SuNingCommentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset = SuNingComment.objects.all()
+    serializer_class = SuNingCommentSerializer
+    pagination_class = SuNingTagPagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = ('productid',)

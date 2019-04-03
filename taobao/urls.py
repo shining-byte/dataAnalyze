@@ -16,6 +16,8 @@ router.register('JDCommntSum', JDCommentSummaryViewSet)
 router.register('TaobaoProduct', TaobaoProductViewSet)
 router.register('TaobaoComment', TaobaoCommentViewSet)
 router.register('TaobaoTag', TaobaoTagViewSet)
+router.register('SuNingTag', SuNingTagViewSet)
+router.register('SuNingComment', SuNingCommentViewSet)
 
 
 app_name = 'taobao'

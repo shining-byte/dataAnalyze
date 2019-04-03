@@ -144,4 +144,38 @@ class TaobaoTag(models.Model):
         verbose_name_plural = verbose_name
 
 
+class SuNingProduct(models.Model):
+    productid = models.CharField('苏宁商品id', max_length=50)
+    producturl = models.URLField('购买地址',)
+
+    class Meta:
+        db_table = 'suningproduct'
+        verbose_name = '苏宁商品'
+        verbose_name_plural = verbose_name
+
+
+class SuNingTag(models.Model):
+    productid = models.CharField('商品id', max_length=50)
+    labelName = models.CharField('名称', max_length=50)
+    labelCnt = models.IntegerField('数目',)
+
+    class Meta:
+        db_table = 'suningtag'
+        verbose_name = '苏宁商品标签'
+        verbose_name_plural = verbose_name
+
+
+class SuNingComment(models.Model):
+    productid = models.CharField('商品id', max_length=50)
+    content = models.TextField('评论')
+    nickName = models.CharField('买家名字', max_length=50)
+    levelName = models.CharField('买家等级', max_length=10)
+
+    class Meta:
+        db_table = 'suningcomment'
+        verbose_name = '苏宁商品评论'
+        verbose_name_plural = verbose_name
+
+
+
 

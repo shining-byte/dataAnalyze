@@ -4,7 +4,7 @@ import time
 from taobao.models import *
 from taobao.serializers import *
 
-from utils.scrapy_web import ScrapyInfo, scrapy_JD
+from utils.scrapy_web import ScrapyInfo, scrapy_JD, scrapy_suning
 
 
 def index(request):
@@ -85,6 +85,15 @@ def search(request):
             print(ProductName.objects.get(name=keyword).taobaoProductId)
             print('已经爬取过淘宝，跳过')
 
+
+        # 爬取苏宁
+        if ProductName.objects.get(name=keyword).suningId == '0':
+
+            print('开始爬取苏宁')
+            scrapy_suning(keyword)
+        else:
+            print('已经爬取苏宁，跳过')
+
         # 取到id
         try:
             taobaoid = ProductName.objects.get(name=keyword).taobaoProductId
@@ -112,13 +121,17 @@ def search(request):
         # 取评论
         taobaocomments = TaobaoComment.objects.filter(productid=taobaoid)[:10]
         jdcomments = JDCommentItem.objects.filter(productid=jdid)[:10]
+        suningid = ProductName.objects.get(name=keyword).suningId
+        suningcomments = SuNingComment.objects.filter(productid=suningid)[:10]
+
         dict['jdid'] = jdid
         dict['jdurl'] = jdurl
         dict['jdprice'] = jdprice
         dict['taobaoid'] = taobaoid
         dict['taobaocomments'] = taobaocomments
         dict['jdcomments'] = jdcomments
-        dict['suningid'] = 1241541
+        dict['suningid'] = suningid
+        dict['suningcomments'] = suningcomments
     return render(request, 'show2.html', dict)
 
 

@@ -52,3 +52,15 @@ class TaobaoTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaobaoTag
         fields = ['tagname', 'tagcount']
+
+
+class SuNingTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuNingTag
+        fields = ['labelName', 'labelCnt']
+
+
+class SuNingCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuNingComment
+        fields = ['content', 'nickName', 'levelName']

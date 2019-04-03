@@ -1,16 +1,12 @@
 # -*- coding:utf-8 -*-
 # Author: cmzz
 # @Time :19-3-30
-import asyncio
 import json
-import math
-import multiprocessing
-import re
-import subprocess
-from pyecharts import Line3D, Pie, WordCloud
 
-from taobao.models import JDProductsItem, JDCommentItem, ProductName, JDHotCommentTagItem, TaobaoTag, TaobaoProduct, \
-    TaobaoComment, JDCommentSummaryItem
+import re
+
+
+from taobao.models import *
 import requests
 from scrapy.selector import Selector
 
@@ -31,7 +27,6 @@ class ScrapyInfo:
         comment_url = 'https://sclub.jd.com/comment/productPageComments.action?productId={}&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1'.format(self.jdid)
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
                    'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-        taobao_comurl = 'https://rate.tmall.com/list_detail_rate.htm?itemId=587578411300&spuId=1152764912&sellerId=2024314280&order=3&currentPage=1&append=0&content=1&tagId=&posi=&picture=&groupId=&ua=098'
         response = requests.get(url=comment_url, headers=headers)
         data = response.json()
         commentSummary = data.get('productCommentSummary')
@@ -155,25 +150,46 @@ def scrapy_JD(keyword):
 
 
 # 搜索时调用
-# def scrapy_taobao(keyword):
-#     taobao_search_url = 'https://s.taobao.com/search?q=' + keyword
-#     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-#     response = requests.get(url=taobao_search_url, headers=headers)
-#     response.encoding = 'utf8'
-#     # productsItem = ProductsItem()
-#     # tlist = re.findall('"raw_title":"(.*?)",', response.text)[1]  # 正则提取商品名称
-#     prices = re.findall('"view_price":"(.*?)",', response.text)[1]  # 正则提示商品价格
-#     nid = re.findall('"nid":"(.*?)"', response.text)[1]# 正则匹配id
-#     try:
-#         ProductName.objects.filter(name=keyword).update(taobaoProductId=nid)
-#         TaobaoProduct.objects.create(productid=nid, productprice=prices, productname_id=keyword)
-#     except Exception as e:
-#         print(e)
-#     return nid
+def scrapy_suning(keyword):
+    url = 'https://search.suning.com/{}/'.format(keyword)
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+    text = requests.get(url, headers=headers).text
+    suningid = re.compile('''<li docType="1".*?id="0000000000-(.*?)".*?</li>''', re.S).findall(text)[0]
+    ProductName.objects.filter(name=keyword).update(suningId=suningid)
+    # 价钱
+    # suningproduct = 'https://product.suning.com/0000000000/{}.html'.format(suningid)
+    # response = requests.get(url=suningproduct)
+    # selector = Selector(response)
+    # suningprice = selector.xpath('//*[@id="mainPrice"]/dl[1]/dd/span/text()').extract()
+    # print(suningprice)
 
-    # print(response.content)
-    # print(response.text)
-    # print(price)
+    SuNingProduct.objects.create(productid=suningid, producturl='https://product.suning.com/0000000000/{}.html'.format(suningid))
+    # 获取标签
+    tagurl = 'https://review.suning.com/ajax/getClusterReview_labels/general-30309172-0000000{}-0000000000-----commodityrLabels.htm?'.format(suningid)
+    text = requests.get(url=tagurl).text
+    text = text.replace('commodityrLabels(', '')
+
+    text = text.replace(')', '')
+    tagjsons = json.loads(text)['commodityLabelCountList']
+    for i in tagjsons:
+        SuNingTag.objects.create(productid=suningid, labelName=i['labelName'], labelCnt=i['labelCnt']).save()
+
+    for i in range(2):
+        suningcommenturl = 'https://review.suning.com/ajax/cluster_review_lists/general-30309172-0000000{}-0000000000-total-{}-default-10-----reviewList.htm'.format(suningid, i+1)
+        text = requests.get(url=suningcommenturl).text
+        text = text.replace('reviewList(', '')
+        text = text.replace(')', '')
+        datajsons = json.loads(text)
+        for j in datajsons['commodityReviews']:
+            if j['content'] == '此用户没有填写评价内容' or len(j['content']) <= 20:
+                pass
+            SuNingComment.objects.create(productid=suningid, content=j['content'], nickName=j['userInfo']['nickName'],
+                                         levelName=j['userInfo']['levelName']).save()
+
+
+
+
+
 
 
 # 保存京东标签

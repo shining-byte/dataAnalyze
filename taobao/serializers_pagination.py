@@ -58,3 +58,17 @@ class TaobaoTagPagination(PageNumberPagination):
     page_size_query_param = 'page_size'  # 可以设置url一页有多少个
     page_query_param = "p"  # 用于url传参数第几页
     max_page_size = 100
+
+
+class SuNingTagPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'  # 可以设置url一页有多少个
+    page_query_param = "p"  # 用于url传参数第几页
+    max_page_size = 100
+
+
+class SuNingCommentPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'  # 可以设置url一页有多少个
+    page_query_param = "p"  # 用于url传参数第几页
+    max_page_size = 100
