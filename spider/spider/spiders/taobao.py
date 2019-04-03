@@ -5,7 +5,7 @@ import requests
 import scrapy
 from spider.items import *
 from scrapy.http import Request
-
+from taobao.models import ProductName
 
 class TaobaoSpider(scrapy.Spider):
     name = 'taobao'
@@ -19,10 +19,10 @@ class TaobaoSpider(scrapy.Spider):
     def parse(self, response):
         prices = re.findall('"view_price":"(.*?)",', response.text)[1]  # 正则提示商品价格
         nid = re.findall('"nid":"(.*?)"', response.text)[1]  # 正则匹配id
-        Product = ProductName()
-        Product['taobaoProductId'] = nid
-        Product['name'] = self.keyword
-        yield Product
+        ProductName.objects.filter(name=self.keyword).update(taobaoProductId=nid)
+        # Product['taobaoProductId'] = nid
+        # Product['name'] = self.keyword
+        # yield Product
         taobaoproduct = TaobaoProduct()
         taobaoproduct['productid'] = nid
         taobaoproduct['productname'] = self.keyword
@@ -67,7 +67,7 @@ class TaobaoSpider(scrapy.Spider):
         jsons = json.loads(text)
         comment = jsons['rateDetail']['rateList'][:20]
         for i in comment:
-            if i['rateContent'] == '此用户没有填写评论!':
+            if len(i['rateContent']) <= 20:
                 pass
             taobaocomments = TaobaoComment()
             taobaocomments['displayUserNick'] = i['displayUserNick']

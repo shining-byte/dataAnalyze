@@ -54,6 +54,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="row-one">
+
+
 					<div class="col-md-4 widget">
 						<div class="stats-left ">
 							<h5 id="suningid">{{ suningid }}</h5>
@@ -64,23 +66,25 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="clearfix"> </div>	
 					</div>
+{#                    第二个#}
 					<div class="col-md-4 widget states-mdl">
 						<div class="stats-left">
 							<h5 id="taobaoid">{{ taobaoid }}</h5>
 							<h4>淘宝</h4>
 						</div>
 						<div class="stats-right">
-							<label> 80</label>
+							<label><a href="{{ taobaourl }}">{{ taobaoprice }}</a> </label>
 						</div>
 						<div class="clearfix"> </div>	
 					</div>
+{#                    第三个#}
 					<div class="col-md-4 widget states-last">
 						<div class="stats-left">
 							<h5 id="jdid">{{ jdid }}</h5>
 							<h4>京东</h4>
 						</div>
 						<div class="stats-right">
-							<label>51</label>
+							<label><a href="{{ jdurl }}">{{ jdprice }}</a> </label>
 						</div>
 						<div class="clearfix"> </div>	
 					</div>
@@ -92,24 +96,36 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 {#              第一个是苏宁易购  #}
 				<div class="charts">
 					<div class="col-md-4 charts-grids widget">
-						<h4 class="title">Bar Chart Example</h4>
+						<h4 class="title">苏宁电商情况</h4>
 						<div id="suning" style= "height:300px; width:400px;"> </div>
                         <p hidden id="suning"></p>
 					</div>
 {#                    第二个是淘宝#}
 					<div class="col-md-4 charts-grids widget states-mdl">
-						<h4 class="title">Line Chart Example</h4>
+						<h4 class="title">淘宝电商情况</h4>
 						<div id="taobao" style= "height:300px; width:400px;"> </div>
+                        <div class="tm-media-text-container">
+                                {% for comment in taobaocomments %}
+                        <p class="tm-media-description tm-gray-text-2">
+                        买家：{{ conment.displayUserNick }}说：“{{ comment.rateContent }}”</p>
+                                    <br>
+                        {% endfor %}
+                    </div>
 					</div>
 {#                    第三个是京东#}
 					<div class="col-md-4 charts-grids widget">
-						<h4 class="title">评论情况</h4>
+						<h4 class="title">京东电商情况</h4>
 						<div id="JD" style= "height:300px; width:400px;"> </div>
-
+                        <div class="tm-media-text-container">
+                                {% for comment in jdcomments %}
+                        <p class="tm-media-description tm-gray-text-2">{{ comment.userLevelName }}
+                        买家：{{ conment.nickname }}说：“{{ comment.content }}”</p>
+                                    <br>
+                        {% endfor %}
+                    </div>
 					</div>
 					<div class="clearfix">
-</div>
-                    <p hidden id="jdproductid"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,9 +136,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                      var jdid = document.getElementById("jdid");
                                      var taobaoid = document.getElementById("taobaoid");
                                      var suningid = document.getElementById("suningid");
-                                     console.log(jdid.innerText);
-                                     console.log(taobaoid.innerText);
-                                     console.log(suningid.innerText);
 
 
 
@@ -178,43 +191,29 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 }]        
                             });
                             jd.showLoading();    //数据加载完之前先显示一段简单的loading动画
-                            var taobaonamelist = [];    //类别数组（用于存放饼图的类别）
-                            var taobaovalueslist = [];
-                            var datajson = [];
+                            var jdnamelist = [];    //类别数组（用于存放饼图的类别）
+                            var jdcountlist = [];
+                            var jddata = [];
                             $.ajax({
                                 type: 'get',
-                                url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
+                         url: 'http://94.191.87.62:8090/api/JDCommntSum/?productid='+jdid.innerText,//请求数据的地址
                                 dataType: "json",        //返回数据形式为json
                                 success: function (result) {
                                     //请求成功时执行该函数内容，result即为服务器返回的json对象
-                                    var data = result;
-                                    for (var i= 0;i<data.results.length; i++){
-                                        taobaonamelist.push(data['results'][i]['tagname']);
-                                        taobaovalueslist.push(data['results'][i]['tagcount']);
-                                    }
-                                    {#console.log(taobaonamelist);#}
-                                    for(var i=0; i<taobaonamelist.length;i++){
-                                    var json = {};
-                                        for (var j =0; j<taobaovalueslist.length;j++){
-                                            if(i==j){
-                                                json.value = taobaovalueslist[j][0];
-                                                json.name = taobaonamelist[i];
-                                                datajson.push(json)
-                                            }
-                                        }
-                                    }
+                                    var data = result.results;
+                                    console.log(data[0]);
+
                                     jd.hideLoading();    //隐藏加载动画
                                     jd.setOption({        //加载数据图表                
                                         legend: {                    
-                                            data: taobaonamelist
+                                            data: ['总评论人数', '中评人数', '好评人数', '差评人数']
                                         },
                                         series: [{                    
                                             data: [
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
+                {value:data[0]['commentCount'], name:'总评论人数'},
+                {value:data[0]['generalCount'], name:'中评人数'},
+                {value:data[0]['goodCount'], name:'好评人数'},
+                {value:data[0]['poorCount'], name:'差评人数'},
             ],
                                         }]
                                     });
@@ -280,7 +279,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             var datajson = [];
                             $.ajax({
                                 type: 'get',
-                                url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
+                                url: 'http://94.191.87.62:8090/api/TaobaoTag/?productid='+taobaoid.innerText,//请求数据的地址
                                 dataType: "json",        //返回数据形式为json
                                 success: function (result) {
                                     //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -289,7 +288,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         taobaonamelist.push(data['results'][i]['tagname']);
                                         taobaovalueslist.push(data['results'][i]['tagcount']);
                                     }
-                                    {#console.log(taobaonamelist);#}
                                     for(var i=0; i<taobaonamelist.length;i++){
                                     var json = {};
                                         for (var j =0; j<taobaovalueslist.length;j++){
@@ -369,26 +367,26 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             var datajson = [];
                             $.ajax({
                                 type: 'get',
-                                url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
+                                url: 'http://94.191.87.62:8090/api/TaobaoTag/?format=json',//请求数据的地址
                                 dataType: "json",        //返回数据形式为json
                                 success: function (result) {
                                     //请求成功时执行该函数内容，result即为服务器返回的json对象
-                                    var data = result;
-                                    for (var i= 0;i<data.results.length; i++){
-                                        taobaonamelist.push(data['results'][i]['tagname']);
-                                        taobaovalueslist.push(data['results'][i]['tagcount']);
-                                    }
+                        {#            var data = result;#}
+                        {#            for (var i= 0;i<data.results.length; i++){#}
+                        {#                taobaonamelist.push(data['results'][i]['tagname']);#}
+                        {#                taobaovalueslist.push(data['results'][i]['tagcount']);#}
+                        {#            }#}
                                     {#console.log(taobaonamelist);#}
-                                    for(var i=0; i<taobaonamelist.length;i++){
-                                    var json = {};
-                                        for (var j =0; j<taobaovalueslist.length;j++){
-                                            if(i==j){
-                                                json.value = taobaovalueslist[j][0];
-                                                json.name = taobaonamelist[i];
-                                                datajson.push(json)
-                                            }
-                                        }
-                                    }
+                        {#            for(var i=0; i<taobaonamelist.length;i++){#}
+                        {#            var json = {};#}
+                        {#                for (var j =0; j<taobaovalueslist.length;j++){#}
+                        {#                    if(i==j){#}
+                        {#                        json.value = taobaovalueslist[j][0];#}
+                        {#                        json.name = taobaonamelist[i];#}
+                        {#                        datajson.push(json)#}
+                        {#                    }#}
+                        {#                }#}
+                        {#            }#}
                                     suning.hideLoading();    //隐藏加载动画
                                     suning.setOption({        //加载数据图表                
                                         legend: {                    
@@ -665,6 +663,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 {#				}#}
 {#			}#}
 {#		</script>#}
+
 	<!--scrolling js-->
 	<script src="/static/js/jquery.nicescroll.js"></script>
 	<script src="/static/js/scripts.js"></script>

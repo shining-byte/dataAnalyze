@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import time
 
 from taobao.models import *
 from taobao.serializers import *
@@ -57,19 +58,68 @@ def search(request):
         keyword = request.GET.get('search')
         # request.session['keyword'] = keyword
         # request['keyword'] = keyword
-        scrapy_JD(keyword)
-        # taobaoProductId = scrapy_taobao(keyword)
-        # request.session['taobaoproductId'] = taobaoProductId
-        import requests
+        # 判断是否已经爬过
+        if(ProductName.objects.filter(name=keyword)):
+            print('已经爬取过京东，跳过')
+        else:
+            print('没爬过,先获取jd的id并生成')
+            id = scrapy_JD(keyword)
+            spider = ScrapyInfo(jdid=id, keyword=keyword)
+            spider.scrapy_JDinfo()
+            print('开始爬取京东')
 
-        url = 'http://127.0.0.1:6800/schedule.json'
-        dictdata = {"project": 'default', "spider": 'taobao', 'keyword': '{}'.format(keyword)}
 
-        requests.post(url=url, data=dictdata)
+        # 判断是否爬过淘宝
+        if ProductName.objects.get(name=keyword).taobaoProductId == '0':
+            # 爬取淘宝
+            print('开始爬取淘宝')
+            import requests
 
-        # products = JDProductsItem.objects.filter(name=keyword)
+            url = 'http://127.0.0.1:6800/schedule.json'
+            dictdata = {"project": 'default', "spider": 'taobao', 'keyword': '{}'.format(keyword)}
 
-    return render(request, 'show2.html', {'jdid': 12311, 'suningid': 98889, 'taobaoid': 46546})
+            r = requests.post(url=url, data=dictdata)
+            print(r.text)
+
+        else:
+            print(ProductName.objects.get(name=keyword).taobaoProductId)
+            print('已经爬取过淘宝，跳过')
+
+        # 取到id
+        try:
+            taobaoid = ProductName.objects.get(name=keyword).taobaoProductId
+        except Exception:
+            time.sleep(2)
+            taobaoid = ProductName.objects.get(name=keyword).taobaoProductId
+        jdid = ProductName.objects.get(name=keyword).jdProductId
+        jd = JDProductsItem.objects.get(productid=jdid)
+        jdurl = jd.url
+        jdprice = jd.reallyPrice
+        dict = {}
+
+        # taobao
+        try:
+            taobao = TaobaoProduct.objects.filter(productid=taobaoid)[0]
+            taobaoprice = taobao.productprice
+            taobaourl = taobao.producturl
+            dict['taobaoprice'] = taobaoprice
+            dict['taobaourl'] = taobaourl
+        except Exception as e:
+            print(e)
+
+            # taobao = TaobaoProduct.objects.filter(productid=taobaoid)[0]
+
+        # 取评论
+        taobaocomments = TaobaoComment.objects.filter(productid=taobaoid)[:10]
+        jdcomments = JDCommentItem.objects.filter(productid=jdid)[:10]
+        dict['jdid'] = jdid
+        dict['jdurl'] = jdurl
+        dict['jdprice'] = jdprice
+        dict['taobaoid'] = taobaoid
+        dict['taobaocomments'] = taobaocomments
+        dict['jdcomments'] = jdcomments
+        dict['suningid'] = 1241541
+    return render(request, 'show2.html', dict)
 
 
 

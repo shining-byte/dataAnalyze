@@ -5,8 +5,9 @@ from django.db import models
 
 class ProductName(models.Model):
     name = models.CharField('名字', max_length=100, primary_key=True)
-    jdProductId = models.CharField('京东产品id', max_length=50, default=1)
+    jdProductId = models.CharField('京东产品id', max_length=50, default=0)
     taobaoProductId = models.CharField('淘宝产品id', max_length=50, default=0)
+    suningId = models.CharField('苏宁产品id', max_length=50, default=0)
 
     class Meta:
         db_table = 'productname'

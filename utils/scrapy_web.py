@@ -14,19 +14,18 @@ from taobao.models import JDProductsItem, JDCommentItem, ProductName, JDHotComme
 import requests
 from scrapy.selector import Selector
 
-REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
 
 class ScrapyInfo:
     def __init__(self,**kwargs):
         # self.web = self.web
         self.jdid = kwargs['jdid']
-        self.taobaoProductId = kwargs['taobaoProductId']
+        # self.taobaoProductId = kwargs['taobaoProductId']
         self.keyword = kwargs['keyword']
-        self.piename = []
-        self.piecount = []
-        self.woldname = []
-        self.worldcount = []
+        # self.piename = []
+        # self.piecount = []
+        # self.woldname = []
+        # self.worldcount = []
 
     def scrapy_JDinfo(self):
         comment_url = 'https://sclub.jd.com/comment/productPageComments.action?productId={}&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1'.format(self.jdid)
@@ -36,17 +35,17 @@ class ScrapyInfo:
         response = requests.get(url=comment_url, headers=headers)
         data = response.json()
         commentSummary = data.get('productCommentSummary')
-        self.piename = ['追评人数', '中评', '好评', '差评']
-        self.piecount.append(commentSummary['showCount'])
-        self.piecount.append(commentSummary['generalCount'])
-        self.piecount.append(commentSummary['goodCount'] - commentSummary['defaultGoodCount'])
-        self.piecount.append(commentSummary['poorCount'])
+        # self.piename = ['追评人数', '中评', '好评', '差评']
+        # self.piecount.append(commentSummary['showCount'])
+        # self.piecount.append(commentSummary['generalCount'])
+        # self.piecount.append(commentSummary['goodCount'] - commentSummary['defaultGoodCount'])
+        # self.piecount.append(commentSummary['poorCount'])
         try:
             JDCommentSummaryItem.objects.create(afterCount=commentSummary['afterCount'], averageScore=commentSummary['averageScore'],
                                             commentCount=commentSummary['commentCount'], defaultGoodCount=commentSummary['defaultGoodCount'],
                                             generalCount=commentSummary['generalCount'], goodCount=commentSummary['goodCount'],
                                             imageListCount=data['imageListCount'], poorCount=commentSummary['poorCount'],
-                                            score=data['score'], productid_id=self.jdid).save()
+                                            score=data['score'], productid=self.jdid).save()
         except Exception as e:
             print(e)
         # pool = multiprocessing.Pool(multiprocessing.cpu_count())
@@ -54,8 +53,8 @@ class ScrapyInfo:
             name = hotComment['name']
             count = hotComment['count']
             saveJDhotTag(name, count, self.jdid)
-            self.woldname.append(name)
-            self.worldcount.append(count)
+            # self.woldname.append(name)
+            # self.worldcount.append(count)
             # pool.apply_async(saveJDhotTag, (name, count, self.jdid))
 
         # pool.close()
@@ -82,8 +81,8 @@ class ScrapyInfo:
                 # thirdCategory = comment_item.get('thirdCategory')
                 # userLevelId = comment_item.get('userLevelId')
                 saveJDcomment(content, nickname, referenceId, score, userLevelName, self.jdid)
-        jdlist = [self.piename, self.piecount, self.woldname, self.worldcount]
-        return jdlist
+        # jdlist = [self.piename, self.piecount, self.woldname, self.worldcount]
+        # return jdlist
 
         # pool2.close()
         # pool2.join()
@@ -147,11 +146,12 @@ def scrapy_JD(keyword):
         ProductName.objects.filter(name=keyword).update(jdProductId=id[0])
 
         product = JDProductsItem.objects.create(productid=id[0], category=category[0], description=desc,
-                                            imgurl=imgurl, reallyPrice=price, url=url[0], name_id=keyword)
+                                            imgurl=imgurl, reallyPrice=price, url=url[0])
         product.save()
             #     product.save()
     except Exception as e:
         print(e)
+    return id[0]
 
 
 # 搜索时调用
@@ -178,83 +178,15 @@ def scrapy_JD(keyword):
 
 # 保存京东标签
 def saveJDhotTag(*args):
-    JDHotCommentTagItem.objects.create(name=args[0], count=args[1], productid_id=args[2]).save()
+    JDHotCommentTagItem.objects.create(name=args[0], count=args[1], productid=args[2]).save()
 
 
 # 保存京东评论信息
 def saveJDcomment(*args):
 
     jdcomment = JDCommentItem.objects.create(content=args[0], nickname=args[1], referenceId=args[2],
-                                             score=args[3], userLevelName=args[4], productid_id=args[5])
+                                             score=args[3], userLevelName=args[4], productid=args[5])
     jdcomment.save()
 
 
 
-# # 元饼图
-# def pie(*args):
-#
-#     pie = Pie("")
-#     # 传入两个列表
-#     pie.add("", args[0], args[1], is_label_show=True)
-#     pi = dict(
-#         mypie=pie.render_embed(),
-#         host=REMOTE_HOST,
-#         script_list=pie.get_js_dependencies()
-#     )
-#     return pi
-#
-#
-# def pie2(*args):
-#
-#     pie = Pie("")
-#     # 传入两个列表
-#     pie.add("", args[0], args[1], is_label_show=True)
-#     pi = dict(
-#         mypie2=pie.render_embed(),
-#         host=REMOTE_HOST,
-#         script_list=pie.get_js_dependencies()
-#     )
-#     return pi
-#
-#
-# # 云词
-# def worldcloud(*args):
-#     wordcloud = WordCloud(width=1300, height=620)
-#     # 传入两个列表
-#     wordcloud.add("", args[0], args[1], word_size_range=[20, 100])
-#     word = dict(
-#         myworldcloud=wordcloud.render_embed(),
-#         host=REMOTE_HOST,
-#         script_list=wordcloud.get_js_dependencies()
-#     )
-#     return word
-
-
-# 云词
-# def worldcloud(*args):
-#     wordcloud = WordCloud(width=1300, height=620)
-#     # 传入两个列表
-#     wordcloud.add("", args[0], args[1], word_size_range=[20, 100])
-#     word = dict(
-#         myworldcloud2=wordcloud.render_embed(),
-#         host=REMOTE_HOST,
-#         script_list=wordcloud.get_js_dependencies()
-#     )
-#     return word
-
-# def line3d(self):
-#     _data = []
-#     for t in range(0, 25000):
-#         _t = t / 1000
-#         x = (1 + 0.25 * math.cos(75 * _t)) * math.cos(_t)
-#         y = (1 + 0.25 * math.cos(75 * _t)) * math.sin(_t)
-#         z = _t + 2.0 * math.sin(75 * _t)
-#         _data.append([x, y, z])
-#     range_color = [
-#         '#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf',
-#         '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-#     line3d = Line3D("3D line plot demo", width=1200, height=600)
-#     line3d.add("", _data, is_visualmap=True,
-#                visual_range_color=range_color, visual_range=[0, 30],
-#                is_grid3D_rotate=True, grid3D_rotate_speed=180)
-#     return line3d
