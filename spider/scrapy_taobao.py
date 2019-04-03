@@ -10,4 +10,4 @@ sys.path.append(os.path.dirname(os.path.abspath('.')))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'dataAnalyze.settings'
 application = get_wsgi_application()
 django.setup()
-cmdline.execute("scrapy crawl taobao -a keyword=小米9".split())
+cmdline.execute("scrapy crawl taobao -a keyword=魅族note6".split())

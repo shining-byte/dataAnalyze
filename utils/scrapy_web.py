@@ -88,31 +88,31 @@ class ScrapyInfo:
         # pool2.close()
         # pool2.join()
 
-    def scrapy_taobaoinfo(self):
-        taobao_sumtagurl = 'https://rate.tmall.com/listTagClouds.htm?itemId={0}&isAll=true&isInner=true&t=&groupId=&_ksTS='.format(self.taobaoProductId)
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
-                   'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-        response = requests.get(url=taobao_sumtagurl, headers=headers).text
-        response = response.replace('(', '')
-        response = response.replace(')', '')
-        taoboatag = json.loads(response)['tags']['tagClouds']
-        taobaolist = [[taoboatag[i]['tag'] for i in range(len(taoboatag))], [taoboatag[i]['count'] for i in range(len(taoboatag))]]
-        for i in taoboatag:
-            TaobaoTag.objects.create(tagname=i['tag'], productid_id=self.taobaoProductId, tagcount=i['count']).save()
-        taobao_comurl = 'http://rate.tmall.com/list_detail_rate.htm?itemId={0}&sellerId=1652490016&currentPage=1'.format(self.taobaoProductId)
-
-        text = requests.get(taobao_comurl).text
-        text = text.replace('jsonp128(', '')
-        text = text.replace(')', '')
-        jsons = json.loads(text)
-        comment = jsons['rateDetail']['rateList'][:10]
-        for i in comment:
-            try:
-                TaobaoComment.objects.create(displayUserNick=i['displayUserNick'], rateContent=i['rateContent'], productid_id=self.taobaoProductId).save()
-                print(i['rateContent'])
-            except Exception as e:
-                print(e)
-        return taobaolist
+    # def scrapy_taobaoinfo(self):
+    #     taobao_sumtagurl = 'https://rate.tmall.com/listTagClouds.htm?itemId={0}&isAll=true&isInner=true&t=&groupId=&_ksTS='.format(self.taobaoProductId)
+    #     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+    #                'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+    #     response = requests.get(url=taobao_sumtagurl, headers=headers).text
+    #     response = response.replace('(', '')
+    #     response = response.replace(')', '')
+    #     taoboatag = json.loads(response)['tags']['tagClouds']
+    #     taobaolist = [[taoboatag[i]['tag'] for i in range(len(taoboatag))], [taoboatag[i]['count'] for i in range(len(taoboatag))]]
+    #     for i in taoboatag:
+    #         TaobaoTag.objects.create(tagname=i['tag'], productid_id=self.taobaoProductId, tagcount=i['count']).save()
+    #     taobao_comurl = 'http://rate.tmall.com/list_detail_rate.htm?itemId={0}&sellerId=1652490016&currentPage=1'.format(self.taobaoProductId)
+    #
+    #     text = requests.get(taobao_comurl).text
+    #     text = text.replace('jsonp128(', '')
+    #     text = text.replace(')', '')
+    #     jsons = json.loads(text)
+    #     comment = jsons['rateDetail']['rateList'][:10]
+    #     for i in comment:
+    #         try:
+    #             TaobaoComment.objects.create(displayUserNick=i['displayUserNick'], rateContent=i['rateContent'], productid_id=self.taobaoProductId).save()
+    #             print(i['rateContent'])
+    #         except Exception as e:
+    #             print(e)
+    #     return taobaolist
 
 
 # 搜索时调用
@@ -155,21 +155,21 @@ def scrapy_JD(keyword):
 
 
 # 搜索时调用
-def scrapy_taobao(keyword):
-    taobao_search_url = 'https://s.taobao.com/search?q=' + keyword
-    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-    response = requests.get(url=taobao_search_url, headers=headers)
-    response.encoding = 'utf8'
-    # productsItem = ProductsItem()
-    # tlist = re.findall('"raw_title":"(.*?)",', response.text)[1]  # 正则提取商品名称
-    prices = re.findall('"view_price":"(.*?)",', response.text)[1]  # 正则提示商品价格
-    nid = re.findall('"nid":"(.*?)"', response.text)[1]# 正则匹配id
-    try:
-        ProductName.objects.filter(name=keyword).update(taobaoProductId=nid)
-        TaobaoProduct.objects.create(productid=nid, productprice=prices, productname_id=keyword)
-    except Exception as e:
-        print(e)
-    return nid
+# def scrapy_taobao(keyword):
+#     taobao_search_url = 'https://s.taobao.com/search?q=' + keyword
+#     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0','authorization':'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+#     response = requests.get(url=taobao_search_url, headers=headers)
+#     response.encoding = 'utf8'
+#     # productsItem = ProductsItem()
+#     # tlist = re.findall('"raw_title":"(.*?)",', response.text)[1]  # 正则提取商品名称
+#     prices = re.findall('"view_price":"(.*?)",', response.text)[1]  # 正则提示商品价格
+#     nid = re.findall('"nid":"(.*?)"', response.text)[1]# 正则匹配id
+#     try:
+#         ProductName.objects.filter(name=keyword).update(taobaoProductId=nid)
+#         TaobaoProduct.objects.create(productid=nid, productprice=prices, productname_id=keyword)
+#     except Exception as e:
+#         print(e)
+#     return nid
 
     # print(response.content)
     # print(response.text)
@@ -190,44 +190,44 @@ def saveJDcomment(*args):
 
 
 
-# 元饼图
-def pie(*args):
-
-    pie = Pie("")
-    # 传入两个列表
-    pie.add("", args[0], args[1], is_label_show=True)
-    pi = dict(
-        mypie=pie.render_embed(),
-        host=REMOTE_HOST,
-        script_list=pie.get_js_dependencies()
-    )
-    return pi
-
-
-def pie2(*args):
-
-    pie = Pie("")
-    # 传入两个列表
-    pie.add("", args[0], args[1], is_label_show=True)
-    pi = dict(
-        mypie2=pie.render_embed(),
-        host=REMOTE_HOST,
-        script_list=pie.get_js_dependencies()
-    )
-    return pi
-
-
-# 云词
-def worldcloud(*args):
-    wordcloud = WordCloud(width=1300, height=620)
-    # 传入两个列表
-    wordcloud.add("", args[0], args[1], word_size_range=[20, 100])
-    word = dict(
-        myworldcloud=wordcloud.render_embed(),
-        host=REMOTE_HOST,
-        script_list=wordcloud.get_js_dependencies()
-    )
-    return word
+# # 元饼图
+# def pie(*args):
+#
+#     pie = Pie("")
+#     # 传入两个列表
+#     pie.add("", args[0], args[1], is_label_show=True)
+#     pi = dict(
+#         mypie=pie.render_embed(),
+#         host=REMOTE_HOST,
+#         script_list=pie.get_js_dependencies()
+#     )
+#     return pi
+#
+#
+# def pie2(*args):
+#
+#     pie = Pie("")
+#     # 传入两个列表
+#     pie.add("", args[0], args[1], is_label_show=True)
+#     pi = dict(
+#         mypie2=pie.render_embed(),
+#         host=REMOTE_HOST,
+#         script_list=pie.get_js_dependencies()
+#     )
+#     return pi
+#
+#
+# # 云词
+# def worldcloud(*args):
+#     wordcloud = WordCloud(width=1300, height=620)
+#     # 传入两个列表
+#     wordcloud.add("", args[0], args[1], word_size_range=[20, 100])
+#     word = dict(
+#         myworldcloud=wordcloud.render_embed(),
+#         host=REMOTE_HOST,
+#         script_list=wordcloud.get_js_dependencies()
+#     )
+#     return word
 
 
 # 云词
@@ -242,19 +242,19 @@ def worldcloud(*args):
 #     )
 #     return word
 
-def line3d(self):
-    _data = []
-    for t in range(0, 25000):
-        _t = t / 1000
-        x = (1 + 0.25 * math.cos(75 * _t)) * math.cos(_t)
-        y = (1 + 0.25 * math.cos(75 * _t)) * math.sin(_t)
-        z = _t + 2.0 * math.sin(75 * _t)
-        _data.append([x, y, z])
-    range_color = [
-        '#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf',
-        '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-    line3d = Line3D("3D line plot demo", width=1200, height=600)
-    line3d.add("", _data, is_visualmap=True,
-               visual_range_color=range_color, visual_range=[0, 30],
-               is_grid3D_rotate=True, grid3D_rotate_speed=180)
-    return line3d
+# def line3d(self):
+#     _data = []
+#     for t in range(0, 25000):
+#         _t = t / 1000
+#         x = (1 + 0.25 * math.cos(75 * _t)) * math.cos(_t)
+#         y = (1 + 0.25 * math.cos(75 * _t)) * math.sin(_t)
+#         z = _t + 2.0 * math.sin(75 * _t)
+#         _data.append([x, y, z])
+#     range_color = [
+#         '#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf',
+#         '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+#     line3d = Line3D("3D line plot demo", width=1200, height=600)
+#     line3d.add("", _data, is_visualmap=True,
+#                visual_range_color=range_color, visual_range=[0, 30],
+#                is_grid3D_rotate=True, grid3D_rotate_speed=180)
+#     return line3d

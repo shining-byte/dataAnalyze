@@ -33,9 +33,9 @@ class TaobaoSpider(scrapy.Spider):
         data['id'] = nid
         taobao_sumtagurl = 'https://rate.tmall.com/listTagClouds.htm?itemId={0}&isAll=true&isInner=true&t=&groupId=&_ksTS='.format(nid)
 
-        yield Request(url=taobao_sumtagurl, callback=self.parse_comment, meta=data, dont_filter=True)
+        yield Request(url=taobao_sumtagurl, callback=self.parse_sumcomment, meta=data, dont_filter=True)
 
-    def parse_comment(self, response):
+    def parse_sumcomment(self, response):
         # taobao_sumtagurl = 'https://rate.tmall.com/listTagClouds.htm?itemId={0}&isAll=true&isInner=true&t=&groupId=&_ksTS='.format(response.meta['id'])
         id = response.meta['id']
         # response = json.loads(response.text)
@@ -44,6 +44,7 @@ class TaobaoSpider(scrapy.Spider):
         response = response.replace(')', '')
         taoboatag = json.loads(response)['tags']['tagClouds']
         taobaolist = [[taoboatag[i]['tag'] for i in range(len(taoboatag))],[taoboatag[i]['count'] for i in range(len(taoboatag))]]
+        print(taobaolist)
         for i in taoboatag:
             taobaotag = TaobaoTag()
             taobaotag['tagname'] = i['tag']
@@ -51,16 +52,26 @@ class TaobaoSpider(scrapy.Spider):
             taobaotag['tagcount'] = i['count']
             yield taobaotag
         taobao_comurl = 'https://rate.tmall.com/list_detail_rate.htm?itemId={}&spuId=1152764912&sellerId=2024314280&order=3&currentPage=1&append=0&content=1&tagId=&posi=&picture=&groupId=&ua=098'.format(id)
+        data = {}
+        data['id'] = id
+        yield Request(url=taobao_comurl, callback=self.parse_comment, meta=data, dont_filter=True)
 
-        text = requests.get(taobao_comurl).text
+    def parse_comment(self, response):
+
+        # text = requests.get(taobao_comurl).text
+        # print(text)
+        # print('awdawdadadadaawda'+response.text)
+        text = response.text
         text = text.replace('jsonp128(', '')
         text = text.replace(')', '')
         jsons = json.loads(text)
-        comment = jsons['rateDetail']['rateList'][:10]
+        comment = jsons['rateDetail']['rateList'][:20]
         for i in comment:
+            if i['rateContent'] == '此用户没有填写评论!':
+                pass
             taobaocomments = TaobaoComment()
             taobaocomments['displayUserNick'] = i['displayUserNick']
             taobaocomments['rateContent'] = i['rateContent']
-            taobaocomments['productid'] = id
+            taobaocomments['productid'] = response.meta['id']
             yield taobaocomments
 

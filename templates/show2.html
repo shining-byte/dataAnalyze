@@ -56,8 +56,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 				<div class="row-one">
 					<div class="col-md-4 widget">
 						<div class="stats-left ">
-							<h5>Today</h5>
-							<h4>亚马逊</h4>
+							<h5 id="suningid">{{ suningid }}</h5>
+							<h4>苏宁易购</h4>
 						</div>
 						<div class="stats-right">
 							<label> 45</label>
@@ -66,7 +66,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="col-md-4 widget states-mdl">
 						<div class="stats-left">
-{#							<h5>Today</h5>#}
+							<h5 id="taobaoid">{{ taobaoid }}</h5>
 							<h4>淘宝</h4>
 						</div>
 						<div class="stats-right">
@@ -76,7 +76,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="col-md-4 widget states-last">
 						<div class="stats-left">
-							<h5>{{ taobaoproductid }}</h5>
+							<h5 id="jdid">{{ jdid }}</h5>
 							<h4>京东</h4>
 						</div>
 						<div class="stats-right">
@@ -86,118 +86,335 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="clearfix"> </div>	
 				</div>
+
+
+{#              三个元饼图  #}
+{#              第一个是苏宁易购  #}
 				<div class="charts">
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">Bar Chart Example</h4>
-						<canvas id="bar" height="300" width="400"> </canvas>
+						<div id="suning" style= "height:300px; width:400px;"> </div>
+                        <p hidden id="suning"></p>
 					</div>
+{#                    第二个是淘宝#}
 					<div class="col-md-4 charts-grids widget states-mdl">
 						<h4 class="title">Line Chart Example</h4>
-						<canvas id="line" height="300" width="400"> </canvas>
+						<div id="taobao" style= "height:300px; width:400px;"> </div>
 					</div>
+{#                    第三个是京东#}
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">评论情况</h4>
-						<div id="firstPieChart" style= "height:300px; width:400px;"> </div>
+						<div id="JD" style= "height:300px; width:400px;"> </div>
+
 					</div>
-					<div class="clearfix"> </div>
-                    <p hidden id="jdproductid">77</p>
-                    <p id="taobaoproductid">{{ taobaoproductid }}</p>
+					<div class="clearfix">
+</div>
+                    <p hidden id="jdproductid"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 							 <script>
                                  window.onload = function () {
-    var myChart = echarts.init(document.getElementById('firstPieChart'));
-    // 显示标题，图例和空的坐标轴
-    myChart.setOption({
-        color: ['#ff7d27', '#47b73d', '#fcc36e', '#57a2fd', "#228b22"],//饼图颜色
-        title: {
-{#            text: '信息发布排行',#}
-{#            subtext: '纯属虚构',#}
-            x:'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },        
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data: []
-        },        
-        toolbox: {
-            show: true,
-            feature: {
-                mark: { show: true },
-                dataView: { show: true, readOnly: false },
-                magicType: {
-                    show: true,
-                    type: ['pie', 'funnel'],
-                    option: {
-                        funnel: {
-                            x: '25%',
-                            width: '50%',
-                            funnelAlign: 'left',
-                            max: 1548
-                        }
-                    }
-                },
-                restore: { show: true },
-                saveAsImage: { show: true }
-            }
-        },         
-        series: [{
-            name: '发布排行',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],            
-            data: []
-        }]        
-    });
-    myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
-    var taobaonamelist = [];    //类别数组（用于存放饼图的类别）
-    var taobaovalueslist = [];
-    var datajson = [];
-    $.ajax({
-        type: 'get',
-        url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
-        dataType: "json",        //返回数据形式为json
-        success: function (result) {
-            //请求成功时执行该函数内容，result即为服务器返回的json对象
-            var data = result;
-            for (var i= 0;i<data.results.length; i++){
-                taobaonamelist.push(data['results'][i]['tagname']);
-                taobaovalueslist.push(data['results'][i]['tagcount']);
-            }
-            {#console.log(taobaonamelist);#}
-            for(var i=0; i<taobaonamelist.length;i++){
-            var json = {};
-                for (var j =0; j<taobaovalueslist.length;j++){
-                    if(i==j){
-                        json.value = taobaovalueslist[j][0];
-                        json.name = taobaonamelist[i];
-                        datajson.push(json)
-                    }
-                }
-            }
-            myChart.hideLoading();    //隐藏加载动画
-            myChart.setOption({        //加载数据图表                
-                legend: {                    
-                    data: taobaonamelist
-                },
-                series: [{                    
-                    data: datajson
-                }]
-            });
-        },
-        error: function (errorMsg) {
-            //请求失败时执行该函数
-            alert("图表请求数据失败!");
-            myChart.hideLoading();
-        }
-    });
-};
-loadOneColumn();
+                        {#             获取三家电商的商品id#}
+                                     var jdid = document.getElementById("jdid");
+                                     var taobaoid = document.getElementById("taobaoid");
+                                     var suningid = document.getElementById("suningid");
+                                     console.log(jdid.innerText);
+                                     console.log(taobaoid.innerText);
+                                     console.log(suningid.innerText);
+
+
+
+                        {#             初始化加载 三个元饼图#}
+                            var jd = echarts.init(document.getElementById('JD'));
+                            var taobao = echarts.init(document.getElementById('taobao'));
+                            var suning = echarts.init(document.getElementById('suning'));
+                            // 显示标题，图例和空的坐标轴
+                        {#             京东#}
+                               jd.setOption({
+                                color: ['#ff7d27', '#47b73d', '#fcc36e', '#57a2fd', "#228b22"],//饼图颜色
+                                title: {
+                        {#            text: '信息发布排行',#}
+                        {#            subtext: '纯属虚构',#}
+                                    x:'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },        
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data: []
+                                },        
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel'],
+                                            option: {
+                                                funnel: {
+                                                    x: '25%',
+                                                    width: '50%',
+                                                    funnelAlign: 'left',
+                                                    max: 1548
+                                                }
+                                            }
+                                        },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },         
+                                series: [{
+                                    name: '发布排行',
+                                    type: 'pie',
+                                    radius: '55%',
+                                    center: ['50%', '60%'],            
+                                    data: []
+                                }]        
+                            });
+                            jd.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                            var taobaonamelist = [];    //类别数组（用于存放饼图的类别）
+                            var taobaovalueslist = [];
+                            var datajson = [];
+                            $.ajax({
+                                type: 'get',
+                                url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
+                                dataType: "json",        //返回数据形式为json
+                                success: function (result) {
+                                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                                    var data = result;
+                                    for (var i= 0;i<data.results.length; i++){
+                                        taobaonamelist.push(data['results'][i]['tagname']);
+                                        taobaovalueslist.push(data['results'][i]['tagcount']);
+                                    }
+                                    {#console.log(taobaonamelist);#}
+                                    for(var i=0; i<taobaonamelist.length;i++){
+                                    var json = {};
+                                        for (var j =0; j<taobaovalueslist.length;j++){
+                                            if(i==j){
+                                                json.value = taobaovalueslist[j][0];
+                                                json.name = taobaonamelist[i];
+                                                datajson.push(json)
+                                            }
+                                        }
+                                    }
+                                    jd.hideLoading();    //隐藏加载动画
+                                    jd.setOption({        //加载数据图表                
+                                        legend: {                    
+                                            data: taobaonamelist
+                                        },
+                                        series: [{                    
+                                            data: [
+                {value:335, name:'直接访问'},
+                {value:310, name:'邮件营销'},
+                {value:234, name:'联盟广告'},
+                {value:135, name:'视频广告'},
+                {value:1548, name:'搜索引擎'}
+            ],
+                                        }]
+                                    });
+                                },
+                                error: function (errorMsg) {
+                                    //请求失败时执行该函数
+                                    alert("图表请求数据失败!");
+                                    jd.hideLoading();
+                                }
+                            });
+
+
+
+                        {# 淘宝      #}
+                        taobao.setOption({
+                                color: ['#ff7d27', '#47b73d', '#fcc36e', '#57a2fd', "#228b22"],//饼图颜色
+                                title: {
+                        {#            text: '信息发布排行',#}
+                        {#            subtext: '纯属虚构',#}
+                                    x:'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },        
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data: []
+                                },        
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel'],
+                                            option: {
+                                                funnel: {
+                                                    x: '25%',
+                                                    width: '50%',
+                                                    funnelAlign: 'left',
+                                                    max: 1548
+                                                }
+                                            }
+                                        },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },         
+                                series: [{
+                                    name: '发布排行',
+                                    type: 'pie',
+                                    radius: '55%',
+                                    center: ['50%', '60%'],            
+                                    data: []
+                                }]        
+                            });
+                            taobao.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                            var taobaonamelist = [];    //类别数组（用于存放饼图的类别）
+                            var taobaovalueslist = [];
+                            var datajson = [];
+                            $.ajax({
+                                type: 'get',
+                                url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
+                                dataType: "json",        //返回数据形式为json
+                                success: function (result) {
+                                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                                    var data = result;
+                                    for (var i= 0;i<data.results.length; i++){
+                                        taobaonamelist.push(data['results'][i]['tagname']);
+                                        taobaovalueslist.push(data['results'][i]['tagcount']);
+                                    }
+                                    {#console.log(taobaonamelist);#}
+                                    for(var i=0; i<taobaonamelist.length;i++){
+                                    var json = {};
+                                        for (var j =0; j<taobaovalueslist.length;j++){
+                                            if(i==j){
+                                                json.value = taobaovalueslist[j][0];
+                                                json.name = taobaonamelist[i];
+                                                datajson.push(json)
+                                            }
+                                        }
+                                    }
+                                    taobao.hideLoading();    //隐藏加载动画
+                                    taobao.setOption({        //加载数据图表                
+                                        legend: {                    
+                                            data: taobaonamelist
+                                        },
+                                        series: [{                    
+                                            data: datajson
+                                        }]
+                                    });
+                                },
+                                error: function (errorMsg) {
+                                    //请求失败时执行该函数
+                                    alert("图表请求数据失败!");
+                                    taobao.hideLoading();
+                                }
+                            });                           
+
+                        {#suning#}
+                        suning.setOption({
+                                color: ['#ff7d27', '#47b73d', '#fcc36e', '#57a2fd', "#228b22"],//饼图颜色
+                                title: {
+                        {#            text: '信息发布排行',#}
+                        {#            subtext: '纯属虚构',#}
+                                    x:'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },        
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data: []
+                                },        
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel'],
+                                            option: {
+                                                funnel: {
+                                                    x: '25%',
+                                                    width: '50%',
+                                                    funnelAlign: 'left',
+                                                    max: 1548
+                                                }
+                                            }
+                                        },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },         
+                                series: [{
+                                    name: '发布排行',
+                                    type: 'pie',
+                                    radius: '55%',
+                                    center: ['50%', '60%'],            
+                                    data: []
+                                }]        
+                            });
+                            suning.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                            var taobaonamelist = [];    //类别数组（用于存放饼图的类别）
+                            var taobaovalueslist = [];
+                            var datajson = [];
+                            $.ajax({
+                                type: 'get',
+                                url: 'http://127.0.0.1:8080/api/TaobaoTag/?format=json',//请求数据的地址
+                                dataType: "json",        //返回数据形式为json
+                                success: function (result) {
+                                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                                    var data = result;
+                                    for (var i= 0;i<data.results.length; i++){
+                                        taobaonamelist.push(data['results'][i]['tagname']);
+                                        taobaovalueslist.push(data['results'][i]['tagcount']);
+                                    }
+                                    {#console.log(taobaonamelist);#}
+                                    for(var i=0; i<taobaonamelist.length;i++){
+                                    var json = {};
+                                        for (var j =0; j<taobaovalueslist.length;j++){
+                                            if(i==j){
+                                                json.value = taobaovalueslist[j][0];
+                                                json.name = taobaonamelist[i];
+                                                datajson.push(json)
+                                            }
+                                        }
+                                    }
+                                    suning.hideLoading();    //隐藏加载动画
+                                    suning.setOption({        //加载数据图表                
+                                        legend: {                    
+                                            data: taobaonamelist
+                                        },
+                                        series: [{                    
+                                            data: [
+                {value:335, name:'直接访问'},
+                {value:310, name:'邮件营销'},
+                {value:234, name:'联盟广告'},
+                {value:135, name:'视频广告'},
+                {value:1548, name:'搜索引擎'}
+            ],
+                                        }]
+                                    });
+                                },
+                                error: function (errorMsg) {
+                                    //请求失败时执行该函数
+                                    alert("图表请求数据失败!");
+                                    suning.hideLoading();
+                                }
+                            });
+                        };
+                        {#loadOneColumn();#}
 							</script>
 							
-				</div>
 {#				<div class="row">#}
 {#					<div class="col-md-4 stats-info widget">#}
 {#						<div class="stats-title">#}
@@ -428,26 +645,26 @@ loadOneColumn();
 {#        <!--//footer-->#}
 {#	</div>#}
 	<!-- Classie -->
-		<script src="/static/js/classie.js"></script>
-		<script>
-			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-				showLeftPush = document.getElementById( 'showLeftPush' ),
-				body = document.body;
-				
+{#		<script src="/static/js/classie.js"></script>#}
+{#		<script>#}
+{#			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),#}
+{#				showLeftPush = document.getElementById( 'showLeftPush' ),#}
+{#				body = document.body;#}
+{#				#}
 			{#showLeftPush.onclick = function() {#}
 			{#	classie.toggle( this, 'active' );#}
 			{#	classie.toggle( body, 'cbp-spmenu-push-toright' );#}
 			{#	classie.toggle( menuLeft, 'cbp-spmenu-open' );#}
 			{#	disableOther( 'showLeftPush' );#}
 			{#};#}
-			
-
-			function disableOther( button ) {
-				if( button !== 'showLeftPush' ) {
-					classie.toggle( showLeftPush, 'disabled' );
-				}
-			}
-		</script>
+{#			#}
+{##}
+{#			function disableOther( button ) {#}
+{#				if( button !== 'showLeftPush' ) {#}
+{#					classie.toggle( showLeftPush, 'disabled' );#}
+{#				}#}
+{#			}#}
+{#		</script>#}
 	<!--scrolling js-->
 	<script src="/static/js/jquery.nicescroll.js"></script>
 	<script src="/static/js/scripts.js"></script>

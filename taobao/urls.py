@@ -5,7 +5,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from taobao.views import index
-from .views import search, show
+from .views import search
 from taobao.serializer_view_set import *
 
 router = DefaultRouter()
@@ -24,7 +24,7 @@ urlpatterns = [
     # path('search/', search, name="search"),
     path('', index, name="index"),
     path('search', search, name='search'),
-    path('show/<int:id>/', show, name="show"),
+    # path('show/<int:id>/', show, name="show"),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include(router.urls)),
 ]

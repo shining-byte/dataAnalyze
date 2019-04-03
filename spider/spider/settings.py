@@ -10,9 +10,10 @@
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 import os
 import sys
+import django
+
 sys.path.append('../../dataAnalyze')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'dataAnalyze.settings')
-import django
 django.setup()
 
 BOT_NAME = 'spider'
