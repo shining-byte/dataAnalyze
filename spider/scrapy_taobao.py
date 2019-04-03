@@ -2,7 +2,12 @@
 # Author: cmzz
 # @Time :19-3-25
 from scrapy import cmdline
-
-from spider.spiders.scrapy_jingdong import JDSpider
-# JDSpider.start_urls = ['https://item.jd.com/100000232304.html']
-cmdline.execute("scrapy crawl taobao".split())
+import os
+import sys
+import django
+from django.core.wsgi import get_wsgi_application
+sys.path.append(os.path.dirname(os.path.abspath('.')))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'dataAnalyze.settings'
+application = get_wsgi_application()
+django.setup()
+cmdline.execute("scrapy crawl taobao -a keyword=小米9".split())

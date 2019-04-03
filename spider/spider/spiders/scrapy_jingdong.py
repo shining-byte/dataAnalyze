@@ -26,7 +26,7 @@ class JDSpider(scrapy.Spider):
     def parse(self, response):
         selector = Selector(response)
 
-        productsItem = JDProductsItem()
+        jdproductsItem = JDProductsItem()
         price = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/strong/i/text()').extract()[:5]
         name = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/font/text()').extract()[:5]
         desc = selector.xpath('//*[@id="J_goodsList"]/ul/li/div/div/a/em/text()').extract()[:5]
@@ -40,18 +40,18 @@ class JDSpider(scrapy.Spider):
             prdouctname['name'] = name[i]
             prdouctname['jdProductId'] = id[i]
             yield prdouctname
-            productsItem['productid'] = id[i]
-            productsItem['category'] = category
-            productsItem['description'] = desc[i]
-            productsItem['name'] = name[i]
-            productsItem['imgurl'] = imgurl[i]
-            productsItem['reallyPrice'] = price[i]
-            productsItem['url'] = url[i]
-            yield productsItem
+            jdproductsItem['productid'] = id[i]
+            jdproductsItem['category'] = category
+            jdproductsItem['description'] = desc[i]
+            jdproductsItem['name'] = name[i]
+            jdproductsItem['imgurl'] = imgurl[i]
+            jdproductsItem['reallyPrice'] = price[i]
+            jdproductsItem['url'] = url[i]
+            yield jdproductsItem
 
             data = dict()
             data['product_id'] = id[i]
-            # yield productsItem
+            # yield jdproductsItem
 
             yield Request(url=comment_url % (id[i], '0'), callback=self.parse_comments, meta=data)
             # yield Request(url='https:'+idurl, callback=self.parse_product)
@@ -104,27 +104,27 @@ class JDSpider(scrapy.Spider):
     #     # shopItem['_id'] = name
     #     # yield shopItem
     #     # 产品
-    #     # productsItem = ProductsItem()
-    #     # productsItem['shopId'] = shop_id
-    #     # productsItem['category'] = categoryname
+    #     # jdproductsItem = jdproductsItem()
+    #     # jdproductsItem['shopId'] = shop_id
+    #     # jdproductsItem['category'] = categoryname
     #     # try:
     #     #     title = response.xpath('//div[@class="sku-name"]/text()').extract()[0].replace(u"\xa0", "").strip()
     #     # except Exception as e:
     #     #     title = response.xpath('//div[@id="name"]/h1/text()').extract()[0]
-    #     # productsItem['name'] = title
+    #     # jdproductsItem['name'] = title
     #     product_id = response.url.split('/')[-1][:-5]
-    #     # productsItem['_id'] = product_id
-    #     # productsItem['url'] = response.url
+    #     # jdproductsItem['_id'] = product_id
+    #     # jdproductsItem['url'] = response.url
     #
     #     # description
     #     # desc = response.xpath('//ul[@class="parameter2 p-parameter-list"]//text()').extract()
-    #     # productsItem['description'] = ';'.join(i.strip() for i in desc)
+    #     # jdproductsItem['description'] = ';'.join(i.strip() for i in desc)
     #
     #     # price
     #     # response = requests.get(url=price_url + product_id)
     #     # price_json = response.json()
-    #     # productsItem['reallyPrice'] = price_json[0]['p']
-    #     # productsItem['originalPrice'] = price_json[0]['m']
+    #     # jdproductsItem['reallyPrice'] = price_json[0]['p']
+    #     # jdproductsItem['originalPrice'] = price_json[0]['m']
     #
     #     # 优惠
     #     # res_url = favourable_url % (product_id, shop_id, vender_id, re_categoy[0][0].replace(',', '%2c'))
@@ -140,16 +140,16 @@ class JDSpider(scrapy.Spider):
     #     #         fav_count = item['discount']
     #     #         # fav_time = item['addDays']
     #     #         desc1.append(u'有效期%s至%s,满%s减%s' % (start_time, end_time, fav_price, fav_count))
-    #     #     productsItem['favourableDesc1'] = ';'.join(desc1)
+    #     #     jdproductsItem['favourableDesc1'] = ';'.join(desc1)
     #     # # 若商品没有活动
     #     # else:
-    #     # # if (productsItem['favourableDesc1']):
-    #     #     productsItem['favourableDesc1'] = '无活动'
+    #     # # if (jdproductsItem['favourableDesc1']):
+    #     #     jdproductsItem['favourableDesc1'] = '无活动'
     #
     #
     #     data = dict()
     #     data['product_id'] = product_id
-    #     # yield productsItem
+    #     # yield jdproductsItem
     #
     #     yield Request(url=comment_url % (product_id, '0'), callback=self.parse_comments, meta=data)
     #
@@ -209,7 +209,7 @@ class JDSpider(scrapy.Spider):
                 # comment['imageCount'] = comment_item.get('imageCount')
                 comment['nickname'] = comment_item.get('nickname')
                 # comment['productColor'] = comment_item.get('productColor')
-                comment['productId'] = product_id
+                comment['productid'] = product_id
                 # comment['productSize'] = comment_item.get('productSize')
                 # comment['referenceId'] = comment_item.get('referenceId')
                 # comment['referenceName'] = comment_item.get('referenceName')
@@ -272,7 +272,7 @@ class JDSpider(scrapy.Spider):
                 pass
             else:
                 comment = JDCommentItem()
-                comment['productId'] = product_id
+                comment['productid'] = product_id
                 # comment['shop_id'] = shop_id
                 # comment['userid'] = comment_item.get('id')
                 comment['content'] = comment_item.get('content')

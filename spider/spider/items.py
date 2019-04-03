@@ -5,6 +5,7 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
 from scrapy_djangoitem import DjangoItem
+
 from taobao.models import *
 
 

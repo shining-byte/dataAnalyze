@@ -15,13 +15,13 @@ class ProductName(models.Model):
 
 
 class JDProductsItem(models.Model):
-    productid =models.CharField('产品id', primary_key=True, max_length=50)  #
-    category =models.CharField('产品分类名', max_length=50, blank=True)  #
-    description =models.TextField('产品描述', blank=True)  #
-    name =models.ForeignKey(ProductName, on_delete=models.CASCADE)  #
+    productid = models.CharField('产品id', primary_key=True, max_length=50)  #
+    category = models.CharField('产品分类名', max_length=50, blank=True)  #
+    description = models.TextField('产品描述', blank=True)  #
+    name = models.CharField('京东商品名', max_length=50) #
     # originalPrice =models.FloatField('原价', blank=True)  #
     imgurl = models.CharField('封面地址', max_length=300)
-    reallyPrice =models.FloatField('当前价格', blank=True)  #
+    reallyPrice = models.FloatField('当前价格', blank=True)  #
     # shopId =models.ForeignKey(ShopItem, on_delete=models.CASCADE)  #
     url = models.URLField('商品地址', blank=True)
     # favourableDesc1 =models.CharField('优惠描述1', max_length=300, blank=True)  #
@@ -32,10 +32,8 @@ class JDProductsItem(models.Model):
         verbose_name_plural = verbose_name
 
 
-
-
 class JDCommentSummaryItem(models.Model):
-    productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE, primary_key=True)
+    productid = models.CharField('京东商品id', max_length=50)
     # productname = models.ForeignKey(ProductName, on_delete=models.CASCADE)
     afterCount = models.IntegerField('追加评论', blank=True)
     averageScore = models.IntegerField('平均评分', blank=True)
@@ -63,7 +61,7 @@ class JDCommentSummaryItem(models.Model):
 
 
 class JDHotCommentTagItem(models.Model):
-    productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE)
+    productid =models.CharField('京东商品id', max_length=50)
     name = models.CharField('标签名字', max_length=100, blank=True)
     count = models.CharField('数量', max_length=100, blank=True)
 
@@ -74,7 +72,7 @@ class JDHotCommentTagItem(models.Model):
 
 
 class JDCommentItem(models.Model):
-    productid = models.ForeignKey(JDProductsItem, on_delete=models.CASCADE)
+    productid = models.CharField('京东商品id', max_length=50)
     # userid =models.CharField('评论用户id', max_length=100, blank=True)
     content = models.TextField('评论内容', blank=True)
     # creationTime = models.CharField('评论时间', max_length=100, blank=True)
@@ -100,7 +98,7 @@ class JDCommentItem(models.Model):
 
 
 class JDAfterComment(models.Model):
-    productid = models.ForeignKey(JDProductsItem , on_delete=models.CASCADE)
+    productid = models.CharField('京东商品id', max_length=50)
     commentid = models.CharField('评论人ID', max_length=100)
     content = models.TextField('追评内容')
 
@@ -112,7 +110,7 @@ class JDAfterComment(models.Model):
 
 class TaobaoProduct(models.Model):
     productid = models.CharField('产品id', max_length=50, primary_key=True)
-    productname = models.ForeignKey(ProductName, on_delete=models.CASCADE)
+    productname = models.CharField('淘宝商品名字', max_length=50)
     productprice = models.FloatField('价钱')
     producturl = models.URLField('商品购买地址')
 
@@ -123,7 +121,7 @@ class TaobaoProduct(models.Model):
 
 
 class TaobaoComment(models.Model):
-    productid = models.ForeignKey(TaobaoProduct, on_delete=models.CASCADE)
+    productid = models.CharField('淘宝商品id', max_length=50)
     displayUserNick = models.CharField('卖家', max_length=50)
     rateContent = models.TextField('评论')
 
@@ -135,7 +133,7 @@ class TaobaoComment(models.Model):
 
 # 淘宝
 class TaobaoTag(models.Model):
-    productid = models.ForeignKey(TaobaoProduct, on_delete=models.CASCADE)
+    productid = models.CharField('淘宝商品id', max_length=50)
     tagname = models.CharField('特性名字', max_length=50)
     tagcount = models.CharField('数量', max_length=50)
 
