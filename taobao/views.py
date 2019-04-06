@@ -11,6 +11,24 @@ def index(request):
     return render(request, 'index.html')
 
 
+def index3(request):
+    return render(request, 'index3.html')
+
+
+def onlineshop(request):
+    return render(request, 'elements.html')
+
+
+def search_reslut(request):
+    return render(request, 'search_reslut.html')
+
+
+def travel_hotel(request):
+    return render(request, 'travel_hotel.html')
+
+
+def hotel_reslut(request):
+    return render(request, 'hotel_reslut.html')
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):

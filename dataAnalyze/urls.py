@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
-
+from taobao.views import *
 
 
 # router = DefaultRouter()
@@ -28,4 +28,9 @@ urlpatterns = [
     path('', include('taobao.urls')),
     path('admin/', admin.site.urls),
     # path('index-api/', include(router.urls)),
+    path('index3', index3, name='index3'),
+    path('onlineshop', onlineshop, name='onlineshop'),
+    path('search_reslut', search_reslut, name='search_reslut'),
+    path('travel_hotel', travel_hotel, name='travel_hotel'),
+    path('hotel_reslut', hotel_reslut, name='hotel_reslut'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
