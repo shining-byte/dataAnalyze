@@ -23,8 +23,11 @@ def onlineshop(request):
 def search_reslut(request):
     keyword = request.GET.get('keyword')
     # 获取京东id
-    jdlist = scrapy_JD2(keyword)
-    suninglist = scrapy_suning2(keyword)
+    try:
+        jdlist = scrapy_JD2(keyword)
+        suninglist = scrapy_suning2(keyword)
+    except Exception as e:
+        print(e)
     # 爬取京东
     # spider = ScrapyInfo(jdid=id, keyword=keyword)
     # spider.scrapy_JDinfo()
@@ -40,12 +43,26 @@ def travel_hotel(request):
 
 def hotel_reslut(request):
     q = request.GET.get('q')
-    meituan = Meituan('北京')
-    ctrip = Ctrip('北京')
-    # print(meituan.hotels)
-    # print(ctrip.hotels)
-    # print(q)
-    return render(request, 'hotel_reslut.html')
+    try:
+        meituan = Meituan(q)
+        ctrip = Ctrip(q)
+        meituanlist = meituan.hotels
+        ctriplist = ctrip.hotels
+    except Exception as e:
+        print(e)
+    return render(request, 'hotel_reslut.html', {'meituanlist': meituanlist, 'ctriplist': ctriplist})
+
+
+def travel_reslut(request):
+    q = request.GET.get('q')
+    try:
+        meituan = Meituan(q)
+        ctrip = Ctrip(q)
+        meituanlist = meituan.hotels
+        ctriplist = ctrip.hotels
+    except Exception as e:
+        print(e)
+    return render(request, 'hotel_reslut.html', {'meituanlist': meituanlist, 'ctriplist': ctriplist})
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):
@@ -154,19 +171,23 @@ def search(request):
             # taobao = TaobaoProduct.objects.filter(productid=taobaoid)[0]
 
         # 取评论
-        taobaocomments = TaobaoComment.objects.filter(productid=taobaoid)[:10]
-        jdcomments = JDCommentItem.objects.filter(productid=jdid)[:10]
-        suningid = ProductName.objects.get(name=keyword).suningId
-        suningcomments = SuNingComment.objects.filter(productid=suningid)[:10]
-
-        dict['jdid'] = jdid
-        dict['jdurl'] = jdurl
-        dict['jdprice'] = jdprice
-        dict['taobaoid'] = taobaoid
-        dict['taobaocomments'] = taobaocomments
-        dict['jdcomments'] = jdcomments
-        dict['suningid'] = suningid
-        dict['suningcomments'] = suningcomments
+        try:
+            taobaocomments = TaobaoComment.objects.filter(productid=taobaoid)[:10]
+            jdcomments = JDCommentItem.objects.filter(productid=jdid)[:10]
+            suningid = ProductName.objects.get(name=keyword).suningId
+            suningcomments = SuNingComment.objects.filter(productid=suningid)[:10]
+            suningurl = SuNingProduct.objects.get(productid=suningid).producturl
+            dict['jdid'] = jdid
+            dict['jdurl'] = jdurl
+            dict['jdprice'] = jdprice
+            dict['taobaoid'] = taobaoid
+            dict['taobaocomments'] = taobaocomments
+            dict['jdcomments'] = jdcomments
+            dict['suningid'] = suningid
+            dict['suningcomments'] = suningcomments
+            dict['suningurl'] = suningurl
+        except Exception as e:
+            print(e)
     return render(request, 'show2.html', dict)
 
 

@@ -5,9 +5,6 @@ import json
 import os
 import re
 import time
-
-import sys
-
 from taobao.models import *
 import requests
 from scrapy.selector import Selector
@@ -322,30 +319,28 @@ class Ctrip:
         return str(self.hotels)
 
 
-#美团酒店
+# 美团酒店
 class Meituan:
     def __init__(self, city):
         local_path = os.path.dirname(os.path.realpath(__file__))
-        print(local_path)
         meituan = open(local_path+"/meituan.txt", mode='r')#读取城市字典
         self.__cities = eval(meituan.readline())
-        self.city=city #当前城市
-        self.page=1 #当前页面
-        self.hotels=[] #所有酒店列表
+        self.city = city #当前城市
+        self.page = 1 #当前页面
+        self.hotels = [] #所有酒店列表
         self.changeCity(self.city)
         meituan.close()
 
-    #改变城市或页数
-    def changeCity(self,city,page=1):
+    # 改变城市或页数
+    def changeCity(self, city, page=1):
         try:
-            self.city=city
-            self.page=page
+            self.city = city
+            self.page = page
             headers = {
                 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0"
             }
-            respon=requests.get(self.__getUrl(self.city,self.page),headers=headers)
-            print(respon.text)
-            raw_hotels=respon.json()['data']['searchresult']
+            respon=requests.get(self.__getUrl(self.city,self.page), headers=headers)
+            raw_hotels = respon.json()['data']['searchresult']
             hotels=[]
             for raw_hotel in raw_hotels:
                 hotel={}

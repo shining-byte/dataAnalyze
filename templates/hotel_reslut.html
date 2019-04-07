@@ -20,130 +20,136 @@
 				<div class="row wrap-content">
 					<div class="col-1-4">
 						<div class="wrap-col">
+                            {% for meituan in meituanlist %}
 							<article>
 								<div class="wrap-art">
-									<img src="/static/images/2.jpg">
+                                    <a href="{{ meituan.href }}"><img src="https://p0.ssl.qhimgs1.com/t014ee531771139a81c.jpg"></a>
 									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
+                                        <a href="{{ meituan.href }}"><h3>{{ meituan.name }}</h3></a>
 									</div>
 									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
+										<p>{{ meituan.tag }}</p>
+										<p>地址:{{ meituan.location }}</p>
+                                        <p>评分:{{ meituan.score }}类型:{{ meituan.star }},消费:{{ meituan.people_num }}</p>
 									</div>
 								</div>
 							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/12.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/3.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/11.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/16.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
+                            {% endfor %}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/12.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/3.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/11.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/16.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
 						</div>
 					</div>
 					<div class="col-1-4">
 						<div class="wrap-col">
+                            {% for ctrip in ctriplist %}
 							<article>
 								<div class="wrap-art">
-									<img src="/static/images/5.jpg">
+									<a href="{{ ctrip.href }}"><img src="http://{{ ctrip.pic_href }}"></a>
+
 									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
+										<h3>{{ ctrip.name }}</h3>
 									</div>
 									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
+										<p>{{ ctrip.location }}</p>
+										<p>评分:{{ ctrip.score }},价格:{{ ctrip.people_num }},</p>
 									</div>
 								</div>
 							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/6.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/7.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/4.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/15.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
+                            {% endfor %}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/6.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/7.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/4.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/15.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
 						</div>
 					</div>
 					<div class="col-1-4">
@@ -160,54 +166,54 @@
 									</div>
 								</div>
 							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/9.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/10.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/13.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="wrap-art">
-									<img src="/static/images/14.jpg">
-									<div class="art-header">
-										<h3>Civita di Bagnoregio, Italia</h3>
-									</div>
-									<div class="art-content">
-										<p>April 14, 2015</p>
-										<p>Uploaded by <a href="#">John Doe</a></p>
-									</div>
-								</div>
-							</article>
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/9.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/10.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/13.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
+{#							<article>#}
+{#								<div class="wrap-art">#}
+{#									<img src="/static/images/14.jpg">#}
+{#									<div class="art-header">#}
+{#										<h3>Civita di Bagnoregio, Italia</h3>#}
+{#									</div>#}
+{#									<div class="art-content">#}
+{#										<p>April 14, 2015</p>#}
+{#										<p>Uploaded by <a href="#">John Doe</a></p>#}
+{#									</div>#}
+{#								</div>#}
+{#							</article>#}
 						</div>
 					</div>
 				</div>

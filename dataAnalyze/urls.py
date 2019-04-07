@@ -33,4 +33,5 @@ urlpatterns = [
     path('search_reslut', search_reslut, name='search_reslut'),
     path('travel_hotel', travel_hotel, name='travel_hotel'),
     path('hotel_reslut', hotel_reslut, name='hotel_reslut'),
+    path('travel_reslut', travel_reslut, name='travel_reslut'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
