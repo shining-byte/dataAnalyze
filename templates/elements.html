@@ -36,8 +36,11 @@
 		</div>
 		<div class="search fl">
 			<div class="sch-form">
-				<input type="text" class="stext">
-				<input type="button" class="sbtn" value="搜索">
+                <form action="{% url 'search_reslut' %}">
+				<input type="text" class="stext" name="keyword">
+{#				<input type="button" class="sbtn" value="搜索">#}
+                    <button type="submit" class="sbtn">搜索</button>
+                    </form>
 			</div>
 			<div class="sch-hint">
 				<a href="">笔记本电脑</a>

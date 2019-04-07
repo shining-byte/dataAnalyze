@@ -4,7 +4,7 @@ import time
 from taobao.models import *
 from taobao.serializers import *
 
-from utils.scrapy_web import ScrapyInfo, scrapy_JD, scrapy_suning
+from utils.scrapy_web import *
 
 
 def index(request):
@@ -19,8 +19,19 @@ def onlineshop(request):
     return render(request, 'elements.html')
 
 
+# 不入数据库,实时爬取
 def search_reslut(request):
-    return render(request, 'search_reslut.html')
+    keyword = request.GET.get('keyword')
+    # 获取京东id
+    jdlist = scrapy_JD2(keyword)
+    suninglist = scrapy_suning2(keyword)
+    # 爬取京东
+    # spider = ScrapyInfo(jdid=id, keyword=keyword)
+    # spider.scrapy_JDinfo()
+    # print(new_dict)
+    # for price, desc, imgurl, id, url in new_dict.items:
+    #     print(price, desc, imgurl)
+    return render(request, 'search_reslut.html', {'jdlist': jdlist, 'suninglist': suninglist, 'keyword': keyword})
 
 
 def travel_hotel(request):
@@ -28,6 +39,12 @@ def travel_hotel(request):
 
 
 def hotel_reslut(request):
+    q = request.GET.get('q')
+    meituan = Meituan('北京')
+    ctrip = Ctrip('北京')
+    # print(meituan.hotels)
+    # print(ctrip.hotels)
+    # print(q)
     return render(request, 'hotel_reslut.html')
 # def show(request, id):
 #     mydict = {}
