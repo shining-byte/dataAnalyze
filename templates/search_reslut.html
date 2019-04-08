@@ -46,6 +46,29 @@
 </div>
 {#        {% endfor %}#}
     {% endfor %}
+
+    {% for taobao in taobaolist %}
+<div class="bjlineSmall singlebj bj_1570533847" >
+  <div class="pic"><a class="shenqingGY" href="{{ taobao.detail_url }}" target="_blank">
+      <img src="{{ taobao.imgurl }}"></a></div>
+  <div class="title">
+    <div class="t"><a class="shenqingGY" href="{{ taobao.detail_url }}" target="_blank">
+        <font class="spnamehighword">{{ keyword }}</font>{{ taobao.title }}</a> <span> <span class="priceyouhui"></span></span></div>
+
+  </div>
+  <div class="cost">
+      <div class="p AreaPrice outprice"><em>¥</em><span class="listpricespan">{{ taobao.price }}</span></div>
+   <font class="pricedanjia"></font><div class="mobprice"></div>
+   <div style="width:120px"><span style="color:#FF5600;"></span></div>
+  </div>
+  <div class="comment">&nbsp; </div>
+  <div class="mall">
+    <p class="m"><img src="https://gtms01.alicdn.com/tps/i1/T1Kz0pXzJdXXXIdnjb-146-58.png" align="absmiddle"> <span class="shenqingGY">淘宝天猫</span></p>
+  </div>
+  <div class="clear"></div>
+</div>
+{#        {% endfor %}#}
+    {% endfor %}
 <style type="text/css">
     .bjlineSmall{width: 990px;padding: 12px 0px;border-bottom:1px solid #eeeeee; position:relative;}
 .bjlineSmall .clear{ height:0px; font-size:0px;overflow:hidden; clear:both;}

@@ -345,7 +345,7 @@ class Meituan:
             raw_hotels = respon.json()['data']['searchresult']
             hotels=[]
             for raw_hotel in raw_hotels:
-                hotel={}
+                hotel = {}
                 hotel['name']=raw_hotel.get('name') #酒店名字
                 hotel['id']=raw_hotel.get('poiid') #酒店id
                 hotel['price']=raw_hotel.get('lowestPrice') #酒店价格
@@ -415,3 +415,61 @@ def scrapy_tuniu(keyword):
         return None
 
 
+# 爬取马蜂窝城市id
+def scrapy_mafengwoCityId(city):
+    url = 'http://www.mafengwo.cn/ajax/router.php?sAct=KMdd_StructWebAjax|SearchMdd&sName={}'.format(city)
+
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+               'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+    response = requests.get(url=url, headers=headers)
+
+    cityid = response.json()['data']['mdd'][0]['mddid']
+
+    return cityid
+
+
+# 爬取马蜂窝美食
+def scrapy_maofengwo(id):
+    try:
+        url = 'http://www.mafengwo.cn/cy/{}/gonglve.html'.format(id)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+                   'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+        response = requests.get(url=url, headers=headers)
+        info = re.compile(
+            '''<li class="item clearfix">.*?<a href="(.*?)".*?><img src="(.*?)".*?alt="(.*?)"></a>.*?<em>(.*?)</em>.*?<div class="rev-txt">.*?<p>(.*?)</p>.*?</div>.*?</li>''',
+            re.S).findall(response.text)
+        list1 = ['url', 'imgurl', 'name', 'score', 'content']
+        newlist = []
+        for i in range(len(info)):
+            newdict = zip(list1, info[i])
+            newdict2 = dict(newdict)
+            newlist.append(newdict2)
+        return newlist
+    except Exception as e:
+        print(e)
+
+
+# 搜索淘宝商品
+def scrapy_taobao(keyword):
+    try:
+        url = 'https://s.taobao.com/search?q={}'.format(keyword)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+                   'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+        response = requests.get(url=url, headers=headers)
+        price = re.findall('"view_price":"(.*?)",', response.text)[:5]  # 正则提示商品价格
+        nid = re.findall('"nid":"(.*?)"', response.text)[:5]
+        title = re.findall('"raw_title":"(.*?)"', response.text)[:5]
+        imgurl = re.findall('"pic_url":"(.*?)"', response.text)[:5]
+        list2 = []
+        for i in nid:
+            detail_url = 'https://detail.tmall.com/item.htm?spm=a230r.1.14.6.70de7ffcZej9q8&id={}&cm_id=140105335569ed55e27b&abbucket=20&sku_properties=10004:1617715035;5919063:6536025'.format(i)
+            list2.append(detail_url)
+        new_list = []
+
+        mid = map(list, zip(price, title, imgurl, list2))
+        for item in mid:
+            new_dict = dict(zip(['price', 'title', 'imgurl', 'detail_url'], item))
+            new_list.append(new_dict)
+        return new_list
+    except Exception as e:
+        print(e)

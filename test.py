@@ -2,35 +2,19 @@ import re
 from scrapy import Selector
 import requests
 
-url = 'http://s.tuniu.com/search_complex/whole-shz-0-{}/'.format('北京')
+url = 'https://s.taobao.com/search?q=华为'
 
-response = requests.get(url=url).text
-
-# print(response.text)
-# text = selector.xpath('//*[@id="niuren_list"]/div[2]/div[2]/div[1]/div[2]').extract()
-# print(text)
-url = re.compile('''<li>.*?<a.*?href="(.*?)".*?>.*?</li>''', re.S).findall(response)[:20] # 链接
-imgurl = re.compile('''<li>.*?<img.*?data-src="(.*?)".*?>.*?</li>''', re.S).findall(response)[:20] # 图片链接
-# print(len(imgurl))
-# print(url)
-# print(len(imgurl))
-title = re.compile('''<li>.*?<span.*?title="&lt;(.*?)">.*?</span>.*?</li>''', re.S).findall(response)[:20] # 标题
-de2 = re.compile('''<li>.*?<dd class="overview" title="(.*?)">.*?</dd>.*?</li>''', re.S).findall(response)[:20] # 标题
-price = re.compile('''<li>.*?<em>(.*?)</em>.*?</li>''', re.S).findall(response)[:20] # 标题
-# print(title)
-# imgurl = selector.xpath('//*[@id="niuren_list"]/div[2]/div[2]/div[1]/div[3]/ul/li[1]/div/a/dl/dt/p[3]').extract()
-# de = selector.xpath('//*[@id="niuren_list"]/div[2]/div[2]/div[1]/div[3]/ul/li/div/a/dl/dd[1]').extract()[0]
-# print(de)
-#
-# price = selector.xpath('//*[@id="niuren_list"]/div[2]/div[2]/div[1]/div[2]/ul/li/div/a/div[2]/div[1]/em/text()').extract()[:20]
-# print(info)
-# print(de)
-
-# print(len(text))
-print(len(url))
-print(len(imgurl))
-print(len(title))
-print(len(de2))
-print(price)
-# print(price)
-
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+           'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+response = requests.get(url=url, headers=headers)
+prices = re.findall('"view_price":"(.*?)",', response.text)[:5]  # 正则提示商品价格
+nid = re.findall('"nid":"(.*?)"', response.text)[:5]
+title = re.findall('"raw_title":"(.*?)"', response.text)[:5]
+pic_url = re.findall('"pic_url":"(.*?)"', response.text)[:5]
+detail_url = re.findall('"detail_url":"(.*?)"', response.text)[:5]
+list = []
+print(nid)
+for i in nid:
+    detail_url = ['https://detail.tmall.com/item.htm?spm=a230r.1.14.6.70de7ffcZej9q8&id={}&cm_id=140105335569ed55e27b&abbucket=20&sku_properties=10004:1617715035;5919063:6536025'.format(i)]
+    list.append(detail_url)
+print(list)

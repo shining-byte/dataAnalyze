@@ -26,6 +26,8 @@ def search_reslut(request):
     try:
         jdlist = scrapy_JD2(keyword)
         suninglist = scrapy_suning2(keyword)
+        taobaolist = scrapy_taobao(keyword)
+        print(taobaolist)
     except Exception as e:
         print(e)
     # 爬取京东
@@ -34,7 +36,7 @@ def search_reslut(request):
     # print(new_dict)
     # for price, desc, imgurl, id, url in new_dict.items:
     #     print(price, desc, imgurl)
-    return render(request, 'search_reslut.html', {'jdlist': jdlist, 'suninglist': suninglist, 'keyword': keyword})
+    return render(request, 'search_reslut.html', {'jdlist': jdlist, 'suninglist': suninglist, 'keyword': keyword, 'taobaolist': taobaolist})
 
 
 def hotel(request):
@@ -43,6 +45,10 @@ def hotel(request):
 
 def travel(request):
     return render(request, 'travel.html')
+
+
+def cate(request):
+    return render(request, 'cate.html')
 
 
 # 酒店搜索结果
@@ -64,6 +70,16 @@ def travel_reslut(request):
     info = scrapy_tuniu(q)
 
     return render(request, 'travel_reslut.html', {'info': info})
+
+
+# 美食搜索结果
+def cate_reslut(request):
+    city = request.GET.get('q')
+    #  先获取id
+    id = scrapy_mafengwoCityId(city)
+    # 再该城市的美食
+    info = scrapy_maofengwo(id)
+    return render(request, 'cate_reslut.html', {'info': info})
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):

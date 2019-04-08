@@ -20,16 +20,16 @@
 				<div class="row wrap-content">
 					<div class="col-1-4">
 						<div class="wrap-col">
-                            {% for tuniu in info %}
+                            {% for mafengwo in info %}
 							<article>
 								<div class="wrap-art">
-                                    <a href="{{ tuniu.url }}"><img src="http:{{ tuniu.imgurl }}"></a>
+                                    <a href="www.mafengwo.cn{{ mafengwo.url }}"><img src="{{ mafengwo.imgurl }}"></a>
 									<div class="art-header">
-                                        <a href="{{ tuniu.url }}"><h3>{{ tuniu.title }}</h3></a>
+                                        <a href="{{ mafengwo.url }}"><h3>{{ mafengwo.name }}</h3></a>
 									</div>
 									<div class="art-content">
-										<p>旅游景点:{{ tuniu.destination }}</p>
-                                        <p>价格:{{ tuniu.price }}</p>
+										<p>评分{{ mafengwo.score }}</p>
+                                        <p>价格:{{ mafengwo.content }}</p>
 									</div>
 								</div>
 							</article>

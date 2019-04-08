@@ -38,4 +38,7 @@ urlpatterns = [
     # 旅游
     path('travel', travel, name='travel'),
     path('travel_reslut', travel_reslut, name='travel_reslut'),
+    # 美食
+    path('cate', cate, name='cate'),
+    path('cate_reslut', cate_reslut, name='cate_reslut'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
