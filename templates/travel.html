@@ -1,0 +1,72 @@
+{% extends 'hotel.html' %}
+{% block content %}
+							<!-- Content -->
+<section>
+<div class="wrap-header">
+		<h1>see the word differently</h1>
+		<span>搜索你想要去的地方</span>
+		<center><div class="search-form">
+			<form method="get" action="{% url 'travel_reslut' %}" id="search" class="f-right">
+				<input name="q" type="text" size="40" placeholder="Where are you going ?">
+				<input type="submit" name="Submit" value="Search">
+			</form>
+		</div></center>
+
+	</div>
+</section>
+                            <style type="text/css">
+.wrap-header{
+	background: url('../static/images/16.jpg') no-repeat 100% 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 750px;
+}
+.wrap-header{text-align: center;padding: 60px 0;}
+.wrap-header h1{font-size: 50px;color: #fff;line-height: 1.2;text-transform: uppercase;letter-spacing: 7px;margin-bottom:10px;}
+.wrap-header span {font-size: 25px;color: #fff;}
+.wrap-header  ul{padding:0px;margin:0px;list-style: none;}
+.wrap-header ul li{display:inline;}
+.wrap-header ul a {float:left;color: #DDD;margin-left: 20px; text-transform: uppercase;padding: 10px;font-size: 16px;font-weight: bold;}
+.wrap-header ul p {float:left;color: #DDD;margin-left: 20px; text-transform: uppercase;font-size: 16px;font-weight: bold;}
+.wrap-header a:hover{color: #FE9B13;}
+
+.wrap-header .search-form{background-color: rgba(220, 220, 220, 0.9);padding: 15px 18px;margin: 60px auto 50px auto;display:inline-block;}
+
+#search {}
+
+#search input[type="text"] {
+    border: 0 none;
+    font: bold 17px Arial,Helvetica,Sans-serif;
+    color: #FF9204;
+    max-width: 380px;
+	width: 70%;
+	min-width: 200px;
+    padding: 10px ;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+    }
+#search input[type="submit"]{
+	background: url(../static/images/search-dark.png) no-repeat 14px 14px #FE9B13;/* Fallback color for non-css3 browsers */
+	padding: 10px 20px 10px 39px;
+	color: #000;
+	cursor: pointer;
+	font: bold 17px Arial, Helvetica, sans-serif;
+	font-weight: 780;
+	outline: none;
+	-webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+	}
+
+                            </style>
+                            {% endblock%}

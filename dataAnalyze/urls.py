@@ -29,9 +29,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('index-api/', include(router.urls)),
     path('index3', index3, name='index3'),
+    # 网购
     path('onlineshop', onlineshop, name='onlineshop'),
     path('search_reslut', search_reslut, name='search_reslut'),
-    path('travel_hotel', travel_hotel, name='travel_hotel'),
+    # 酒店
+    path('hotel', hotel, name='hotel'),
     path('hotel_reslut', hotel_reslut, name='hotel_reslut'),
+    # 旅游
+    path('travel', travel, name='travel'),
     path('travel_reslut', travel_reslut, name='travel_reslut'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)

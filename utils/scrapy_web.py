@@ -5,6 +5,8 @@ import json
 import os
 import re
 import time
+
+
 from taobao.models import *
 import requests
 from scrapy.selector import Selector
@@ -383,4 +385,33 @@ class Meituan:
 
     def __str__(self):
         return str(self.hotels)
+
+
+# 搜索途牛旅游网
+def scrapy_tuniu(keyword):
+    url = 'http://s.tuniu.com/search_complex/whole-shz-0-{}/'.format(keyword)
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+                   'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
+        response = requests.get(url=url, headers=headers).text
+
+
+        url = re.compile('''<li>.*?<a.*?href="(.*?)".*?>.*?</li>''', re.S).findall(response)[:20]  # 链接
+        imgurl = re.compile('''<li>.*?<img.*?data-src="(.*?)".*?>.*?</li>''', re.S).findall(response)[1:21]  # 图片链接
+
+        title = re.compile('''<li>.*?<span.*?title="&lt;(.*?)">.*?</span>.*?</li>''', re.S).findall(response)[:20]  # 标题
+        destination = re.compile('''<li>.*?<dd class="overview" title="(.*?)">.*?</dd>.*?</li>''', re.S).findall(response)[:20]  # 目的地
+
+        price = re.compile('''<li>.*?<em>(.*?)</em>.*?</li>''', re.S).findall(response)[:20]  # 价格
+
+        new_list = []
+        mid = map(list, zip(price, destination, imgurl, title, url))
+        for item in mid:
+            new_dict = dict(zip(['price', 'destination', 'imgurl', 'title', 'url'], item))
+            new_list.append(new_dict)
+        return new_list
+    except Exception as e:
+        print(e)
+        return None
+
 

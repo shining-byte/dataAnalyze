@@ -20,21 +20,21 @@
 				<div class="row wrap-content">
 					<div class="col-1-4">
 						<div class="wrap-col">
-                            {% for meituan in meituanlist %}
+                            {% for tuniu in info %}
 							<article>
 								<div class="wrap-art">
-                                    <a href="{{ meituan.href }}"><img src="https://p0.ssl.qhimgs1.com/t014ee531771139a81c.jpg"></a>
+                                    <a href="{{ tuniu.url }}"><img src="http:{{ tuniu.imgurl }}"></a>
 									<div class="art-header">
-                                        <a href="{{ meituan.href }}"><h3>{{ meituan.name }}</h3></a>
+                                        <a href="{{ tuniu.url }}"><h3>{{ tuniu.title }}</h3></a>
 									</div>
 									<div class="art-content">
-										<p>{{ meituan.tag }}</p>
-										<p>地址:{{ meituan.location }}</p>
-                                        <p>评分:{{ meituan.score }}类型:{{ meituan.star }},消费:{{ meituan.people_num }}</p>
+										<p>旅游景点:{{ tuniu.destination }}</p>
+                                        <p>价格:{{ tuniu.price }}</p>
 									</div>
 								</div>
 							</article>
                             {% endfor %}
+
 {#							<article>#}
 {#								<div class="wrap-art">#}
 {#									<img src="/static/images/12.jpg">#}

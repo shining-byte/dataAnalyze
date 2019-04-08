@@ -37,10 +37,15 @@ def search_reslut(request):
     return render(request, 'search_reslut.html', {'jdlist': jdlist, 'suninglist': suninglist, 'keyword': keyword})
 
 
-def travel_hotel(request):
-    return render(request, 'travel_hotel.html')
+def hotel(request):
+    return render(request, 'hotel.html')
 
 
+def travel(request):
+    return render(request, 'travel.html')
+
+
+# 酒店搜索结果
 def hotel_reslut(request):
     q = request.GET.get('q')
     try:
@@ -53,16 +58,12 @@ def hotel_reslut(request):
     return render(request, 'hotel_reslut.html', {'meituanlist': meituanlist, 'ctriplist': ctriplist})
 
 
+# 旅游搜索结果
 def travel_reslut(request):
     q = request.GET.get('q')
-    try:
-        meituan = Meituan(q)
-        ctrip = Ctrip(q)
-        meituanlist = meituan.hotels
-        ctriplist = ctrip.hotels
-    except Exception as e:
-        print(e)
-    return render(request, 'hotel_reslut.html', {'meituanlist': meituanlist, 'ctriplist': ctriplist})
+    info = scrapy_tuniu(q)
+
+    return render(request, 'travel_reslut.html', {'info': info})
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):
