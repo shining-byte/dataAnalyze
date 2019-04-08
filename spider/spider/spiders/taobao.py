@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import re
 import json
-import requests
 import scrapy
 from spider.items import *
 from scrapy.http import Request
 from taobao.models import ProductName
+
 
 class TaobaoSpider(scrapy.Spider):
     name = 'taobao'
@@ -36,7 +36,6 @@ class TaobaoSpider(scrapy.Spider):
         yield Request(url=taobao_sumtagurl, callback=self.parse_sumcomment, meta=data, dont_filter=True)
 
     def parse_sumcomment(self, response):
-        # taobao_sumtagurl = 'https://rate.tmall.com/listTagClouds.htm?itemId={0}&isAll=true&isInner=true&t=&groupId=&_ksTS='.format(response.meta['id'])
         id = response.meta['id']
         # response = json.loads(response.text)
         response = response.text
