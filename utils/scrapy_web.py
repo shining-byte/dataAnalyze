@@ -393,8 +393,8 @@ def scrapy_tuniu(keyword):
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
                    'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-        response = requests.get(url=url, headers=headers).text
-
+        response = requests.post(url=url, headers=headers).text
+        print(response)
 
         url = re.compile('''<li>.*?<a.*?href="(.*?)".*?>.*?</li>''', re.S).findall(response)[:20]  # 链接
         imgurl = re.compile('''<li>.*?<img.*?data-src="(.*?)".*?>.*?</li>''', re.S).findall(response)[1:21]  # 图片链接

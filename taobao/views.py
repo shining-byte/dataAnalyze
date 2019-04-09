@@ -66,7 +66,9 @@ def hotel_reslut(request):
 # 旅游搜索结果
 def travel_reslut(request):
     q = request.GET.get('q')
+    print(q)
     info = scrapy_tuniu(q)
+    print(info)
 
     return render(request, 'travel_reslut.html', {'info': info})
 
