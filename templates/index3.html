@@ -1,24 +1,4 @@
-{% load staticfiles %}
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Editorial by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/static/assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="/static/assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body>
-
-		<!-- Wrapper -->
-			<div id="wrapper">
+{% extends 'index3_base.html' %}
                 {% block content %}
 				<!-- Main -->
 					<div id="main">
@@ -26,7 +6,7 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong>尽搜己用</strong>cmzz</a>
+									<a href="index.html" class="logo"><strong>欢迎</strong></a>
 									<ul class="icons">
 										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
@@ -40,13 +20,13 @@
 								<section id="banner">
 									<div class="content">
 										<header>
-											<h1>你好,欢迎来到尽搜己用<br />
-											by HTML5 UP</h1>
+											<h1>尽搜己用<br />
+											by CMZZ</h1>
 											<p>一个吃穿住行的高性价比网站</p>
 										</header>
-										<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
+										<p>我们致力于打造为人民服务的平台</p>
 										<ul class="actions">
-											<li><a href="#" class="button big">Learn More</a></li>
+											<li><a href="#" class="button big">了解更多</a></li>
 										</ul>
 									</div>
 									<span class="image object">
@@ -56,47 +36,3 @@
 						</div>
 					</div>
                     {% endblock %}
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="{% url 'onlineshop' %}">网购</a></li>
-										<li><a href="{% url 'hotel' %}">酒店</a></li>
-										<li><a href="{% url 'travel' %}">旅游</a></li>
-										<li><a href="{% url 'cate' %}">美食</a></li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
-
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-			<script src="/static/assets/js/skel.min.js"></script>
-			<script src="/static/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="/static/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/static/assets/js/main.js"></script>
-
-	</body>
-</html>

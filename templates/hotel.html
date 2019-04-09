@@ -1,45 +1,26 @@
-{% load staticfiles %}
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Elements - Editorial by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
+{% extends 'index3_base.html' %}
+
+
+{% block content %}
+    		<!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/static/assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="/static/assets/css/ie8.css" /><![endif]-->
 		<link href="/static/css/onlinecss.css" rel="stylesheet">
 			<script src="http://apps.bdimg.com/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
 	<script src="/static/js/onlineshop.js" type="text/javascript"></script>
-	</head>
-	<body>
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-{% block content %}
 							<!-- Content -->
 <section>
 <div class="wrap-header">
-		<h1>see the word differently</h1>
-		<span>搜索你想要的的地方酒店</span>
-		<center><div class="search-form">
-			<form method="get" action="{% url 'hotel_reslut' %}" id="search" class="f-right">
-				<input name="q" type="text" size="40" placeholder="Where are you going ?">
-				<input type="submit" name="Submit" value="Search">
-			</form>
-		</div></center>
-
+		<h1>酒店</h1>
+		<center>
+            								<section id="search" class="alt">
+									<form method="post" action="{% url 'hotel' %}">
+										<input type="text" name="q" id="query" placeholder="Search" />
+                                        <input type="submit" name="Submit" value="Search">
+									</form>
+								</section>
+        </center>
 	</div>
 </section>
                             <style type="text/css">
@@ -98,49 +79,3 @@
 
                             </style>
                             {% endblock%}
-
-						</div>
-					</div>
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="{% url 'onlineshop' %}">网购</a></li>
-										<li><a href="{% url 'hotel' %}">酒店</a></li>
-										<li><a href="{% url 'travel' %}">旅游</a></li>
-										<li><a href="{% url 'cate' %}">美食</a></li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-			<script src="/static/assets/js/skel.min.js"></script>
-			<script src="/static/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="/static/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/static/assets/js/main.js"></script>
-
-	</body>
-</html>

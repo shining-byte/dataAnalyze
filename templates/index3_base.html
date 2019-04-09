@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>尽搜己用</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="/static/assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+            				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+                {% block content %}
+
+                    {% endblock %}
+                        </div>
+                    </div>
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>菜单选项</h2>
+									</header>
+									<ul>
+										<li><a href="{% url 'onlineshop' %}">网购</a></li>
+										<li><a href="{% url 'hotel' %}">酒店</a></li>
+										<li><a href="{% url 'travel' %}">旅游</a></li>
+										<li><a href="{% url 'cate' %}">美食</a></li>
+									</ul>
+								</nav>
+
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+			<script src="/static/assets/js/skel.min.js"></script>
+			<script src="/static/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="/static/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/static/assets/js/main.js"></script>
+
+	</body>
+</html>

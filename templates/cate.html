@@ -1,13 +1,9 @@
 {% load staticfiles %}
 <!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
-		<title>Elements - Editorial by HTML5 UP</title>
+		<title>尽搜己用</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -31,15 +27,13 @@
 							<!-- Content -->
 <section>
 <div class="wrap-header">
-		<h1>see the word differently</h1>
-		<span>搜索你想要的的地方美食</span>
+		<h1>地方美食</h1>
 		<center><div class="search-form">
 			<form method="get" action="{% url 'cate_reslut' %}" id="search" class="f-right">
-				<input name="q" type="text" size="40" placeholder="Where are you going ?">
+				<input name="q" type="text" size="40" placeholder="搜索你想要的的地方美食">
 				<input type="submit" name="Submit" value="Search">
 			</form>
 		</div></center>
-
 	</div>
 </section>
                             <style type="text/css">
@@ -122,11 +116,6 @@
 										<li><a href="{% url 'hotel' %}">酒店</a></li>
 										<li><a href="{% url 'travel' %}">旅游</a></li>
 										<li><a href="{% url 'cate' %}">美食</a></li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
 									</ul>
 								</nav>
 
