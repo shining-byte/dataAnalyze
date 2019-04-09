@@ -1,16 +1,26 @@
-{% extends 'hotel.html' %}
+{% extends 'index3_base.html' %}
+
 {% block content %}
 							<!-- Content -->
 <section>
+    		<!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="/static/assets/css/ie8.css" /><![endif]-->
+		<link href="/static/css/onlinecss.css" rel="stylesheet">
+			<script src="http://apps.bdimg.com/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
+	<script src="/static/js/onlineshop.js" type="text/javascript"></script>
 <div class="wrap-header">
-		<h1>see the word differently</h1>
-		<span>搜索你想要去的地方</span>
-		<center><div class="search-form">
-			<form method="get" action="{% url 'travel_reslut' %}" id="search" class="f-right">
-				<input name="q" type="text" size="40" placeholder="Where are you going ?">
-				<input type="submit" name="Submit" value="Search">
-			</form>
-		</div></center>
+		<h1>旅游</h1>
+		<center>
+                            <section id="search" class="alt">
+        <form method="get" action="{% url 'travel_reslut' %}">
+            <input type="text" name="q" id="query" placeholder="Search" />
+            <input type="submit" name="Submit" value="Search">
+        </form>
+    </section>
+
+        </center>
 
 	</div>
 </section>
@@ -61,12 +71,12 @@
 	color: #000;
 	cursor: pointer;
 	font: bold 17px Arial, Helvetica, sans-serif;
-	font-weight: 780;
+	font-weight: 700;
 	outline: none;
 	-webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
 	}
 
-                            </style>
-                            {% endblock%}
+</style>
+{% endblock%}

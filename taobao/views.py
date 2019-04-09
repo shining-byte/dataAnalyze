@@ -16,18 +16,17 @@ def index3(request):
 
 
 def onlineshop(request):
-    return render(request, 'elements.html')
+    return render(request, 'onlineshop.html')
 
 
 # 不入数据库,实时爬取
 def search_reslut(request):
-    keyword = request.GET.get('keyword')
+    keyword = request.GET.get('q')
     # 获取京东id
     try:
         jdlist = scrapy_JD2(keyword)
         suninglist = scrapy_suning2(keyword)
         taobaolist = scrapy_taobao(keyword)
-        print(taobaolist)
     except Exception as e:
         print(e)
     # 爬取京东

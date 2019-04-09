@@ -12,20 +12,20 @@
 							<!-- Content -->
 <section>
 <div class="wrap-header">
-		<h1>酒店</h1>
+		<h1>网购</h1>
 		<center>
-                <section id="search" class="alt">
-        <form method="get" action="{% url 'hotel_reslut' %}">
-            <input type="text" name="q" id="query" placeholder="Search" />
-            <input type="submit" name="Submit" value="Search">
-        </form>
-    </section>
+            								<section id="search" class="alt">
+									<form method="get" action="{% url 'search_reslut' %}">
+										<input type="text" name="q" id="query" placeholder="搜索你想要的商品" />
+                                        <input type="submit" name="Submit" value="Search">
+									</form>
+								</section>
         </center>
 	</div>
 </section>
                             <style type="text/css">
 .wrap-header{
-	background: url('../static/images/1.jpg') no-repeat 100% 100%;
+	background: url('../static/images/onlineshop.jpeg') no-repeat 100% 100%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -70,12 +70,12 @@
 	color: #000;
 	cursor: pointer;
 	font: bold 17px Arial, Helvetica, sans-serif;
-	font-weight: 700;
+	font-weight: 780;
 	outline: none;
 	-webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
 	}
 
-</style>
-{% endblock%}
+                            </style>
+                            {% endblock%}
