@@ -15,7 +15,7 @@ index3 页面用requests爬取的马蜂窝的美食，美团的酒店，还有�
 美食搜索:
 ![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0001.png)
 项目文件结构:
-```.
+```
 ├── dataAnalyze
 │   ├── settings.py
 │   ├── urls.py
@@ -88,6 +88,6 @@ index3 页面用requests爬取的马蜂窝的美食，美团的酒店，还有�
 ├── twistd.pid
 └── utils
     └── scrapy_web.py(爬取网站的主要文件)```
-****
+
 
 
