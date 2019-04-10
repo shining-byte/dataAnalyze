@@ -7,6 +7,9 @@
 
 index3 页面用requests爬取的马蜂窝的美食，美团的酒店，还有途牛的旅游
 主页面
-
-
+![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0002.png)
+商品搜索:
+![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0003.png)
 旅游搜索:
+![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0004.png)
+
