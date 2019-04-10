@@ -81,6 +81,11 @@ def cate_reslut(request):
     # 再该城市的美食
     cates = scrapy_maofengwo(id)
     return render(request, 'cate_reslut.html', {'cates': cates})
+
+
+# 地图
+def navigation_reslut(request):
+    return render(request, 'navigation_reslut.html')
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):

@@ -41,4 +41,6 @@ urlpatterns = [
     # 美食
     path('cate', cate, name='cate'),
     path('cate_reslut', cate_reslut, name='cate_reslut'),
+    # 导航
+    path('navigation_reslut', navigation_reslut, name='navigation_relust'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
