@@ -1,7 +1,7 @@
 # dataAnalyze
 这个项目的index页面django+scrapy动态爬取京东淘宝,苏宁,淘宝,三家电商的相同商品的评论和标签信息, show2.html用了echarts.js调用rest frameworkde的接口饼图来展示
 项目文件结构:
-.
+```.
 ├── dataAnalyze
 │   ├── settings.py
 │   ├── urls.py
@@ -60,7 +60,7 @@
 │   ├── apps.py
 │   ├── filter.py
 │   ├── __init__.py
-│   ├── migrations(django数据库迁移)
+│   ├── migrations(django数据库迁移文件)
 │   ├── models.py
 │   ├── run.py
 │   ├── serializers_pagination.py
@@ -73,10 +73,8 @@
 ├── test.py
 ├── twistd.pid
 └── utils
-    └── scrapy_web.py(爬取网站的主要文件)
-
-59 directories, 266 files
-
+    └── scrapy_web.py(爬取网站的主要文件)```
+****
 效果图:
 ![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0005.png)
 其中爬取淘宝用了框架,因为在学校里爬取信息,不需要验证登录.
@@ -89,4 +87,6 @@ index3 页面用requests爬取的马蜂窝的美食，美团的酒店，还有�
 ![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0003.png)
 旅游搜索:
 ![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0004.png)
+美食搜索:
+
 
