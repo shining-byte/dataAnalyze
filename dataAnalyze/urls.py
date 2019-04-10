@@ -42,5 +42,6 @@ urlpatterns = [
     path('cate', cate, name='cate'),
     path('cate_reslut', cate_reslut, name='cate_reslut'),
     # 导航
-    path('navigation_reslut', navigation_reslut, name='navigation_relust'),
+    path('map', map, name='map'),
+    path('navigation', navigation, name='navigation'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
