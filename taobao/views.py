@@ -93,7 +93,6 @@ def navigation(request):
     origin = request.GET.get('origin')
     destination = request.GET.get('destination')
     way = request.GET.get('way')
-    print(origin, destination, way)
     return render(request, 'navigation.html', {'origin': origin, 'destination': destination, 'way': way})
 # def show(request, id):
 #     mydict = {}
