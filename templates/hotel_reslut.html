@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -69,6 +70,254 @@
     margin: 0.5em 0 0 0;
     padding: 0.5em 0 0 0;
 }
+            	#search form {
+		text-decoration: none;
+		position: relative;
+	}
+
+		#search form:before {
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-font-smoothing: antialiased;
+			font-family: FontAwesome;
+			font-style: normal;
+			font-weight: normal;
+			text-transform: none !important;
+		}
+
+		#search form:before {
+			-moz-transform: scaleX(-1);
+			-webkit-transform: scaleX(-1);
+			-ms-transform: scaleX(-1);
+			transform: scaleX(-1);
+			color: #7f888f;
+			content: '\f002';
+			cursor: default;
+			display: block;
+			font-size: 1.5em;
+			height: 2em;
+			line-height: 2em;
+			opacity: 0.325;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			top: 0;
+			width: 2em;
+		}
+
+		#search form input[type="text"] {
+			padding-right: 2.75em;
+		}
+
+	#sidebar {
+		-moz-flex-grow: 0;
+		-webkit-flex-grow: 0;
+		-ms-flex-grow: 0;
+		flex-grow: 0;
+		-moz-flex-shrink: 0;
+		-webkit-flex-shrink: 0;
+		-ms-flex-shrink: 0;
+		flex-shrink: 0;
+		-moz-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
+		-webkit-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
+		-ms-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
+		transition: margin-left 0.5s ease, box-shadow 0.5s ease;
+		background-color: #f5f6f7;
+		font-size: 0.9em;
+		position: relative;
+		width: 26em;
+	}
+
+		#sidebar h2 {
+			font-size: 1.38889em;
+		}
+
+		#sidebar > .inner {
+			padding: 2.22222em 2.22222em 2.44444em 2.22222em ;
+			position: relative;
+			width: 26em;
+		}
+
+			#sidebar > .inner > * {
+				border-bottom: solid 2px rgba(210, 215, 217, 0.75);
+				margin: 0 0 3.5em 0;
+				padding: 0 0 3.5em 0;
+			}
+
+				#sidebar > .inner > * > :last-child {
+					margin-bottom: 0;
+				}
+
+				#sidebar > .inner > *:last-child {
+					border-bottom: 0;
+					margin-bottom: 0;
+					padding-bottom: 0;
+				}
+
+			#sidebar > .inner > .alt {
+				background-color: #eff1f2;
+				border-bottom: 0;
+				margin: -2.22222em 0 4.44444em -2.22222em;
+				padding: 2.22222em;
+				width: calc(100% + 4.44444em);
+			}
+
+		#sidebar .toggle {
+			text-decoration: none;
+			-moz-transition: left 0.5s ease;
+			-webkit-transition: left 0.5s ease;
+			-ms-transition: left 0.5s ease;
+			transition: left 0.5s ease;
+			-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+			border: 0;
+			display: block;
+			height: 7.5em;
+			left: 26em;
+			line-height: 7.5em;
+			outline: 0;
+			overflow: hidden;
+			position: absolute;
+			text-align: center;
+			text-indent: 7.5em;
+			top: 0;
+			width: 6em;
+			z-index: 10000;
+		}
+
+			#sidebar .toggle:before {
+				-moz-osx-font-smoothing: grayscale;
+				-webkit-font-smoothing: antialiased;
+				font-family: FontAwesome;
+				font-style: normal;
+				font-weight: normal;
+				text-transform: none !important;
+			}
+
+			#sidebar .toggle:before {
+				content: '\f0c9';
+				font-size: 2rem;
+				height: inherit;
+				left: 0;
+				line-height: inherit;
+				position: absolute;
+				text-indent: 0;
+				top: 0;
+				width: inherit;
+			}
+
+		#sidebar.inactive {
+			margin-left: -26em;
+		}
+
+		@media screen and (max-width: 1680px) {
+
+			#sidebar {
+				width: 24em;
+			}
+
+				#sidebar > .inner {
+					padding: 1.66667em 1.66667em 1.33333em 1.66667em ;
+					width: 24em;
+				}
+
+					#sidebar > .inner > .alt {
+						margin: -1.66667em 0 3.33333em -1.66667em;
+						padding: 1.66667em;
+						width: calc(100% + 3.33333em);
+					}
+
+				#sidebar .toggle {
+					height: 6.25em;
+					left: 24em;
+					line-height: 6.25em;
+					text-indent: 5em;
+					width: 5em;
+				}
+
+					#sidebar .toggle:before {
+						font-size: 1.5rem;
+					}
+
+				#sidebar.inactive {
+					margin-left: -24em;
+				}
+
+		}
+
+		@media screen and (max-width: 1280px) {
+
+			#sidebar {
+				box-shadow: 0 0 5em 0 rgba(0, 0, 0, 0.175);
+				height: 100%;
+				left: 0;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+
+				#sidebar.inactive {
+					box-shadow: none;
+				}
+
+				#sidebar > .inner {
+					-webkit-overflow-scrolling: touch;
+					height: 100%;
+					left: 0;
+					overflow-x: hidden;
+					overflow-y: auto;
+					position: absolute;
+					top: 0;
+				}
+
+					#sidebar > .inner:after {
+						content: '';
+						display: block;
+						height: 4em;
+						width: 100%;
+					}
+
+				#sidebar .toggle {
+					text-indent: 6em;
+					width: 6em;
+				}
+
+					#sidebar .toggle:before {
+						font-size: 1.5rem;
+						margin-left: -0.4375em;
+					}
+
+				body.is-loading #sidebar {
+					display: none;
+				}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			#sidebar .toggle {
+				text-indent: 7.25em;
+				width: 7.25em;
+			}
+
+				#sidebar .toggle:before {
+					color: #7f888f;
+					margin-left: -0.0625em;
+					margin-top: -0.25em;
+					font-size: 1.1rem;
+					z-index: 1;
+				}
+
+				#sidebar .toggle:after {
+					background: rgba(222, 225, 226, 0.75);
+					border-radius: 0.375em;
+					content: '';
+					height: 3.5em;
+					left: 1em;
+					position: absolute;
+					top: 1em;
+					width: 5em;
+				}
+
+		}
 		</style>
 </head>
 <body class="home">
@@ -90,7 +339,7 @@
         <div class="row" id="post-masonry">
 
 
-
+{% block content %}
                     <!--Blog Post-->
                             {% for ctrip in ctriplist %}
             <article class="col-sm-4 post post-masonry post-format-image">
@@ -101,7 +350,7 @@
                     <div class="post-excerpt row">
                         <h5 class="post-meta">
 {#                            <a href="#" class="date">feb 17, 2016</a>#}
-                            <span class="post-author"><i>by</i><a href="#">美团</a></span>
+                            <span class="post-author"><i>by</i><a href="#">携程</a></span>
                         </h5>
                         <h3 class="post-title"><a href="{{ ctrip.href }}">{{ ctrip.name }}</a></h3>
                         <p>{{ ctrip.location }}</p>
@@ -140,7 +389,7 @@
             </article>
             {% endfor %}
 
-
+{% endblock %}
         </div>
     </div>
 </section>
@@ -153,7 +402,7 @@
 							<!-- Menu -->
 								<nav id="menu">
 									<header class="major">
-										<h2>菜单选项</h2>
+										<a href="/index3"><h2>菜单选项</h2></a>
 									</header>
 									<ul>
 										<li><a href="{% url 'onlineshop' %}">网购</a></li>
@@ -175,7 +424,7 @@
 			<!--[if lte IE 8]><script src="static/assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/static/assets/js/main.js"></script>
 		<script src="/static/js/jquery-2.2.0.min.js"></script>
-		<script src="/static/js/bootstrap.min.js"></script>
+		<script src="/static/bootstrap.min.js"></script>
 		<script src="/static/vendors/owl-carousel/owl.carousel.min.js"></script>
 		<script src="/static/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
 		<script src="/static/vendors/instafeed/instafeed.min.js"></script>

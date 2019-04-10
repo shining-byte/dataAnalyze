@@ -79,8 +79,8 @@ def cate_reslut(request):
     #  先获取id
     id = scrapy_mafengwoCityId(city)
     # 再该城市的美食
-    info = scrapy_maofengwo(id)
-    return render(request, 'cate_reslut.html', {'info': info})
+    cates = scrapy_maofengwo(id)
+    return render(request, 'cate_reslut.html', {'cates': cates})
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):
