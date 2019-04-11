@@ -1,0 +1,70 @@
+{% extends 'hotel_reslut.html' %}
+
+
+{% block content %}
+            <!--Blog Post-->
+    {% for product in jdlist %}
+            <article class="col-sm-4 post post-masonry post-format-image">
+                <div class="post-wrapper row">
+                    <div class="featured-content row">
+                        <a href="{{ product.url }}"><img src="{{ product.imgurl }}" width="350" height="350" alt="" class="img-responsive"></a>
+                    </div>
+                    <div class="post-excerpt row">
+                        <h5 class="post-meta">
+{#                            <a href="#" class="date">feb 17, 2016</a>#}
+                            <span class="post-author"><i>by</i><a href="#">淘宝</a></span>
+                        </h5>
+                        <h3 class="post-title"><a href="{{ product.url }}">{{ keyword }}</a></h3>
+                        <p>{{ product.desc}}</p>
+                        <footer class="row">
+                            <h5 class="taxonomy"><i>价钱:</i><a href="#">{{ product.price }}</a></h5>
+{#                            <div class="response-count"><img src="images/comment-icon-gray.png" alt="">5</div>#}
+                        </footer>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+    {% for suning in suninglist %}
+            <article class="col-sm-4 post post-masonry post-format-image">
+                <div class="post-wrapper row">
+                    <div class="featured-content row">
+                        <a href="{{ suning.url }}"><img src="{{ suning.imgurl }}" width="350" height="350" alt="" class="img-responsive"></a>
+                    </div>
+                    <div class="post-excerpt row">
+                        <h5 class="post-meta">
+{#                            <a href="#" class="date">feb 17, 2016</a>#}
+                            <span class="post-author"><i>by</i><a href="#">苏宁</a></span>
+                        </h5>
+                        <h3 class="post-title"><a href="{{ suning.url }}">{{ keyword }}</a></h3>
+                        <p>{{ suning.desc}}</p>
+                        <footer class="row">
+                            <h5 class="taxonomy"><i>价钱:</i><a href="#">图片上显示</a></h5>
+{#                            <div class="response-count"><img src="images/comment-icon-gray.png" alt="">5</div>#}
+                        </footer>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+    {% for taobao in taobaolist %}
+            <article class="col-sm-4 post post-masonry post-format-image">
+                <div class="post-wrapper row">
+                    <div class="featured-content row">
+                        <a href="{{ taobao.detail_url }}"><img src="{{ taobao.imgurl }}" width="350" height="350" alt="" class="img-responsive"></a>
+                    </div>
+                    <div class="post-excerpt row">
+                        <h5 class="post-meta">
+{#                            <a href="#" class="date">feb 17, 2016</a>#}
+                            <span class="post-author"><i>by</i><a href="#">途牛</a></span>
+                        </h5>
+                        <h3 class="post-title"><a href="{{ taobao.detail_url }}">{{ keyword }}</a></h3>
+                        <p>{{ taobao.title }}</p>
+                        <footer class="row">
+                            <h5 class="taxonomy"><i>价钱:</i><a href="#">{{ taobao.price }}</a></h5>
+{#                            <div class="response-count"><img src="images/comment-icon-gray.png" alt="">5</div>#}
+                        </footer>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+
+{% endblock %}

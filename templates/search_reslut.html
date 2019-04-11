@@ -1,6 +1,7 @@
 {% extends 'onlineshop.html' %}
 
 {% block content %}
+{#    淘宝#}
     {% for product in jdlist %}
 {#    {% for k, v in product.items %}#}
 <div class="bjlineSmall singlebj bj_1570533847" >
@@ -24,6 +25,7 @@
 </div>
 {#        {% endfor %}#}
     {% endfor %}
+{#    苏宁#}
     {% for suning in suninglist %}
 <div class="bjlineSmall singlebj bj_1570533847" >
   <div class="pic"><a class="shenqingGY" href="{{ suning.url }}" target="_blank">
@@ -47,6 +49,8 @@
 {#        {% endfor %}#}
     {% endfor %}
 
+
+{#    淘宝#}
     {% for taobao in taobaolist %}
 <div class="bjlineSmall singlebj bj_1570533847" >
   <div class="pic"><a class="shenqingGY" href="{{ taobao.detail_url }}" target="_blank">
