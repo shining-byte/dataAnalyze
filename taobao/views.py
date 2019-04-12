@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import time
 
+from pypinyin import lazy_pinyin
+
 from taobao.models import *
 from taobao.serializers import *
 
@@ -107,6 +109,29 @@ def navigation(request):
     destination = request.GET.get('destination')
     way = request.GET.get('way')
     return render(request, 'navigation.html', {'origin': origin, 'destination': destination, 'way': way})
+
+
+# 食物
+def food(request):
+    return render(request, 'food.html')
+
+
+# 食物相克
+def checkfood(request):
+    food = request.GET.get('q')
+    pinyin = ''.join(lazy_pinyin(food))
+    url = 'http://shiwuxiangke.00cha.com/{}.html'.format(pinyin)
+    response = requests.get(url)
+    response.encoding = 'gb2312'
+    text = response.text
+    info = re.compile('<div class="zynr">.*?<h1.*?">(.*?)</h1>.*?<img.*?src="(.*?)".*?>.*?</div>', re.S).findall(text)
+    # print(info)
+    title = info[0][0]
+    imgurl = 'http://shiwuxiangke.00cha.com/'+info[0][1]
+    content = re.compile('<p>(.*?)</p>', re.S).findall(text)
+    return render(request, 'food_reslut.html', {'content': content[0], 'title': title, 'imgurl': imgurl})
+
+
 # def show(request, id):
 #     mydict = {}
 #     if(ProductName.objects.filter(jdProductId=id)):

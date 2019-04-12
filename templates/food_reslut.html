@@ -1,0 +1,17 @@
+{% extends 'hotel_reslut.html' %}
+{% block content %}
+            <article class="col-sm-4 post post-masonry post-format-image">
+                <div class="post-wrapper row">
+                    <div class="featured-content row">
+                        <img src="{{ imgurl }}" width="300" height="350" alt="" class="img-responsive">
+                    </div>
+                    <div class="post-excerpt row">
+                        <h5 class="post-meta">
+{#                            <a href="#" class="date">feb 17, 2016</a>#}
+                            <h3 class="post-title">{{ title }}</h3>
+                        </h5>{{ content|safe }}
+
+                    </div>
+                </div>
+            </article>
+{% endblock %}

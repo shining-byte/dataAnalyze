@@ -44,4 +44,7 @@ urlpatterns = [
     # 导航
     path('map', map, name='map'),
     path('navigation', navigation, name='navigation'),
+    # 食物相克
+    path('food', food, name='food'),
+    path('checkfood', checkfood, name='checkfood'),
 ]+static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
