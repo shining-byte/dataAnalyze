@@ -12,10 +12,11 @@
 	<script src="/static/js/onlineshop.js" type="text/javascript"></script>
 <div class="wrap-header">
 		<h1>食物相克</h1>
+    <p style="color: #0b0b0b">有些人可以爱,但有些东西却不可以乱吃</p>
 		<center>
                             <section id="search" class="alt">
         <form method="get" action="{% url 'checkfood' %}">
-            <input type="text" name="q" id="query" placeholder="Search" />
+            <input type="text" name="q" id="query" placeholder="输入你想要了解的食物" />
             <input type="submit" name="Submit" value="Search">
         </form>
     </section>

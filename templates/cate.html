@@ -11,11 +11,13 @@
 			<script src="http://apps.bdimg.com/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
 	<script src="/static/js/onlineshop.js" type="text/javascript"></script>
 <div class="wrap-header">
-		<h1>地方美食</h1>
+		<h1 style="color: #0b0b0b">地方美食</h1>
+    <p style="color: white">能穿过你的❤的,不止有爱,还有美食</p>
+    <p></p>
 		<center>
                             <section id="search" class="alt">
         <form method="get" action="{% url 'cate_reslut' %}">
-            <input type="text" name="q" id="query" placeholder="Search" />
+            <input type="text" name="q" id="query" placeholder="输入你寻找美食的城市" />
             <input type="submit" name="Submit" value="Search">
         </form>
     </section>
