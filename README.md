@@ -4,6 +4,8 @@
 ![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0005.png)
 其中爬取淘宝用了框架,因为在学校里爬取信息,不需要验证登录.
 所以用了scrapy框架,并部署在scrapyd上.再用frp内网穿透.
+api 接口格式如下,show2.html有通过ajax访问接口提取数据.
+![Image text](https://github.com/XZHhengge/dataAnalyze/blob/master/img-storage/image0006.png)
 
 index3 页面用requests爬取的马蜂窝的美食，美团的酒店，还有途牛的旅游
 主页面

@@ -105,10 +105,15 @@ class MySqlPipeline(object):
                 pass
             else:
                 if item['score'] == 5:
-                    with open('pos.txt', 'a') as f:
-                        f.write(item['content']+'\n')
+                    pass
+                    # with open('pos.txt', 'a') as f:
+                    #     f.write(item['content']+'\n')
                 elif item['score'] == 1:
+
                     with open('neg.txt', 'a') as f:
+                        f.write(item['content']+'\n')
+                elif item['score'] == 2:
+                    with open('neu.txt', 'a') as f:
                         f.write(item['content']+'\n')
             # elif item['content'] == '此用户未及时填写评价内容，系统默认评价！':
             #     pass

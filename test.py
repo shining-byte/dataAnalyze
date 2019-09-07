@@ -1,31 +1,5 @@
-import re
-from scrapy import Selector
-import requests
-from pypinyin import lazy_pinyin
-from scrapy import Selector
-pinyin = ''.join(lazy_pinyin('鸡肉'))
-#
-# url = 'http://shiwuxiangke.00cha.com/'
-url2 = 'http://shiwuxiangke.00cha.com/{}.html'.format(pinyin)
+string = '''(('V803', 'LI80201界位%'), ('V803', 'PI80202压力MPa'), ('V803', 'PV80202压控阀阀位%'), ('V802', 'LI80103界位%'), ('V802', '压力MPa'), ('V801', 'LI80101界位%'), ('V801', 'LV80101液控阀阀位%'), ('SR803', 'LICA80301A液位%'), ('SR803', 'PDIA80301压差MPa'), ('V901', 'LI90104液位%\t'), ('V901', '界位'), ('V901', '压力MPa'), ('T901', 'LI90101上界位%\t'), ('T901', 'LI90102下界位%'), ('T901', 'PI90101压力MPa\t'), ('T901', 'PV90101压控阀阀位%'), ('T902', 'LI90103液位%\t'), ('V909', 'LI90301液位%\t'), ('V905', 'LI90302液位%\t'))'''
 
-
-'''<p>
-
-<strong>(.*?)</strong><br>(.*?)(.*?)<br><br><strong>(.*?)</strong><br>(.*?)</p>'''
-response = requests.get(url2)
-response.encoding = 'gb2312'
-# selector = Selector(response)
-# info2 = selector.xpath('/html/body/div/div[4]/div[1]/div[1]/p[5]/text()').extract()
-# print(info2)
-info = re.compile('<div class="zynr">.*?<h1.*?">(.*?)</h1>.*?<img.*?src="(.*?)".*?>.*?</div>', re.S).findall(response.text)
-
-# info = re.compile('<p>(.*?)</p>', re.S).findall(response.text)
-print(info)
-# headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
-#            'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20'}
-# data = {'shi': '鲍鱼'.encode('gb2312')}
-# response = requests.post(url=url, data=data)
-# response.encoding = 'gb2312'
-# print(response.text)
+print(string)
 
 

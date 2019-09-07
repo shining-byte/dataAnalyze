@@ -21,7 +21,19 @@ def onlineshop(request):
     return render(request, 'onlineshop.html')
 
 
-# 不入数据库,实时爬取
+def hotel(request):
+    return render(request, 'hotel.html')
+
+
+def travel(request):
+    return render(request, 'travel.html')
+
+
+def cate(request):
+    return render(request, 'cate.html')
+
+
+# 实时爬取
 def search_reslut(request):
     keyword = request.GET.get('q')
     # 获取京东id
@@ -51,18 +63,6 @@ def search_reslut(request):
         # for price, desc, imgurl, id, url in new_dict.items:
         #     print(price, desc, imgurl)
         return render(request, 'search_reslut.html', {'jdlist': jdlist, 'suninglist': suninglist, 'keyword': keyword, 'taobaolist': taobaolist})
-
-
-def hotel(request):
-    return render(request, 'hotel.html')
-
-
-def travel(request):
-    return render(request, 'travel.html')
-
-
-def cate(request):
-    return render(request, 'cate.html')
 
 
 # 酒店搜索结果
@@ -132,48 +132,7 @@ def checkfood(request):
     return render(request, 'food_reslut.html', {'content': content[0], 'title': title, 'imgurl': imgurl})
 
 
-# def show(request, id):
-#     mydict = {}
-#     if(ProductName.objects.filter(jdProductId=id)):
-#         taobaoProductId = request.session['taobaoproductId']
-#         mydict['jdproductid'] = id
-#         mydict['taobaoproductId'] = taobaoProductId
-#         print(mydict)
-#         return render(request, 'show2.html', mydict)
-#
-#     else:
-#         keyword = request.session['keyword']
-#         taobaoProductId = request.session['taobaoproductId']
-#         # 初始化类
-#         spider = ScrapyInfo(jdid=id, taobaoProductId=taobaoProductId, keyword=keyword)
-#         # 开始爬取京东
-#         jdlist = spider.scrapy_JDinfo()
-#         # taobaolist = spider.scrapy_taobaoinfo()
-#         # scrapy_info(id=id)
-#
-#         #     comments = JDCommentItem.objects.all()[:3]
-#         # 饼图
-#         # jdpie = pie(jdlist[0], jdlist[1])
-#         # # comment_item = json.loads(text1[0], strict=False)['comments'][:3]
-#         #
-#         # taobaopie = pie2(taobaolist[0], taobaolist[1])
-#         # # 云词图
-#         # jdworldud = worldcloud(jdlist[2], jdlist[3])
-#
-#         jdcomments = JDCommentItem.objects.all()[:3]
-#         taobaocomments = TaobaoComment.objects.all()[:10]
-#         price = JDProductsItem.objects.get(productid=id).reallyPrice
-#         # mydict = dict(jdpie, **jdworldud)
-#         mydict['jdcomments'] = jdcomments
-#         mydict['taobaocomments'] = taobaocomments
-#         url = JDProductsItem.objects.get(name=keyword).url
-#         mydict['url'] = url
-#         mydict['price'] = price
-#         mydict['taobaoproductid'] = taobaoProductId
-#
-#     return render(request, 'show2.html', mydict)
-
-
+# 商品搜索
 def search(request):
     if request.method == 'GET':
         keyword = request.GET.get('search')

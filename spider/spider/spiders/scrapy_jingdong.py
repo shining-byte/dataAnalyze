@@ -13,17 +13,21 @@ price_url = 'https://p.3.cn/prices/mgets?skuIds=J_'
 favourable_url = 'https://cd.jd.com/promotion/v2?skuId=%s&area=1_72_2799_0&shopId=%s&venderId=%s&cat=%s'
 
 shop_id = 1
-# aftercomment = 0
-# from myFirstScrapy
 comment_url = 'https://club.jd.com/comment/productPageComments.action?productId=%s&score=0&sortType=6&page=%s&pageSize=10'
 
 
 class JDSpider(scrapy.Spider):
     name = 'JD'
-    allowed_domains = ['jd.com']
-    start_urls = 0
+    allowed_domains = ['jd.com', 'search.jd.com']
+
+    def __init__(self, keyword=None, *args, **kwargs):
+        super(JDSpider, self).__init__(*args, **kwargs)
+
+        self.start_urls = ['https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format(keyword)]
+        # self.start_urls = ['https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format('华为p30')]
 
     def parse(self, response):
+        print(response.text)
         selector = Selector(response)
 
         jdproductsItem = JDProductsItem()
@@ -225,9 +229,9 @@ class JDSpider(scrapy.Spider):
         # next page
         max_page = int(data.get('maxPage', '1'))
         if max_page > 60:
-            max_page = 30
+            max_page = 60
         for j in [1, 2, 3, 5]:
-            for i in range(1, max_page):
+            for i in range(30, max_page):
                 if j == 5:
                     url = 'https://club.jd.com/comment/productPageComments.action?productId=%s&score=%s&sortType=6&page=%s&pageSize=10' % (
                     product_id, j, str(i))

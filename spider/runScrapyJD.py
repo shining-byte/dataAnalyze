@@ -13,11 +13,9 @@ application = get_wsgi_application()
 django.setup()
 from spider.spiders.scrapy_jingdong import JDSpider
 
-
-
 if __name__ == '__main__':
-    JDSpider.start_urls = ['https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format('魅族16')]
-    cmdline.execute("scrapy crawl JD".split())
+    # JDSpider.start_urls = ['https://search.jd.com/Search?keyword={}&enc=utf-8&spm=2.1.0'.format('魅族16')]
+    cmdline.execute("scrapy crawl JD -a keyword=小米8SE".split())
 
 
 

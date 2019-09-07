@@ -17,6 +17,7 @@ class TaobaoSpider(scrapy.Spider):
         self.keyword = keyword
 
     def parse(self, response):
+        print(response.text)
         prices = re.findall('"view_price":"(.*?)",', response.text)[1]  # 正则提示商品价格
         nid = re.findall('"nid":"(.*?)"', response.text)[1]  # 正则匹配id
         ProductName.objects.filter(name=self.keyword).update(taobaoProductId=nid)
